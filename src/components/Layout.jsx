@@ -1,7 +1,7 @@
 import React from "react";
 
-// import { ThemeProvider } from "@mui/system";
-// import { theme } from "../styles/index";
+import { ThemeProvider } from "@mui/system";
+import { theme } from "../styles/index";
 
 import Header from "./Header/Header";
 import { Outlet } from "react-router-dom";
@@ -14,7 +14,7 @@ import { Container } from "@mui/material";
 
 const Layout = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       {/* <LocalizationProvider dateAdapter={AdapterMoment}> */}
       <Container maxWidth="xl" disableGutters>
@@ -23,7 +23,7 @@ const Layout = () => {
         <Footer />
       </Container>
       {/* </LocalizationProvider> */}
-    </>
+    </ThemeProvider>
   );
 };
 
