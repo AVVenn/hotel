@@ -37,6 +37,7 @@ export let theme = createTheme({
       primary: "#333333",
       white: "#FFFFFF",
       orange: "#FF7300",
+      lightOrange: "#f80",
       lightgray: "#999999",
       gray: "#5C5C5C",
     },
