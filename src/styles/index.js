@@ -1,7 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-
+import { ru } from "date-fns/locale";
 const LinkBehavior = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
   return (
@@ -10,6 +10,7 @@ const LinkBehavior = React.forwardRef((props, ref) => {
 });
 
 export let theme = createTheme({
+  ru,
   breakpoints: {
     values: {
       xs: 0,
