@@ -33,13 +33,14 @@ export let theme = createTheme({
     },
     background: {
       default: "#FFFFFF",
+      second: "#F1F6FA",
     },
     text: {
       primary: "#333333",
       white: "#FFFFFF",
       orange: "#FF7300",
       lightOrange: "#f80",
-      lightgray: "#999999",
+      lightgray: "#E6E6E6",
       gray: "#5C5C5C",
     },
   },
@@ -85,6 +86,11 @@ export let theme = createTheme({
     MuiButtonBase: {
       defaultProps: {
         LinkComponent: LinkBehavior,
+      },
+    },
+    MuiTypography: {
+      defaultProps: {
+        align: "center",
       },
     },
   },

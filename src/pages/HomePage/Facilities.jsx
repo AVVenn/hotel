@@ -1,6 +1,7 @@
 import React from "react";
-import { Container, Typography, Grid } from "@mui/material";
-import { BoxCenter } from "../../components/common/CustomBoxes";
+import { Typography, Grid } from "@mui/material";
+import { BoxCenter, Container } from "../../components/common/CustomBoxes";
+import { CustomGrid } from "../../components/common/CustomGrid";
 
 import KitchenIcon from "@mui/icons-material/Kitchen";
 import BlenderIcon from "@mui/icons-material/Blender";
@@ -29,28 +30,25 @@ const icons = [
 
 const Facilities = () => {
   return (
-    <Container sx={{ pt: "60px", pb: "60px" }}>
-      <Typography variant="h3" align="center" sx={{ mb: "30px" }}>
+    <Container>
+      <Typography sx={{ mb: 4 }} variant="h2" component="h2">
         Удобства
       </Typography>
       <BoxCenter>
-        <Grid
+        <CustomGrid
           container
           spacing={4}
           columns={{ xs: 6, ssm: 9, sm: 12, md: 12 }}
-          sx={{ justifyContent: "space-around", alignItems: "center" }}
         >
           {icons.map((icon) => (
             <Grid item xs={3} ssm={3} sm={4} md={2} key={icon.text}>
               <BoxCenter sx={{ flexDirection: "column" }}>
                 {icon.icon}
-                <Typography variant="h6" align="center">
-                  {icon.text}
-                </Typography>
+                <Typography variant="h6">{icon.text}</Typography>
               </BoxCenter>
             </Grid>
           ))}
-        </Grid>
+        </CustomGrid>
       </BoxCenter>
     </Container>
   );

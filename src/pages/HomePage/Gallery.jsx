@@ -1,8 +1,11 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import Box from "@mui/material/Box";
-import Masonry from "@mui/lab/Masonry";
-import { Label } from "../../components/common/Label";
+import { Card, CardMedia, CardContent } from "@mui/material";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import { Container } from "../../components/common/CustomBoxes";
 
 const itemData = [
   {
@@ -75,34 +78,65 @@ const itemData = [
   },
 ];
 
+const settings = {
+  focusOnSelect: true,
+  lazyLoad: true,
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true,
+      },
+    },
+    {
+      breakpoint: 640,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 420,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
+
 const Gallery = () => {
   return (
-    <>
-      <Typography component="h2" variant="h2" align="center">
+    <Container width="93vw" sx={{ m: "0 auto" }}>
+      <Typography sx={{ mb: 4 }} component="h2" variant="h2">
         Галерея
       </Typography>
-      <Box sx={{ width: "100%", minHeight: 700 }}>
-        <Masonry columns={5} spacing={1}>
-          {itemData.map((item, index) => (
-            <div key={index}>
-              <Label>{index + 1}</Label>
-              <img
-                src={`${item.img}?w=162&auto=format`}
-                srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                alt={item.title}
-                loading="lazy"
-                style={{
-                  borderBottomLeftRadius: 4,
-                  borderBottomRightRadius: 4,
-                  display: "block",
-                  width: "100%",
-                }}
-              />
-            </div>
-          ))}
-        </Masonry>
-      </Box>
-    </>
+      <Slider {...settings}>
+        {itemData.map((image) => (
+          <Card sx={{ borderRadius: "15px", maxWidth: "300px" }}>
+            <CardMedia
+              component="img"
+              height="400"
+              image={image.img}
+              alt={image.title}
+            />
+            <CardContent sx={{ p: 1 }}>
+              <Typography variant="h6">{image.title}</Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Slider>
+    </Container>
   );
 };
 

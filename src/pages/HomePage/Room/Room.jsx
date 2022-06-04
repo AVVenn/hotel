@@ -1,84 +1,55 @@
 import React from "react";
 
-import {
-  Box,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Rating,
-} from "@mui/material";
+import { Typography, Grid, CardMedia, Rating } from "@mui/material";
 
 import { ButtonOutlined } from "../../../components/common/Buttons";
 
 import PreviewIcon from "@mui/icons-material/Preview";
+import {
+  BoxCenter,
+  BoxSpaceAround,
+} from "../../../components/common/CustomBoxes";
 
-const Room = ({ post }) => {
+import { CardRoom } from "../../../components/common/CardRoom";
+
+const Room = ({ room }) => {
   return (
     <Grid item xs={12} sm={6} md={4}>
-      <Card
-        sx={{
-          height: "300px",
-          display: "flex",
-          borderRadius: "15px",
-          border: `2px solid gray`,
-          "&:hover": {
-            borderColor: "orange",
-          },
-        }}
-      >
+      <CardRoom>
         <CardMedia
           sx={{
-            width: "60%",
-            display: "flex",
-            backgroundImage: `${post.image}`,
-            backgrounPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            width: "56%",
           }}
-          image={post.image}
+          image={room.image}
         />
-        <CardContent
-          sx={{
-            pb: 0,
-            p: 1,
-            flex: 1,
-            flexDirection: "column",
-            justifyContent: "center",
-            alingItems: "space-around",
-          }}
-        >
+        <BoxCenter sx={{ p: 1, flex: 1, flexDirection: "column" }}>
           <Typography
             component="h3"
             variant="h6"
-            align="center"
-            sx={{ fontWeight: "bold", mb: 2 }}
+            sx={{ fontWeight: "bold", mb: 1 }}
           >
-            {post.title}
+            {room.title}
           </Typography>
-          <Typography variant="body1">{post.price} руб. к/место</Typography>
-          <Typography variant="body1" sx={{ mb: 2 }}>
-            Осталось мест:{post.places}
+          <Typography variant="h6" color="text.orange">
+            {room.price} руб. к/место
           </Typography>
-          <Box sx={{ mb: 1.5 }}>
-            <Rating name="read-only" value={post.rating} readOnly />
-            <Typography sx={{ "&:MuiTypography-root": { fontSize: "10px" } }}>
-              {post.rating.toFixed(1)}
-            </Typography>
-          </Box>
+          <Typography variant="body1" sx={{ mb: 1 }}>
+            {`Осталось мест: ${room.places}`}
+          </Typography>
+          <BoxSpaceAround sx={{ mb: 1.5 }}>
+            <Rating name="read-only" value={room.rating} readOnly />
+            <Typography variant="caption">{room.rating.toFixed(1)}</Typography>
+          </BoxSpaceAround>
           <ButtonOutlined
             sx={{
-              justifySelf: "center",
-              justifyItems: "center",
               p: "12px 20px",
             }}
             endIcon={<PreviewIcon />}
           >
             Смотреть
           </ButtonOutlined>
-        </CardContent>
-      </Card>
+        </BoxCenter>
+      </CardRoom>
     </Grid>
   );
 };

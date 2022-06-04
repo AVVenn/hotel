@@ -1,12 +1,10 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { routes } from "../../constants/routes";
-
 import { Box, Typography, IconButton, Stack } from "@mui/material";
-
+import { Divider } from "@mui/material";
 import { BoxSpaceAround } from "../common/CustomBoxes";
 import { TypographyForLink } from "../common/TypographyLink";
-import { WhiteDivider } from "../common/WhiteDivider";
 
 import { contacts, socialMedia } from "./forFooter";
 
@@ -25,7 +23,13 @@ const Footer = () => {
   return (
     <Box sx={{ backgroundColor: "gray.main", py: 3 }}>
       <BoxSpaceAround sx={{ flexDirection: { xs: "column", sm: "row" } }}>
-        <BoxSpaceAround sx={{ flexDirection: "column", p: 2 }}>
+        <BoxSpaceAround
+          sx={{
+            flexDirection: "column",
+            p: 2,
+            borderBottom: { xs: "1px solid white", sm: "none" },
+          }}
+        >
           {contacts.map((contact) => (
             <TypographyForLink key={contact.link} href={contact.link}>
               {contact.text}
@@ -45,8 +49,13 @@ const Footer = () => {
             ))}
           </Stack>
         </BoxSpaceAround>
-        <WhiteDivider />
-        <BoxSpaceAround sx={{ flexDirection: "column", p: 2 }}>
+        <BoxSpaceAround
+          sx={{
+            flexDirection: "column",
+            p: 2,
+            borderBottom: { xs: "1px solid white", sm: "none" },
+          }}
+        >
           {firstRowRoutes.map((page) => (
             <TypographyForLink
               key={page.name}
@@ -57,7 +66,6 @@ const Footer = () => {
             </TypographyForLink>
           ))}
         </BoxSpaceAround>
-        <WhiteDivider />
         <BoxSpaceAround sx={{ flexDirection: "column", p: 2 }}>
           {secondRowRoutes.map((page) => (
             <TypographyForLink
@@ -70,14 +78,14 @@ const Footer = () => {
           ))}
         </BoxSpaceAround>
       </BoxSpaceAround>
-      <WhiteDivider sx={{ display: "block" }} />
+      <Divider sx={{ backgroundColor: "secondary.main" }} />
       <BoxSpaceAround
-        sx={{ flexDirection: { xs: "column", sm: "row" }, pt: 3, px: 2 }}
+        sx={{ flexDirection: { xs: "column", sm: "row" }, pt: 3 }}
       >
-        <Typography variant="caption" color="text.white" align="center">
+        <Typography variant="caption" color="text.white">
           УО «Гомельский торгово-экономический колледж» Белкоопсоюза
         </Typography>
-        <Typography variant="caption" color="text.white" align="center">
+        <Typography variant="caption" color="text.white">
           Разработка сайта - AvVen
         </Typography>
       </BoxSpaceAround>

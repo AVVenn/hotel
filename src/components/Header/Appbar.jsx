@@ -4,9 +4,7 @@ import {
   AppBar,
   Box,
   IconButton,
-  Container,
   Avatar,
-  Button,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -53,7 +51,7 @@ const Appbar = ({ setOpen, pages, isAuth }) => {
             <Tooltip title="Открыть профиль">
               <IconButton>
                 <Avatar
-                  sx={{ width: 50, height: 50 }}
+                  sx={{ width: "50", height: "50" }}
                   alt="Profile"
                   src="/static/images/avatar/2.jpg"
                 />

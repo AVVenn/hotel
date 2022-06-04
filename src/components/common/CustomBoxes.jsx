@@ -12,3 +12,7 @@ export const BoxSpaceAround = styled(Box)((BoxCenter) => ({
   justifyContent: "space-around",
   alignItems: "center",
 }));
+
+export const Container = styled(Box)(() => ({
+  padding: "60px 10px",
+}));
