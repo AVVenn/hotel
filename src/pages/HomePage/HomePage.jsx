@@ -13,9 +13,9 @@ const HomePage = () => {
       </Typography>
       <FindPlaces />
       <Facilities />
-      <Divider variant="middle" sx={{ backgroundColor: "text.lightgray" }} />
+      <Divider variant="middle" sx={{ backgroundColor: "text.lightWarning" }} />
       <RoomsList />
-      <Divider variant="middle" sx={{ backgroundColor: "text.lightgray" }} />
+      <Divider variant="middle" sx={{ backgroundColor: "text.lightWarning" }} />
       <Gallery />
     </Box>
   );

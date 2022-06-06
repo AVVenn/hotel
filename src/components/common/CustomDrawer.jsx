@@ -7,6 +7,6 @@ export const CustomDrawer = styled(Drawer)(({ theme: { palette } }) => ({
   display: { xs: "block", md: "none" },
   "& .MuiDrawer-paper": {
     width: drawerWidth,
-    backgroundColor: palette.gray.main,
+    backgroundColor: palette.third,
   },
 }));

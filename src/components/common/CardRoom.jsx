@@ -5,8 +5,8 @@ export const CardRoom = styled(Card)(({ theme: { palette } }) => ({
   height: "250px",
   display: "flex",
   borderRadius: "15px",
-  border: `1px solid ${palette.text.gray}`,
+  border: `1px solid ${palette.text.notes}`,
   "&:hover": {
-    borderColor: "orange",
+    borderColor: palette.primary.main,
   },
 }));

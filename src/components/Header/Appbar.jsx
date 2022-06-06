@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import Context from "../../сontext";
 import { Link as RouterLink } from "react-router-dom";
 import {
   AppBar,
@@ -15,6 +16,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 
 const Appbar = ({ setOpen, pages, isAuth }) => {
+  const {
+    handleOpenSignIn,
+    handleCloseSignIn,
+    handleOpenSignUp,
+    handleCloseSignUp,
+  } = useContext(Context);
   return (
     <AppBar position="static">
       <BoxSpaceAround sx={{ height: "100px" }}>
@@ -26,8 +33,8 @@ const Appbar = ({ setOpen, pages, isAuth }) => {
           <MenuIcon />
         </IconButton>
         <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <HomeWorkIcon sx={{ mr: 1, color: "text.orange", fontSize: 45 }} />
-          <Typography noWrap sx={{ color: "text.orange", fontWeight: 500 }}>
+          <HomeWorkIcon sx={{ mr: 1, color: "text.warning", fontSize: 45 }} />
+          <Typography noWrap sx={{ color: "text.warning", fontWeight: 500 }}>
             Общежитие ГТЭК
           </Typography>
         </Box>
@@ -59,10 +66,16 @@ const Appbar = ({ setOpen, pages, isAuth }) => {
             </Tooltip>
           )) || (
             <>
-              <ButtonOutlined sx={{ p: { xs: 1, sm: "14px 20px" }, mr: 0.5 }}>
+              <ButtonOutlined
+                onClick={handleOpenSignIn}
+                sx={{ p: { xs: 1, sm: "14px 20px" }, mr: 0.5 }}
+              >
                 Войти
               </ButtonOutlined>
-              <ButtonOutlined sx={{ p: { xs: 1, sm: "14px 20px" } }}>
+              <ButtonOutlined
+                sx={{ p: { xs: 1, sm: "14px 20px" } }}
+                onClick={handleOpenSignUp}
+              >
                 Зарегистрироваться
               </ButtonOutlined>
             </>

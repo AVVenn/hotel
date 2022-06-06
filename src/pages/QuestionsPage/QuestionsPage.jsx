@@ -17,6 +17,7 @@ import { CustomGrid } from "../../components/common/CustomGrid";
 
 const customQuestions = [
   {
+    id: 1,
     name: "Мария",
     date: "17 октября 2019",
     title:
@@ -25,6 +26,7 @@ const customQuestions = [
       "В сопровождении одного взрослого совершать поездку могут до 7 детей (до 16 лет), но скидка 50% предоставляется детям до 10 лет в количестве не более 3 человек.",
   },
   {
+    id: 2,
     name: "Мария",
     date: "17 октября 2019",
     title:
@@ -33,6 +35,7 @@ const customQuestions = [
       "В сопровождении одного взрослого совершать поездку могут до 7 детей (до 16 лет), но скидка 50% предоставляется детям до 10 лет в количестве не более 3 человек.",
   },
   {
+    id: 3,
     name: "Мария",
     date: "17 октября 2019",
     title:
@@ -41,6 +44,7 @@ const customQuestions = [
       "В сопровождении одного взрослого совершать поездку могут до 7 детей (до 16 лет), но скидка 50% предоставляется детям до 10 лет в количестве не более 3 человек.",
   },
   {
+    id: 4,
     name: "Мария",
     date: "17 октября 2019",
     title:
@@ -49,6 +53,7 @@ const customQuestions = [
       "В сопровождении одного взрослого совершать поездку могут до 7 детей (до 16 лет), но скидка 50% предоставляется детям до 10 лет в количестве не более 3 человек.",
   },
   {
+    id: 5,
     name: "Мария",
     date: "17 октября 2019",
     title:
@@ -79,7 +84,7 @@ const Questions = () => {
       </Typography>
       <CustomGrid container spacing={2}>
         {customQuestions.map((item, index) => (
-          <Grid item xs={12} ssm={12} sm={6} md={6}>
+          <Grid item xs={12} ssm={12} sm={6} md={6} key={item.id}>
             {item.request && (
               <Accordion disableGutters>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -88,7 +93,10 @@ const Questions = () => {
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails
-                  sx={{ backgroundColor: "#F1F6FA", fontStyle: "italic" }}
+                  sx={{
+                    backgroundColor: "background.secondary",
+                    fontStyle: "italic",
+                  }}
                 >
                   <Typography>{item.request}</Typography>
                 </AccordionDetails>
@@ -116,7 +124,7 @@ const Questions = () => {
               label="write something"
               multiline
               rows={5}
-              rowMax={10}
+              // rowMax={10}
               fullWidth
               sx={{ mb: 2 }}
             ></TextField>
@@ -135,7 +143,7 @@ const Questions = () => {
           </Typography>
         </Grid>
         {customQuestions.map((question) => (
-          <Grid item>
+          <Grid item key={question.key}>
             {question.request && (
               <Grid
                 container
@@ -155,7 +163,10 @@ const Questions = () => {
                     {question.title}
                   </Typography>
                   <Typography
-                    sx={{ backgroundColor: "#F1F6FA", fontStyle: "italic" }}
+                    sx={{
+                      backgroundColor: "background.secondary",
+                      fontStyle: "italic",
+                    }}
                   >
                     {question.request}
                   </Typography>

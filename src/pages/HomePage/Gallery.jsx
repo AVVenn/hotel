@@ -123,7 +123,10 @@ const Gallery = () => {
       </Typography>
       <Slider {...settings}>
         {itemData.map((image) => (
-          <Card sx={{ borderRadius: "15px", maxWidth: "300px" }}>
+          <Card
+            sx={{ borderRadius: "15px", maxWidth: "300px" }}
+            key={image.img}
+          >
             <CardMedia
               component="img"
               height="400"

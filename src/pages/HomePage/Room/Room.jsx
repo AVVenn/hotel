@@ -30,13 +30,10 @@ const Room = ({ room }) => {
           >
             {room.title}
           </Typography>
-          <Typography variant="h6" color="text.orange">
+          <Typography variant="h6" color="text.warning">
             {room.price} руб. к/место
           </Typography>
-          <Typography variant="body1" sx={{ mb: 1 }}>
-            {`Осталось мест: ${room.places}`}
-          </Typography>
-          <BoxSpaceAround sx={{ mb: 1.5 }}>
+          <BoxSpaceAround sx={{ mb: 2 }}>
             <Rating name="read-only" value={room.rating} readOnly />
             <Typography variant="caption">{room.rating.toFixed(1)}</Typography>
           </BoxSpaceAround>

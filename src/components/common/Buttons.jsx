@@ -9,16 +9,16 @@ export const ButtonOutlined = styled(Button)(({ theme: { palette } }) => ({
   borderRadius: "15px",
   border: "2px solid",
   "&:hover": {
-    color: palette.text.white,
+    color: palette.text.second,
     backgroundColor: palette.primary.main,
   },
   "&:active": {
-    color: palette.text.white,
-    backgroundColor: palette.text.lightOrange,
+    color: palette.text.second,
+    backgroundColor: palette.text.lightWarning,
   },
   "&:focus": {
-    color: palette.text.white,
-    backgroundColor: palette.text.lightOrange,
+    color: palette.text.second,
+    backgroundColor: palette.text.lightWarning,
   },
 }));
 
@@ -32,13 +32,13 @@ export const ButtonHeader = styled(ButtonOutlined)(
 export const ButtonContained = styled(Button)(({ theme: { palette } }) => ({
   textTransform: "uppercase",
   backgroundColor: palette.primary.main,
-  color: palette.text.white,
+  color: palette.text.second,
   "&:hover": {
-    color: palette.text.white,
-    backgroundColor: palette.text.lightOrange,
+    color: palette.text.second,
+    backgroundColor: palette.text.lightWarning,
   },
   "&:active": {
-    color: palette.text.white,
-    backgroundColor: palette.text.lightOrange,
+    color: palette.text.second,
+    backgroundColor: palette.text.lightWarning,
   },
 }));

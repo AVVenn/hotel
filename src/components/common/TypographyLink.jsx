@@ -4,10 +4,10 @@ import { styled } from "@mui/material/styles";
 export const TypographyForLink = styled(Typography)(
   ({ theme: { palette } }) => ({
     component: "a",
-    color: palette.text.white,
+    color: palette.text.second,
     textDecoration: "none",
     "&:hover": {
-      color: palette.text.orange,
+      color: palette.text.warning,
     },
   })
 );

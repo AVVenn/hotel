@@ -36,7 +36,7 @@ const Sidebar = ({ open, setOpen, pages, isAuth }) => {
               sx={{
                 color: "primary.main",
                 "&:hover": {
-                  color: "text.white",
+                  color: "text.warning",
                   backgroundColor: "primary.main",
                 },
               }}

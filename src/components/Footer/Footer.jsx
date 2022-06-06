@@ -21,7 +21,13 @@ const secondRowRoutes = [
 
 const Footer = () => {
   return (
-    <Box sx={{ backgroundColor: "gray.main", py: 3 }}>
+    <Box
+      sx={{
+        backgroundColor: "third.main",
+        py: 3,
+        borderTop: "1px solid #7635DC",
+      }}
+    >
       <BoxSpaceAround sx={{ flexDirection: { xs: "column", sm: "row" } }}>
         <BoxSpaceAround
           sx={{
@@ -82,10 +88,10 @@ const Footer = () => {
       <BoxSpaceAround
         sx={{ flexDirection: { xs: "column", sm: "row" }, pt: 3 }}
       >
-        <Typography variant="caption" color="text.white">
+        <Typography variant="caption" color="text.second">
           УО «Гомельский торгово-экономический колледж» Белкоопсоюза
         </Typography>
-        <Typography variant="caption" color="text.white">
+        <Typography variant="caption" color="text.second">
           Разработка сайта - AvVen
         </Typography>
       </BoxSpaceAround>

@@ -2,9 +2,10 @@ import React from "react";
 import { Box, Typography, Grid, TextField } from "@mui/material";
 import { BoxCenter, Container } from "../../components/common/CustomBoxes";
 import { ButtonContained } from "../../components/common/Buttons";
-import { ContactsTitle } from "../../components/common/Title";
+import { Title } from "../../components/common/Title";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import { CustomGrid } from "../../components/common/CustomGrid";
+import { TypographyLeft } from "../../components/common/TypographyLeft";
 const ContactsPage = () => {
   return (
     <Container sx={{ px: 5 }}>
@@ -16,53 +17,51 @@ const ContactsPage = () => {
       </BoxCenter>
       <CustomGrid container spacing={6}>
         <Grid item xs={12} ssm={6} sm={6} md={6}>
-          <Typography variant="h3" sx={{ mb: 3 }} align="left">
+          <TypographyLeft variant="h3" sx={{ mb: 3 }}>
             Вахта
-          </Typography>
+          </TypographyLeft>
           <Box sx={{ mb: 3 }}>
-            <ContactsTitle>Телефон:</ContactsTitle>
-            <Typography align="left">25-24-83</Typography>
+            <Title>Телефон:</Title>
+            <TypographyLeft>25-24-83</TypographyLeft>
           </Box>
           <Box sx={{ mb: 3 }}>
-            <ContactsTitle>{`График работы: `}</ContactsTitle>
-            <Typography align="left">
-              Ежедневно, круглосуточно, без обеда
-            </Typography>
+            <Title>{`График работы: `}</Title>
+            <TypographyLeft>Ежедневно, круглосуточно, без обеда</TypographyLeft>
           </Box>
         </Grid>
         <Grid item xs={12} ssm={6} sm={6} md={6}>
-          <Typography align="left" variant="h3" sx={{ mb: 3 }}>
+          <TypographyLeft variant="h3" sx={{ mb: 3 }}>
             Заведующий общежитием
-          </Typography>
+          </TypographyLeft>
           <Box sx={{ mb: 3 }}>
-            <ContactsTitle>Телефон:</ContactsTitle>
-            <Typography align="left">22-33-96</Typography>
-            <Typography align="left">+ 375-33-365-52-04</Typography>
+            <Title>Телефон:</Title>
+            <TypographyLeft>22-33-96</TypographyLeft>
+            <TypographyLeft>+ 375-33-365-52-04</TypographyLeft>
           </Box>
           <Box>
-            <ContactsTitle>График работы:</ContactsTitle>
-            <Typography align="left">
+            <Title>График работы:</Title>
+            <TypographyLeft>
               Понедельник-пятница, 8:00-17:00, Обед: 12:30-13:20
-            </Typography>
+            </TypographyLeft>
           </Box>
         </Grid>
         <Grid item xs={12} ssm={12} sm={10} md={6}>
-          <Typography variant="h3" sx={{ mb: 3 }} align="left">
+          <TypographyLeft variant="h3" sx={{ mb: 3 }}>
             Приемная директора колледжа
-          </Typography>
+          </TypographyLeft>
           <Box sx={{ mb: 3 }}>
-            <ContactsTitle>Телефон/факс:</ContactsTitle>
-            <Typography align="left">33-70-02</Typography>
+            <Title>Телефон/факс:</Title>
+            <TypographyLeft>33-70-02</TypographyLeft>
           </Box>
           <Box sx={{ mb: 3 }}>
-            <ContactsTitle>Email:</ContactsTitle>
-            <Typography align="left">gtec@bks.by</Typography>
+            <Title>Email:</Title>
+            <TypographyLeft>gtec@bks.by</TypographyLeft>
           </Box>
           <Box sx={{ mb: 3 }}>
-            <ContactsTitle>График работы:</ContactsTitle>
-            <Typography align="left">
+            <Title>График работы:</Title>
+            <TypographyLeft>
               Понедельник-пятница, 8:00-17:00, Обед: 12:30-13:20
-            </Typography>
+            </TypographyLeft>
           </Box>
         </Grid>
         <Grid item xs={12} ssm={10} sm={10} md={6}>
