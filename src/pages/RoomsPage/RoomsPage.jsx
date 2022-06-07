@@ -4,53 +4,123 @@ import { Container, BoxCenter } from "../../components/common/CustomBoxes";
 import {
   Typography,
   Grid,
+  CardMedia,
   CardActionArea,
   CardContent,
   Card,
+  Rating,
+  Chip,
 } from "@mui/material";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
+import DoneIcon from "@mui/icons-material/Done";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import { TypographyLeft } from "../../components/common/TypographyLeft";
+import { BoxSpaceAround } from "../../components/common/CustomBoxes";
+import { CustomGrid } from "../../components/common/CustomGrid";
+const rooms = [
+  {
+    id: 1,
+    title: "4х местная комната",
+    price: 8,
+    places: 40,
+    rating: 4,
+    image: "https://source.unsplash.com/random",
+    facility: ["Чайник", "Постельное", "Wi-fi"],
+  },
+  {
+    id: 2,
+    title: "3х местная комната",
+    price: 11,
+    places: 12,
+    rating: 5,
+    image: "https://source.unsplash.com/random",
+    facility: ["Чайник", "Постельное", "Холодильник", "Wi-fi"],
+  },
+  {
+    id: 3,
+    title: "2х местная комната",
+    price: 13,
+    places: 2,
+    rating: 5,
+    image: "https://source.unsplash.com/random",
+    facility: ["Чайник", "Постельное", "Холодильник", "Телевизор", "Wi-fi"],
+  },
+  {
+    id: 4,
+    title: "2х местная комната",
+    price: 15,
+    places: 2,
+    rating: 5,
+    image: "https://source.unsplash.com/random",
+    facility: [
+      "Чайник",
+      "Постельное",
+      "Холодильник",
+      "Телевизор",
+      "Wi-fi",
+      "Блочный тип",
+    ],
+  },
+];
 
 const RoomsPage = () => {
   return (
-    <Container sx={{ px: 5 }}>
+    <Container sx={{ px: 3 }}>
       <BoxCenter sx={{ mb: 3 }}>
-        <NewspaperIcon sx={{ mr: 2 }} />
+        <MeetingRoomIcon sx={{ mr: 2 }} />
         <Typography component="h2" variant="h2">
-          Новости
+          Наши комнаты
         </Typography>
       </BoxCenter>
-      <Grid container spacing={3}>
-        {news.map((newsItem) => (
-          <Grid item xs={12} ssm={6} sm={4} md={4} key={newsItem.id}>
-            <CardActionArea component={RouterLink} to={`/news/${newsItem.id}`}>
-              <Card sx={{ backgroundColor: "primary.main" }}>
-                <CardContent sx={{ m: "0 auto", p: "2 1" }}>
-                  <BoxCenter
-                    sx={{
-                      mb: 3,
-                      width: "130px",
-                      backgroundColor: "third.main",
-                      borderRadius: "15px",
-                    }}
-                  >
-                    <Typography color="text.second" variant="subtitle2">
-                      {newsItem.date}
+      <CustomGrid container spacing={4}>
+        {rooms.map((room) => (
+          <Grid item xs={12} ssm={12} sm={6} md={6} key={room.id}>
+            <CardActionArea component={RouterLink} to={`/rooms/${room.id}`}>
+              <Card
+                sx={{
+                  borderRadius: "20px",
+                  border: "1px solid orange",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="300"
+                  image={room.image}
+                  alt="room.image"
+                />
+                <CardContent>
+                  <Typography component="h3" variant="h3" sx={{ mb: 2.5 }}>
+                    {room.title}
+                  </Typography>
+                  <BoxCenter sx={{ mb: 2 }}>
+                    <Typography sx={{ mr: 2 }}>Рейтинг:</Typography>
+                    <Rating name="read-only" value={room.rating} readOnly />
+                    <Typography variant="caption">
+                      {room.rating.toFixed(1)}
                     </Typography>
                   </BoxCenter>
-                  <TypographyLeft
-                    component="h4"
-                    variant="h4"
-                    color="text.second"
-                  >
-                    {newsItem.title}
-                  </TypographyLeft>
+                  <Grid container sx={{ mb: 3 }}>
+                    {room.facility.map((item) => (
+                      <Grid item>
+                        <Chip
+                          label={item}
+                          icon={<DoneIcon color="success.main" />}
+                          variant="outlined"
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                  <BoxSpaceAround>
+                    <Typography color="error.main">{`Осталось мест: ${room.places}`}</Typography>
+                    <Typography
+                      sx={{ fontWeight: 600, color: "text.warning" }}
+                    >{`Цена: ${room.price} руб.`}</Typography>
+                  </BoxSpaceAround>
                 </CardContent>
               </Card>
             </CardActionArea>
           </Grid>
         ))}
-      </Grid>
+      </CustomGrid>
     </Container>
   );
 };

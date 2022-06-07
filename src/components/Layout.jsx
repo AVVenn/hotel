@@ -16,11 +16,20 @@ import { CssBaseline, Button, Container } from "@mui/material";
 
 import SignIn from "./common/modals/SignIn";
 import SignUp from "./common/modals/SignUp";
+import Booking from "./common/modals/Booking";
 
 const Layout = () => {
   const [theme, setTheme] = useState(baseTheme);
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSingUp, setOpenSignUp] = useState(false);
+  const [openBooking, setOpenBoking] = useState(false);
+  const handleCloseBooking = useCallback(() => {
+    setOpenBoking(false);
+  }, [setOpenBoking]);
+
+  const handleOpenBooking = useCallback(() => {
+    setOpenBoking(true);
+  }, [setOpenBoking]);
 
   const handleSwitchTheme = (whichTheme) => {
     setTheme(createTheme(deepmerge(theme, whichTheme)));
@@ -47,8 +56,17 @@ const Layout = () => {
       handleCloseSignIn,
       handleOpenSignUp,
       handleCloseSignUp,
+      handleCloseBooking,
+      handleOpenBooking,
     }),
-    [handleOpenSignIn, handleCloseSignIn, handleOpenSignUp, handleCloseSignUp]
+    [
+      handleOpenSignIn,
+      handleCloseSignIn,
+      handleOpenSignUp,
+      handleCloseSignUp,
+      handleCloseBooking,
+      handleOpenBooking,
+    ]
   );
   return (
     <ThemeProvider theme={theme}>
@@ -86,6 +104,7 @@ const Layout = () => {
             handleOpenSignIn={handleOpenSignIn}
             open={openSingUp}
           />
+          <Booking open={openBooking} handleCloseBooking={handleCloseBooking} />
         </Container>
       </Context.Provider>
     </ThemeProvider>

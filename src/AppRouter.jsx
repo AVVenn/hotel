@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage/HomePage";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
+import Room from "./pages/RoomsPage/Room";
 import NewsPage from "./pages/NewsPage/NewsPage";
 import News from "./pages/NewsPage/News";
 import ContactsPage from "./pages/ContactsPage/ContactsPage";
@@ -21,6 +22,7 @@ const AppRouter = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="rooms" element={<RoomsPage />} />
+        <Route path="rooms/:id" element={<Room />}></Route>
         <Route path="news" element={<NewsPage />} />
         <Route path="news/:id" element={<News />} />
         <Route path="contacts" element={<ContactsPage />} />
