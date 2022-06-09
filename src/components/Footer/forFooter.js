@@ -1,18 +1,19 @@
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
+import { contacts } from "../../constants/contacts";
 
-export const contacts = [
+export const phones = [
   {
-    text: "+375 33 365 52 04",
+    text: contacts.PHONE_ZAVEDYUSHIY_MOBILE,
     link: "tel:+375333655204",
   },
   {
-    text: "+375 232 25 24 83",
+    text: contacts.PHONE_VAHTA,
     link: "tel:+375232252483",
   },
   {
-    text: "+375 232 22 00 96",
+    text: contacts.PHONE_ZAVEDYUSHIY_GOROD,
     link: "tel:+375232220096",
   },
 ];

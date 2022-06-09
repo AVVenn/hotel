@@ -1,13 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  Toolbar,
-} from "@mui/material";
+import { Divider, IconButton, List, ListItem, Toolbar } from "@mui/material";
+import { ListItemButtonForSideBar } from "../common/ListItemButtonForSideBar";
 import { CustomDrawer } from "../common/CustomDrawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -32,18 +26,10 @@ const Sidebar = ({ open, setOpen, pages, isAuth }) => {
       <List>
         {pages.map((page) => (
           <ListItem key={page.path} component={RouterLink} to={page.path}>
-            <ListItemButton
-              sx={{
-                color: "primary.main",
-                "&:hover": {
-                  color: "text.warning",
-                  backgroundColor: "primary.main",
-                },
-              }}
-            >
+            <ListItemButtonForSideBar>
               <ListItemIcon sx={{ color: "inherit" }}>{page.icon}</ListItemIcon>
               {page.name}
-            </ListItemButton>
+            </ListItemButtonForSideBar>
           </ListItem>
         ))}
       </List>

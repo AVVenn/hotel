@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import { TypographyLeft } from "../../components/common/TypographyLeft";
 import { BoxSpaceAround } from "../../components/common/CustomBoxes";
 import { CustomGrid } from "../../components/common/CustomGrid";
 const rooms = [
@@ -64,7 +63,7 @@ const rooms = [
 
 const RoomsPage = () => {
   return (
-    <Container sx={{ px: 3 }}>
+    <Container>
       <BoxCenter sx={{ mb: 3 }}>
         <MeetingRoomIcon sx={{ mr: 2 }} />
         <Typography component="h2" variant="h2">
@@ -73,7 +72,7 @@ const RoomsPage = () => {
       </BoxCenter>
       <CustomGrid container spacing={4}>
         {rooms.map((room) => (
-          <Grid item xs={12} ssm={12} sm={6} md={6} key={room.id}>
+          <Grid item xs={12} sm={6} key={room.id}>
             <CardActionArea component={RouterLink} to={`/rooms/${room.id}`}>
               <Card
                 sx={{
@@ -110,7 +109,10 @@ const RoomsPage = () => {
                     ))}
                   </Grid>
                   <BoxSpaceAround>
-                    <Typography color="error.main">{`Осталось мест: ${room.places}`}</Typography>
+                    <Typography
+                      color="error.main"
+                      sx={{ fontWeight: 600 }}
+                    >{`Осталось мест: ${room.places}`}</Typography>
                     <Typography
                       sx={{ fontWeight: 600, color: "text.warning" }}
                     >{`Цена: ${room.price} руб.`}</Typography>

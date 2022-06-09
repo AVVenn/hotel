@@ -1,4 +1,5 @@
 import React from "react";
+import { contacts } from "../../constants/contacts";
 import { Container } from "../../components/common/CustomBoxes";
 import { Title } from "../../components/common/Title";
 import {
@@ -49,8 +50,8 @@ const Rules = () => {
         не раньше, чем за 14 суток до момента заезда.
       </TypographyLeft>
       <TypographyLeft sx={{ mb: 2 }}>
-        При необходимости заказа большего количества мест, пожалуйста, свяжитесь
-        с заведующим общежития +375 (33) 365-52-04
+        {`При необходимости заказа большего количества мест, пожалуйста, свяжитесь
+        с заведующим общежития ${contacts.PHONE_ZAVEDYUSHIY_MOBILE}`}
       </TypographyLeft>
       <TypographyLeftTitle component="h3" variant="h3">
         Подтверждение брони

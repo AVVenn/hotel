@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  TextField,
   Typography,
   Accordion,
   AccordionSummary,
@@ -14,6 +13,13 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { ButtonContained } from "../../components/common/Buttons";
 import { BoxCenter, Container } from "../../components/common/CustomBoxes";
 import { CustomGrid } from "../../components/common/CustomGrid";
+
+import { Formik, Form } from "formik";
+import Textfield from "../../components/common/FormsUI/Textfield";
+import {
+  INITIAL_FORM_STATE,
+  FORM_VALIDATIOM,
+} from "../../constants/formValidation";
 
 const customQuestions = [
   {
@@ -118,24 +124,39 @@ const Questions = () => {
               Задать вопрос
             </Typography>
           </BoxCenter>
-          <form action="">
-            <TextField
-              variant="outlined"
-              label="write something"
-              multiline
-              rows={5}
-              // rowMax={10}
-              fullWidth
-              sx={{ mb: 2 }}
-            ></TextField>
-            <BoxCenter sx={{ mb: 2 }}>
-              <TextField label="Имя" fullWidth variant="outlined"></TextField>
-              <TextField label="Email" fullWidth variant="outlined"></TextField>
-            </BoxCenter>
-            <ButtonContained sx={{ borderRadius: "15px", py: 2, px: 8 }}>
-              Отправить
-            </ButtonContained>
-          </form>
+          <Formik
+            initialValues={{ ...INITIAL_FORM_STATE }}
+            validationSchema={FORM_VALIDATIOM}
+            onSubmit={(values) => console.log(values)}
+          >
+            <Form>
+              <Grid container rowSpacing={1}>
+                <Grid item xs={12}>
+                  <Textfield
+                    name="message"
+                    label="Ваш вопрос"
+                    multiline
+                    rows={7}
+                    sx={{ mb: 2 }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Textfield label="Имя" name="name" />
+                </Grid>
+                <Grid item xs={6}>
+                  <Textfield name="email" label="Email" />
+                </Grid>
+                <Grid item xs={6}>
+                  <ButtonContained
+                    type="submit"
+                    sx={{ borderRadius: "15px", py: 2, px: 8 }}
+                  >
+                    Отправить
+                  </ButtonContained>
+                </Grid>
+              </Grid>
+            </Form>
+          </Formik>
         </Grid>
         <Grid item xs={12} sx={{ mt: 5 }}>
           <Typography variant="h3" sx={{ mb: 2 }}>

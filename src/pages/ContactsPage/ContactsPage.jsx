@@ -1,11 +1,20 @@
 import React from "react";
-import { Box, Typography, Grid, TextField } from "@mui/material";
+import { contacts } from "../../constants/contacts";
+import { Box, Typography, Grid } from "@mui/material";
 import { BoxCenter, Container } from "../../components/common/CustomBoxes";
 import { ButtonContained } from "../../components/common/Buttons";
 import { Title } from "../../components/common/Title";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import { CustomGrid } from "../../components/common/CustomGrid";
 import { TypographyLeft } from "../../components/common/TypographyLeft";
+
+import { Formik, Form } from "formik";
+import Textfield from "../../components/common/FormsUI/Textfield";
+import {
+  INITIAL_FORM_STATE,
+  FORM_VALIDATIOM,
+} from "../../constants/formValidation";
+
 const ContactsPage = () => {
   return (
     <Container sx={{ px: 5 }}>
@@ -22,7 +31,7 @@ const ContactsPage = () => {
           </TypographyLeft>
           <Box sx={{ mb: 3 }}>
             <Title>Телефон:</Title>
-            <TypographyLeft>25-24-83</TypographyLeft>
+            <TypographyLeft>{contacts.PHONE_VAHTA}</TypographyLeft>
           </Box>
           <Box sx={{ mb: 3 }}>
             <Title>{`График работы: `}</Title>
@@ -35,8 +44,8 @@ const ContactsPage = () => {
           </TypographyLeft>
           <Box sx={{ mb: 3 }}>
             <Title>Телефон:</Title>
-            <TypographyLeft>22-33-96</TypographyLeft>
-            <TypographyLeft>+ 375-33-365-52-04</TypographyLeft>
+            <TypographyLeft>{contacts.PHONE_ZAVEDYUSHIY_GOROD}</TypographyLeft>
+            <TypographyLeft>{contacts.PHONE_ZAVEDYUSHIY_MOBILE}</TypographyLeft>
           </Box>
           <Box>
             <Title>График работы:</Title>
@@ -51,11 +60,11 @@ const ContactsPage = () => {
           </TypographyLeft>
           <Box sx={{ mb: 3 }}>
             <Title>Телефон/факс:</Title>
-            <TypographyLeft>33-70-02</TypographyLeft>
+            <TypographyLeft>{contacts.PHONE_PRIEMNAYA}</TypographyLeft>
           </Box>
           <Box sx={{ mb: 3 }}>
             <Title>Email:</Title>
-            <TypographyLeft>gtec@bks.by</TypographyLeft>
+            <TypographyLeft>{contacts.MAIL_PRIEMNAYA}</TypographyLeft>
           </Box>
           <Box sx={{ mb: 3 }}>
             <Title>График работы:</Title>
@@ -68,24 +77,39 @@ const ContactsPage = () => {
           <Typography component="h3" variant="h3" sx={{ mb: 3 }}>
             Задать вопрос
           </Typography>
-          <form action="">
-            <TextField
-              variant="outlined"
-              label="Ваш вопрос"
-              multiline
-              rows={5}
-              rowMax={10}
-              fullWidth
-              sx={{ mb: 2 }}
-            ></TextField>
-            <BoxCenter sx={{ mb: 2 }}>
-              <TextField label="Имя" fullWidth variant="outlined"></TextField>
-              <TextField label="Email" fullWidth variant="outlined"></TextField>
-            </BoxCenter>
-            <ButtonContained sx={{ borderRadius: "15px", py: 1.5, px: 4 }}>
-              Отправить
-            </ButtonContained>
-          </form>
+          <Formik
+            initialValues={{ ...INITIAL_FORM_STATE }}
+            validationSchema={FORM_VALIDATIOM}
+            onSubmit={(values) => console.log(values)}
+          >
+            <Form>
+              <Grid container rowSpacing={1}>
+                <Grid item xs={12}>
+                  <Textfield
+                    name="message"
+                    label="Ваш вопрос"
+                    multiline
+                    rows={5}
+                    sx={{ mb: 2 }}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <Textfield label="Имя" name="name" />
+                </Grid>
+                <Grid item xs={6}>
+                  <Textfield label="Email" name="email" />
+                </Grid>
+                <Grid item xs={6}>
+                  <ButtonContained
+                    type="submit"
+                    sx={{ borderRadius: "15px", py: 1.5, px: 4 }}
+                  >
+                    Отправить
+                  </ButtonContained>
+                </Grid>
+              </Grid>
+            </Form>
+          </Formik>
         </Grid>
       </CustomGrid>
     </Container>

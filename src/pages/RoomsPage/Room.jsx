@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import classes from "./room.module.css";
-import { Link as RouterLink } from "react-router-dom";
 import { Container } from "../../components/common/CustomBoxes";
-import { Typography, Box, Divider, Button, Grid } from "@mui/material";
+import { Typography, Box, Divider, Grid } from "@mui/material";
 import { TypographyLeft } from "../../components/common/TypographyLeft";
 import { ButtonContained } from "../../components/common/Buttons";
 import Context from "../../сontext";
@@ -19,12 +18,12 @@ const room = {
     "https://source.unsplash.com/random",
   ],
   facility: [
-    "Чайник",
-    "Постельное",
-    "Холодильник",
-    "Телевизор",
+    "чайник",
+    "постельное",
+    "хлодильник",
+    "телевизор",
     "Wi-fi",
-    "Блочный тип",
+    "блочный тип",
   ],
   body: "Общежитие расположено в самом центре Гомеля: 200 метров до Гомельского дворцово-паркового ансамбля, 50 метров до кинотеатра им.Калинина, 500 метров до цирка, 300 метров до центрального рынка. К услугам гостей бесплатный WiFi и фортепиано.",
 };
@@ -52,15 +51,12 @@ const Room = () => {
           </TypographyLeft>
           <Divider />
           <TypographyLeft
-            pargaraph
             sx={{ mb: 2 }}
-          >{`В числе удобств тумбочка, шкаф, постельное белье, полотенце, ${room.facility.join(
+          >{`В числе удобств тумбочка, шкаф, полотенце, ${room.facility.join(
             ", "
           )}.`}</TypographyLeft>
           <Divider />
-          <TypographyLeft
-            paragraph
-          >{`Проживающим особенно нравится расположение и низкая цена. В среднем они оценивают проживание в этой комнате на ${room.rating.toFixed(
+          <TypographyLeft>{`Проживающим особенно нравится расположение и низкая цена. В среднем они оценивают проживание в этой комнате на ${room.rating.toFixed(
             1
           )} из 5.`}</TypographyLeft>
         </Grid>
@@ -72,7 +68,6 @@ const Room = () => {
         >
           <ButtonContained
             sx={{ px: 8, py: 5, borderRadius: "15px" }}
-            variant="contained"
             onClick={handleOpenBooking}
           >
             Забронировать

@@ -1,79 +1,60 @@
-import React, { useState } from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
+import React from "react";
+import { Typography, InputAdornment, Grid } from "@mui/material";
 import { ru } from "date-fns/locale";
 import { addDays, compareDesc } from "date-fns";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useFormikContext } from "formik";
+import Textfield from "../../common/FormsUI/Textfield";
+import Select from "../../common/FormsUI/Select";
+import numberPeople from "../../../constants/dataNumbersPeople.json";
+import DateTimePicker from "../FormsUI/DataTimePicker";
 
-export default function AddressForm() {
-  const [numberOfPerson, setNumberOfPerson] = useState(1);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+export default function DateForm() {
+  const { setFieldValue, values } = useFormikContext();
 
   const changeStartDate = (date) => {
-    if (endDate && compareDesc(date, endDate) < 1) {
-      setEndDate(addDays(date, 1));
+    if (values.dataEnd && compareDesc(date, values.dataEnd) < 1) {
+      setFieldValue("dataEnd", addDays(date, 1));
     }
-    setStartDate(date);
+    setFieldValue("dataStart", date);
   };
 
   const changeEndDate = (date) => {
-    setEndDate(date);
+    setFieldValue("dataEnd", date);
   };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
       <Typography variant="h6" gutterBottom>
-        Shipping address
+        Введите ваши данные
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ mb: 2 }}>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="firstName"
-            type="firstName"
-            name="firstName"
-            label="Имя"
-            fullWidth
-            autoComplete="given-name"
-          />
+          <Textfield required name="firstName" type="text" label="Имя" />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            type="lastName"
-            id="lastName"
-            name="lastName"
-            label="Фамилия"
-            fullWidth
-          />
+          <Textfield required type="text" name="lastName" label="Фамилия" />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
+        <Grid item xs={12} ssm={6} sm={6}>
+          <Textfield
             required
             type="number"
-            id="phone"
             name="phone"
             label="Телефон"
-            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">+375</InputAdornment>
+              ),
+            }}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="email"
-            type="email"
-            name="email"
-            label="Е-mail"
-            fullWidth
-          />
+        <Grid item xs={12} ssm={6} sm={6}>
+          <Textfield name="email" type="text" label="Е-mail" />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} ssm={6} sm={6}>
           <DatePicker
             id="startDate"
             closeOnSelect
@@ -82,42 +63,36 @@ export default function AddressForm() {
             minDate={new Date()}
             maxDate={addDays(new Date(), 20)}
             label="Дата приезда"
-            value={startDate}
-            renderInput={(props) => <TextField {...props} />}
+            value={values.dataStart}
+            name="dataStart"
+            renderInput={(props) => (
+              <DateTimePicker name="dataStart" {...props} />
+            )}
             onChange={changeStartDate}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} ssm={6} sm={6}>
           <DatePicker
             id="endDate"
             closeOnSelect
             showDaysOutsideCurrentMonth
-            minDate={addDays(startDate, 1)}
-            maxDate={addDays(startDate, 50)}
+            minDate={addDays(values.dataStart, 1)}
+            maxDate={addDays(values.dataStart, 50)}
             mask="__.__.____"
             label="Дата отъезда"
-            value={endDate}
-            renderInput={(props) => <TextField {...props} />}
+            value={values.dataEnd}
+            renderInput={(props) => (
+              <DateTimePicker name="dataEnd" {...props} />
+            )}
             onChange={changeEndDate}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl sx={{ minWidth: "135px", mr: { xs: 1, sm: 0 } }}>
-            <InputLabel>Кол-во человек</InputLabel>
-            <Select
-              id="numberOfPerson"
-              value={numberOfPerson}
-              label="Кол-во человек"
-              onChange={({ target: { value } }) => {
-                setNumberOfPerson(value);
-              }}
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-            </Select>
-          </FormControl>
+        <Grid item xs={12} ssm={6} sm={6}>
+          <Select
+            name="peopleNumber"
+            label="Кол-во человек"
+            options={numberPeople}
+          />
         </Grid>
       </Grid>
     </LocalizationProvider>

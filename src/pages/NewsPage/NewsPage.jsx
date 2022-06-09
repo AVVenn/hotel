@@ -1,4 +1,5 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import { Container, BoxCenter } from "../../components/common/CustomBoxes";
 import {
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import { TypographyLeft } from "../../components/common/TypographyLeft";
+import { TypographyForNews } from "../../components/common/TypographyForNews";
 
 const news = [
   {
@@ -53,24 +55,16 @@ const News = () => {
           Новости
         </Typography>
       </BoxCenter>
+      <Outlet />
       <Grid container spacing={3}>
         {news.map((newsItem) => (
           <Grid item xs={12} ssm={6} sm={4} md={4} key={newsItem.id}>
             <CardActionArea component={RouterLink} to={`/news/${newsItem.id}`}>
               <Card sx={{ backgroundColor: "primary.main" }}>
-                <CardContent sx={{ m: "0 auto", p: "2 1" }}>
-                  <BoxCenter
-                    sx={{
-                      mb: 3,
-                      width: "130px",
-                      backgroundColor: "third.main",
-                      borderRadius: "15px",
-                    }}
-                  >
-                    <Typography color="text.second" variant="subtitle2">
-                      {newsItem.date}
-                    </Typography>
-                  </BoxCenter>
+                <CardContent>
+                  <TypographyForNews variant="subtitle2">
+                    {newsItem.date}
+                  </TypographyForNews>
                   <TypographyLeft
                     component="h4"
                     variant="h4"

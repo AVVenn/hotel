@@ -6,7 +6,7 @@ import { Divider } from "@mui/material";
 import { BoxSpaceAround } from "../common/CustomBoxes";
 import { TypographyForLink } from "../common/TypographyLink";
 
-import { contacts, socialMedia } from "./forFooter";
+import { phones, socialMedia } from "./forFooter";
 
 const firstRowRoutes = [
   { name: "Комнаты", path: routes.ROOMS },
@@ -36,7 +36,7 @@ const Footer = () => {
             borderBottom: { xs: "1px solid white", sm: "none" },
           }}
         >
-          {contacts.map((contact) => (
+          {phones.map((contact) => (
             <TypographyForLink key={contact.link} href={contact.link}>
               {contact.text}
             </TypographyForLink>

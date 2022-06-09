@@ -1,22 +1,23 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
+import Textfield from "../FormsUI/Textfield";
 
-export default function PaymentForm() {
+export default function MesageForm() {
   return (
     <>
       <Typography variant="h6" gutterBottom>
         Ваши пожелания
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} sx={{ mb: 2 }}>
         <Grid item xs={12}>
-          <TextField
+          <Textfield
             id="cardName"
-            label="Напишите что-то"
+            label="Напишите пожелания"
             fullWidth
             multiline
             rows={10}
+            name="message"
           />
         </Grid>
       </Grid>

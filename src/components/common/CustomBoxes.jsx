@@ -13,6 +13,14 @@ export const BoxSpaceAround = styled(Box)((BoxCenter) => ({
   alignItems: "center",
 }));
 
+export const BoxSpaceBetween = styled(Box)(() => ({
+  width: "100%",
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "center",
+}));
+
 export const Container = styled(Box)(() => ({
   padding: "60px 10px",
 }));
