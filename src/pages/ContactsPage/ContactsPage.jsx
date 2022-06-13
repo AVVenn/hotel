@@ -86,7 +86,7 @@ const ContactsPage = () => {
               <Grid container rowSpacing={1}>
                 <Grid item xs={12}>
                   <Textfield
-                    name="message"
+                    name="question"
                     label="Ваш вопрос"
                     multiline
                     rows={5}

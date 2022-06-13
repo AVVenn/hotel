@@ -5,7 +5,7 @@ import { store } from "../index";
 const getNews = () => {
   return (dispatch, getState) => {
     dispatch({
-      type: actionTypes.SET_LOADING,
+      type: actionTypes.SET_LOADING_NEWS,
       payload: {
         isLoadingNews: true,
       },

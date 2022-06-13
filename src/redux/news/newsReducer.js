@@ -18,7 +18,7 @@ export const newsReducer = (state = initialState, action) => {
         ...state,
         filterText: action.payload.filterText,
       };
-    case actionTypes.SET_LOADING:
+    case actionTypes.SET_LOADING_NEWS:
       return {
         ...state,
         isLoadingNews: action.payload.isLoadingNews,

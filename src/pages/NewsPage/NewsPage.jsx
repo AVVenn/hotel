@@ -30,7 +30,7 @@ const News = () => {
   const isLoadingNews = useSelector(selectLoadingNews);
   const { getNews, newsQuerySearchChange } = actionCreators;
   const filteredNews = useSelector(selectSortedNews);
-  console.log(filteredNews);
+
   useEffect(() => {
     if (!news.length) {
       getNews();
