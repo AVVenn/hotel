@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 export const TypographyForLink = styled(Typography)(
   ({ theme: { palette } }) => ({
-    component: "a",
+    cursor: "pointer",
     color: palette.text.second,
     textDecoration: "none",
     "&:hover": {

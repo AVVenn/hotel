@@ -1,0 +1,7 @@
+const FILTER_TYPE_ROOMS = {
+  PRICE: "PRICE",
+  RATING: "RATING",
+  FREE_PLACES: "FREE_PLACES",
+};
+
+export default FILTER_TYPE_ROOMS;

@@ -1,0 +1,5 @@
+export const actionTypes = {
+  SET_NEWS: "SET_NEWS",
+  FILTER_QUERY_SEARCH_NEWS: "FILTER_QUERY_SEARCH_NEWS",
+  SET_LOADING: "SET_LOADING",
+};

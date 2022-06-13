@@ -5,7 +5,8 @@ import { useFormikContext } from "formik";
 const ButtonWrapper = ({ children, ...otherProps }) => {
   const { submitForm } = useFormikContext();
   const handleSubmit = () => {
-    if (children === "Забронировать") submitForm();
+    // if (children === "Забронировать")
+    submitForm();
   };
 
   const configButton = {

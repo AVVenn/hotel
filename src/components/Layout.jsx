@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import Context from "../сontext";
-import { ThemeProvider, createTheme } from "@mui/system";
+import { ThemeProvider } from "@mui/system";
+import { createTheme } from "@mui/material/styles";
 import { baseTheme } from "../styles/index";
 // import { lightTheme } from "../styles/lightTheme";
-import { darkTheme } from "../styles/darkTheme";
-import { darkTheme2 } from "../styles/darkTheme2";
-// import _ from "lodash";
+import { darkThemePurple } from "../styles/darkThemePurple";
+import { darkThemeGreen } from "../styles/darkThemeGreen";
 import { deepmerge } from "@mui/utils";
 
 import Header from "./Header/Header";
@@ -17,12 +17,25 @@ import { CssBaseline, Button, Container } from "@mui/material";
 import SignIn from "./common/modals/SignIn";
 import SignUp from "./common/modals/SignUp";
 import Booking from "./common/modals/Booking";
+import actions from "../redux/rooms/actionCreators";
 
 const Layout = () => {
-  const [theme, setTheme] = useState(baseTheme);
+  const chosenTheme = JSON.parse(localStorage.getItem("chosenTheme"));
+  // console.log(chosenTheme);
+  const { getRooms } = actions;
+  useEffect(() => {
+    getRooms();
+  }, []);
+
+  const [theme, setTheme] = useState(createTheme(chosenTheme) || baseTheme);
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSingUp, setOpenSignUp] = useState(false);
   const [openBooking, setOpenBoking] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("chosenTheme", JSON.stringify(theme));
+  }, [theme]);
+
   const handleCloseBooking = useCallback(() => {
     setOpenBoking(false);
   }, [setOpenBoking]);
@@ -34,6 +47,7 @@ const Layout = () => {
   const handleSwitchTheme = (whichTheme) => {
     setTheme(createTheme(deepmerge(theme, whichTheme)));
   };
+
   const handleOpenSignIn = useCallback(() => {
     setOpenSignIn(true);
   }, [setOpenSignIn]);
@@ -75,22 +89,22 @@ const Layout = () => {
         <Container maxWidth="xl" disableGutters>
           <Header handleOpenSignIn={handleOpenSignIn} />
           <Button
-            onClick={() => handleSwitchTheme(darkTheme)}
+            onClick={() => handleSwitchTheme(darkThemePurple)}
             variant="contained"
           >
-            Dark
+            DarkPurple
           </Button>
           <Button
-            onClick={() => handleSwitchTheme(darkTheme2)}
+            onClick={() => handleSwitchTheme(darkThemeGreen)}
             variant="contained"
           >
-            Dark
+            DarkGreen
           </Button>
           <Button
             onClick={() => handleSwitchTheme(baseTheme)}
             variant="contained"
           >
-            Default
+            Light
           </Button>
           <Outlet />
           <Footer />

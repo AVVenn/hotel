@@ -88,7 +88,7 @@ const Booking = ({ open, handleCloseBooking }) => {
       }}
     >
       <Form>
-        <Dialog onClose={handleCloseBooking} open={open}>
+        <Dialog onClose={handleCloseBooking} open={open} fullWidth>
           <Container
             component="main"
             maxWidth="sm"
@@ -134,7 +134,7 @@ const Booking = ({ open, handleCloseBooking }) => {
                       {activeStep !== 0 && (
                         <ButtonContainedForModals
                           onClick={handleBack}
-                          sx={{ p: 2, fontSize: "16px" }}
+                          sx={{ p: 2, fontSize: "20px" }}
                         >
                           Назад
                         </ButtonContainedForModals>
@@ -147,7 +147,7 @@ const Booking = ({ open, handleCloseBooking }) => {
                       ) : (
                         <ButtonContainedForModals
                           onClick={handleNext}
-                          sx={{ p: 2, fontSize: "16px" }}
+                          sx={{ p: 2, fontSize: "20px" }}
                         >
                           Дальше
                         </ButtonContainedForModals>

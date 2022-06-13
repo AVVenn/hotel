@@ -37,7 +37,11 @@ const Footer = () => {
           }}
         >
           {phones.map((contact) => (
-            <TypographyForLink key={contact.link} href={contact.link}>
+            <TypographyForLink
+              component="a"
+              key={contact.link}
+              href={contact.link}
+            >
               {contact.text}
             </TypographyForLink>
           ))}

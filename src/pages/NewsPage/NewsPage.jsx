@@ -1,52 +1,42 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { Container, BoxCenter } from "../../components/common/CustomBoxes";
+import { format } from "date-fns";
 import {
   Typography,
   Grid,
   CardActionArea,
   CardContent,
   Card,
+  TextField,
+  CircularProgress,
 } from "@mui/material";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import { TypographyLeft } from "../../components/common/TypographyLeft";
 import { TypographyForNews } from "../../components/common/TypographyForNews";
 
-const news = [
-  {
-    title: "Собирайте смайлы и оплачивайте поездки бонусами!",
-    date: "29.03.2022",
-    body: `Смайлы - это бонусные баллы, начисленные пассажиру за совершенные поздки, а также за привлечение друзей путем  отравки промокода. Смайлы начисляются только при онлайн бронировании на сайте 618.by и приложение SMILEBUS, при условии успешной поездки. Внимание! Оплата накопленными смайлами возможна только в приложении SMILEBUS! 100 смайлов = 1 BYN 
-  Как накопить смайлы? 1. Бронируйте билеты онлайн через мобильное приложение или сайт. За каждую успешную поездку вам будут начисляться смайлы. Количество начисленных смайлов за поездку зависит от маршрута, на котором действует бонусная программа и стоимости поездки.  
-  2. Делитесь своим промокодом и приглашайте друзей в Smilebus.  
-Как использовать смайлы? 
-Смайлами можно оплачивать любые поездки в Smilebus. Для оплаты поездки, вы должны располагать необходимым количеством смайлов на счете. Частичная оплата билета смайлами невозможна.`,
-    id: 1,
-  },
-  {
-    title: "Собирайте смайлы и оплачивайте поездки бонусами!",
-    date: "29.03.2022",
-    body: `Смайлы - это бонусные баллы, начисленные пассажиру за совершенные поздки, а также за привлечение друзей путем  отравки промокода. Смайлы начисляются только при онлайн бронировании на сайте 618.by и приложение SMILEBUS, при условии успешной поездки. Внимание! Оплата накопленными смайлами возможна только в приложении SMILEBUS! 100 смайлов = 1 BYN 
-Как накопить смайлы? 1. Бронируйте билеты онлайн через мобильное приложение или сайт. За каждую успешную поездку вам будут начисляться смайлы. Количество начисленных смайлов за поездку зависит от маршрута, на котором действует бонусная программа и стоимости поездки.  
-2. Делитесь своим промокодом и приглашайте друзей в Smilebus.  
-Как использовать смайлы? 
-Смайлами можно оплачивать любые поездки в Smilebus. Для оплаты поездки, вы должны располагать необходимым количеством смайлов на счете. Частичная оплата билета смайлами невозможна.`,
-    id: 2,
-  },
-  {
-    title: "Собирайте смайлы и оплачивайте поездки бонусами!",
-    date: "29.03.2022",
-    body: `Смайлы - это бонусные баллы, начисленные пассажиру за совершенные поздки, а также за привлечение друзей путем  отравки промокода. Смайлы начисляются только при онлайн бронировании на сайте 618.by и приложение SMILEBUS, при условии успешной поездки. Внимание! Оплата накопленными смайлами возможна только в приложении SMILEBUS! 100 смайлов = 1 BYN 
-Как накопить смайлы? 1. Бронируйте билеты онлайн через мобильное приложение или сайт. За каждую успешную поездку вам будут начисляться смайлы. Количество начисленных смайлов за поездку зависит от маршрута, на котором действует бонусная программа и стоимости поездки.  
-2. Делитесь своим промокодом и приглашайте друзей в Smilebus.  
-Как использовать смайлы? 
-Смайлами можно оплачивать любые поездки в Smilebus. Для оплаты поездки, вы должны располагать необходимым количеством смайлов на счете. Частичная оплата билета смайлами невозможна.`,
-    id: 3,
-  },
-];
+import actionCreators from "../../redux/news/actionCreator";
+import { useSelector } from "react-redux";
+import {
+  selectNews,
+  selectSearchQueryStringNews,
+  selectSortedNews,
+  selectLoadingNews,
+} from "../../redux/news/newsSelectors";
 
 const News = () => {
+  const news = useSelector(selectNews);
+  const querySearchString = useSelector(selectSearchQueryStringNews);
+  const isLoadingNews = useSelector(selectLoadingNews);
+  const { getNews, newsQuerySearchChange } = actionCreators;
+  const filteredNews = useSelector(selectSortedNews);
+  console.log(filteredNews);
+  useEffect(() => {
+    if (!news.length) {
+      getNews();
+    }
+  }, []);
+
   return (
     <Container sx={{ px: 5 }}>
       <BoxCenter sx={{ mb: 3 }}>
@@ -55,29 +45,58 @@ const News = () => {
           Новости
         </Typography>
       </BoxCenter>
-      <Outlet />
-      <Grid container spacing={3}>
-        {news.map((newsItem) => (
-          <Grid item xs={12} ssm={6} sm={4} md={4} key={newsItem.id}>
-            <CardActionArea component={RouterLink} to={`/news/${newsItem.id}`}>
-              <Card sx={{ backgroundColor: "primary.main" }}>
-                <CardContent>
-                  <TypographyForNews variant="subtitle2">
-                    {newsItem.date}
-                  </TypographyForNews>
-                  <TypographyLeft
-                    component="h4"
-                    variant="h4"
-                    color="text.second"
-                  >
-                    {newsItem.title}
-                  </TypographyLeft>
-                </CardContent>
-              </Card>
-            </CardActionArea>
+      {isLoadingNews ? (
+        <BoxCenter>
+          <CircularProgress />
+        </BoxCenter>
+      ) : (
+        <Grid container spacing={3}>
+          <Grid item xs={9}>
+            <TextField
+              fullWidth
+              label="Найти новость"
+              value={querySearchString}
+              onChange={({ target: { value } }) => newsQuerySearchChange(value)}
+            />
           </Grid>
-        ))}
-      </Grid>
+          {filteredNews.length === 0 ? (
+            <Grid item xs={12}>
+              <Typography sx={{ mt: 2 }} variant="h2">
+                Ничего не найдено
+              </Typography>
+            </Grid>
+          ) : (
+            filteredNews.map((newsItem) => (
+              <Grid item xs={12} ssm={6} sm={4} md={4} key={newsItem._id}>
+                <CardActionArea
+                  component={RouterLink}
+                  to={`/news/${newsItem._id}`}
+                >
+                  <Card
+                    sx={{
+                      backgroundColor: "primary.main",
+                      minHeight: "200px",
+                    }}
+                  >
+                    <CardContent>
+                      <TypographyForNews variant="subtitle2">
+                        {format(new Date(newsItem.createdAt), "dd.MM.yyyy")}
+                      </TypographyForNews>
+                      <TypographyLeft
+                        component="h4"
+                        variant="h4"
+                        color="text.second"
+                      >
+                        {newsItem.title}
+                      </TypographyLeft>
+                    </CardContent>
+                  </Card>
+                </CardActionArea>
+              </Grid>
+            ))
+          )}
+        </Grid>
+      )}
     </Container>
   );
 };

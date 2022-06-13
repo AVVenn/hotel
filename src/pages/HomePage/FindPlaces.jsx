@@ -44,7 +44,7 @@ const FindPlaces = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
-      <BoxCenter sx={{ width: "100%", px: 1.5 }}>
+      <BoxCenter sx={{ width: "100%", px: 1 }}>
         <Grid container sx={{ margin: "0 auto", width: "auto" }}>
           <Grid item xs={6} ssm={3}>
             <DatePicker
