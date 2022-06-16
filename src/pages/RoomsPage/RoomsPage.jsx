@@ -1,6 +1,9 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { Container, BoxCenter } from "../../components/common/CustomBoxes";
+import { format } from "date-fns";
+
+import { routes } from "../../constants/routes";
 
 import FilterRooms from "./FilterRooms";
 import {
@@ -22,14 +25,20 @@ import { CustomGrid } from "../../components/common/CustomGrid";
 
 import { useSelector } from "react-redux";
 import {
+  selectOptionsForSearchRoom,
   selectFilteredRooms,
   selectIsLoadingRooms,
+  selectRoomsWithFreePlaces,
 } from "../../redux/rooms/roomsSelectors";
 
 const RoomsPage = () => {
-  const rooms = useSelector(selectFilteredRooms);
+  const { state } = useLocation();
+  const allRooms = useSelector(selectFilteredRooms);
   const isLoadingRooms = useSelector(selectIsLoadingRooms);
-  console.log(isLoadingRooms);
+  const freePlaces = useSelector(selectRoomsWithFreePlaces);
+  const options = useSelector(selectOptionsForSearchRoom);
+  const day = format(options.dateStart, "dd.MM.yyyy");
+  const rooms = state?.filtered && freePlaces ? freePlaces : allRooms;
   return (
     <Container>
       <FilterRooms />
@@ -52,11 +61,11 @@ const RoomsPage = () => {
           ) : (
             <>
               <CustomGrid container spacing={4}>
-                {rooms.map((room) => (
+                {rooms.map((room, index) => (
                   <Grid item xs={12} sm={6} key={room._id}>
                     <CardActionArea
                       component={RouterLink}
-                      to={`/rooms/${room._id}`}
+                      to={`${routes.ROOMS}/${room._id}`}
                     >
                       <Card
                         sx={{
@@ -102,9 +111,10 @@ const RoomsPage = () => {
                           </Grid>
                           <BoxSpaceAround>
                             <Typography
+                              variant="body2"
                               color="error.main"
                               sx={{ fontWeight: 600 }}
-                            >{`Осталось мест: ${room.freePlaces}`}</Typography>
+                            >{`На ${day} свободных мест: ${freePlaces[index]?.numberOfPlaces} `}</Typography>
                             <Typography
                               sx={{ fontWeight: 600, color: "text.warning" }}
                             >{`Цена: ${room.price} руб.`}</Typography>

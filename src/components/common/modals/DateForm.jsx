@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, InputAdornment, Grid } from "@mui/material";
 import { ru } from "date-fns/locale";
-import { addDays, compareDesc } from "date-fns";
+// import { addDays, compareDesc } from "date-fns";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -13,18 +13,24 @@ import numberPeople from "../../../constants/dataNumbersPeople.json";
 import DateTimePicker from "../FormsUI/DataTimePicker";
 
 export default function DateForm() {
-  const { setFieldValue, values } = useFormikContext();
+  // const { id } = useParams();
+  // const options = useSelector(selectOptionsForSearchRoom);
+  // const freePlacesInRoom = useSelector(selectRoomsWithFreePlaces);
+  // const pricePlace = freePlacesInRoom.find((rooms) => rooms._id === id)?.price;
+
+  const { values } = useFormikContext(); // setFieldValue
 
   const changeStartDate = (date) => {
-    if (values.dataEnd && compareDesc(date, values.dataEnd) < 1) {
-      setFieldValue("dataEnd", addDays(date, 1));
-    }
-    setFieldValue("dataStart", date);
+    // if (values.dateEnd && compareDesc(date, values.dateEnd) < 1) {
+    //   setFieldValue("dateEnd", addDays(date, 1));
+    // }
+    // setFieldValue("dateStart", date);
   };
 
   const changeEndDate = (date) => {
-    setFieldValue("dataEnd", date);
+    // setFieldValue("dateEnd", date);
   };
+  console.log(values);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
@@ -56,42 +62,55 @@ export default function DateForm() {
         </Grid>
         <Grid item xs={12} ssm={6} sm={6}>
           <DatePicker
-            id="startDate"
-            closeOnSelect
-            showDaysOutsideCurrentMonth
+            disabled
+            // id="startDate"
+            // closeOnSelect
+            // showDaysOutsideCurrentMonth
             mask="__.__.____"
-            minDate={new Date()}
-            maxDate={addDays(new Date(), 20)}
+            // minDate={new Date()}
+            // maxDate={addDays(new Date(), 20)}
             label="Дата приезда"
-            value={values.dataStart}
-            name="dataStart"
+            value={values.dateStart} //values.dateStart
+            name="dateStart"
             renderInput={(props) => (
-              <DateTimePicker name="dataStart" {...props} />
+              <DateTimePicker name="dateStart" disabled {...props} />
             )}
             onChange={changeStartDate}
           />
         </Grid>
         <Grid item xs={12} ssm={6} sm={6}>
           <DatePicker
-            id="endDate"
-            closeOnSelect
-            showDaysOutsideCurrentMonth
-            minDate={addDays(values.dataStart, 1)}
-            maxDate={addDays(values.dataStart, 50)}
+            disabled
+            // id="endDate"
+            // closeOnSelect
+            // showDaysOutsideCurrentMonth
+            // minDate={addDays(values.dateStart, 1)}
+            // maxDate={addDays(values.dateStart, 50)}
             mask="__.__.____"
             label="Дата отъезда"
-            value={values.dataEnd}
+            name="dateEnd"
+            value={values.dateEnd}
             renderInput={(props) => (
-              <DateTimePicker name="dataEnd" {...props} />
+              <DateTimePicker name="dateEnd" {...props} />
             )}
             onChange={changeEndDate}
           />
         </Grid>
         <Grid item xs={12} ssm={6} sm={6}>
           <Select
-            name="peopleNumber"
+            disabled
+            name="numberOfPerson"
             label="Кол-во человек"
             options={numberPeople}
+            value={values.numberOfPerson}
+          />
+        </Grid>
+        <Grid item xs={12} ssm={6} sm={6}>
+          <Textfield
+            disabled
+            name="numberOfPerson"
+            value={values.numberOfPerson}
+            label="Место(а) по цене (руб.):"
           />
         </Grid>
       </Grid>

@@ -7,6 +7,10 @@ import {
   Select,
   Grid,
 } from "@mui/material";
+
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../constants/routes";
+
 import { ru } from "date-fns/locale";
 import { addDays, compareDesc } from "date-fns";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -14,16 +18,25 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
-import { BoxCenter } from "../../components/common/CustomBoxes";
-
 import numberPeople from "../../constants/dataNumbersPeople.json";
 
+import { BoxCenter } from "../../components/common/CustomBoxes";
 import { ButtonContained } from "../../components/common/Buttons";
 
+import actionCreators from "../../redux/rooms/actionCreators";
+import { useSelector } from "react-redux";
+import { selectOptionsForSearchRoom } from "../../redux/rooms/roomsSelectors";
+
 const FindPlaces = () => {
-  const [numberOfPerson, setNumberOfPerson] = useState(1);
-  const [dataStart, setDataStart] = useState(new Date());
-  const [dataEnd, setDataEnd] = useState(addDays(new Date(), 1));
+  const navigate = useNavigate();
+  const { changeOptionsForSearchRoom } = actionCreators;
+  const optionsForSearch = useSelector(selectOptionsForSearchRoom);
+
+  const [numberOfPerson, setNumberOfPerson] = useState(
+    optionsForSearch.numberOfPerson
+  );
+  const [dataStart, setDataStart] = useState(optionsForSearch.dateStart);
+  const [dataEnd, setDataEnd] = useState(optionsForSearch.dateEnd);
 
   const changeStartDate = (date) => {
     if (dataEnd && compareDesc(date, dataEnd) < 1) {
@@ -37,9 +50,12 @@ const FindPlaces = () => {
   };
 
   const formHandler = () => {
-    const obj = { dataStart, dataEnd, numberOfPerson };
-    console.log(obj);
-    return obj;
+    changeOptionsForSearchRoom({
+      dateStart: dataStart,
+      dateEnd: dataEnd,
+      numberOfPerson: numberOfPerson,
+    });
+    navigate(routes.ROOMS, { state: { filtered: true } });
   };
 
   return (

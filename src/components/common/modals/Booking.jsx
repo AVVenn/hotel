@@ -14,11 +14,17 @@ import MessageForm from "./MessageForm";
 import Review from "./Review";
 import { ButtonContainedForModals } from "../Buttons";
 
-import { addDays } from "date-fns";
+import { useParams } from "react-router-dom";
+
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import ButtonWrapper from "../FormsUI/Button";
 
+import { useSelector } from "react-redux";
+import {
+  selectOptionsForSearchRoom,
+  selectRoomsWithFreePlaces,
+} from "../../../redux/rooms/roomsSelectors";
 const steps = ["Ваши данные", "Пожелания", "Бронирование"];
 
 function getStepContent(step) {
@@ -35,6 +41,10 @@ function getStepContent(step) {
 }
 
 const Booking = ({ open, handleCloseBooking }) => {
+  const { id } = useParams();
+  const options = useSelector(selectOptionsForSearchRoom);
+  const freePlacesInRoom = useSelector(selectRoomsWithFreePlaces);
+  const pricePlace = freePlacesInRoom.find((rooms) => rooms._id === id)?.price;
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -52,9 +62,10 @@ const Booking = ({ open, handleCloseBooking }) => {
     lastName: "",
     phone: "",
     email: "",
-    peopleNumber: "",
-    dataStart: new Date(),
-    dataEnd: addDays(new Date(), 1),
+    numberOfPerson: +options.numberOfPerson,
+    dateStart: options.dateStart,
+    dateEnd: options.dateEnd,
+    placePrice: pricePlace,
     message: "",
   };
   const FORM_VALIDATIOM = yup.object().shape({
@@ -75,7 +86,8 @@ const Booking = ({ open, handleCloseBooking }) => {
       .matches(phoneRegExp, "Некорректный номер")
       .required("Обязательно"),
     email: yup.string().email("Некорректный email").required("Обязательно"),
-    peopleNumber: yup.string().required("Обязательно"),
+    numberOfPerson: yup.number().required("Обязательно"),
+    placePrice: yup.number(),
     message: yup.string().typeError("Только строки"),
   });
 
@@ -83,6 +95,7 @@ const Booking = ({ open, handleCloseBooking }) => {
     <Formik
       initialValues={{ ...INITIAL_FORM_STATE }}
       validationSchema={FORM_VALIDATIOM}
+      enableReinitialize={true}
       onSubmit={(values) => {
         console.log(values);
       }}

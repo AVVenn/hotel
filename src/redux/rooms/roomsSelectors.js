@@ -37,7 +37,7 @@ export const selectFilteredRooms = createSelector(
 export const selectOptionsForSearchRoom = ({ apartments }) =>
   apartments.optionsForSearchRoom;
 
-const selectBookedPlacesInRooms = createSelector(
+export const selectBookedPlacesInRooms = createSelector(
   selectFilteredRooms,
   selectOptionsForSearchRoom,
   (rooms, options) =>
@@ -67,10 +67,13 @@ const selectBookedPlacesInRooms = createSelector(
 
 export const selectRoomsWithFreePlaces = createSelector(
   selectFilteredRooms,
+  selectOptionsForSearchRoom,
   selectBookedPlacesInRooms,
-  (rooms, reservedPlaces) =>
-    rooms.map((room, index) => ({
-      ...room,
-      numberOfPlaces: room.numberOfPlaces - reservedPlaces[index],
-    }))
+  (rooms, options, reservedPlaces) =>
+    rooms
+      .map((room, index) => ({
+        ...room,
+        numberOfPlaces: room.numberOfPlaces - reservedPlaces[index],
+      }))
+      .filter((room) => room.numberOfPlaces >= +options.numberOfPerson)
 );

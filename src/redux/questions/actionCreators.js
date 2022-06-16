@@ -30,12 +30,15 @@ const sendQuetions = (values) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name: values.name,
-        email: values.email,
-        question: values.question,
-      }),
-    }).then((response) => response.json().then((obj) => console.log(obj)));
+      body: JSON.stringify(values),
+    }).then((response) =>
+      response.json().then((obj) =>
+        dispatch({
+          type: actionTypes.SEND_QUESTION,
+          payload: { question: obj },
+        })
+      )
+    );
   };
 };
 

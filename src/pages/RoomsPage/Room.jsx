@@ -23,11 +23,13 @@ import Context from "../../сontext";
 
 import { useSelector } from "react-redux";
 import { selectRooms } from "../../redux/rooms/roomsSelectors";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { routes } from "../../constants/routes";
 
 const Room = () => {
-  const rooms = useSelector(selectRooms);
+  const navigate = useNavigate();
   const { id } = useParams();
+  const rooms = useSelector(selectRooms);
   const room = rooms.find((apartment) => apartment._id === id);
 
   const [openSlider, setOpenSlider] = useState(false);
@@ -43,7 +45,7 @@ const Room = () => {
   const prevImage = () =>
     setSlideNumber((prevImg) =>
       prevImg === 0 ? (prevImg = room.photos.length - 1) : (prevImg -= 1)
-    );
+    ); // поправить
 
   const nextImage = () =>
     setSlideNumber((prevImg) =>
@@ -103,11 +105,11 @@ const Room = () => {
             {room.description}
           </TypographyLeft>
           <Divider />
-          <TypographyLeft
-            sx={{ mb: 2 }}
-          >{`В числе удобств тумбочка, шкаф, полотенце, ${room.facilities.join(
-            ", "
-          )}.`}</TypographyLeft>
+          <TypographyLeft sx={{ mb: 2 }}>
+            {`В числе удобств тумбочка, шкаф, полотенце, ${room.facilities.join(
+              ", "
+            )}.`}
+          </TypographyLeft>
           <Divider />
           <TypographyLeft>{`Проживающим особенно нравится расположение и низкая цена. В среднем они оценивают проживание в этой комнате на ${room.rating.toFixed(
             1
@@ -117,14 +119,25 @@ const Room = () => {
           item
           xs={12}
           sm={3.5}
-          sx={{ display: "flex", alignItems: "center" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
         >
           <ButtonContained
             fullWidth
-            sx={{ py: 5, borderRadius: "15px" }}
+            sx={{ py: 3, borderRadius: "15px" }}
             onClick={handleOpenBooking}
           >
             {`Забронировать за ${room.price} руб./сут.`}
+          </ButtonContained>
+          <ButtonContained
+            fullWidth
+            sx={{ py: 3, borderRadius: "15px", mt: 3 }}
+            onClick={() => navigate(-1)}
+          >
+            Назад
           </ButtonContained>
         </Grid>
       </Grid>

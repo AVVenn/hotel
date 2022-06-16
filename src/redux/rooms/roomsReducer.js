@@ -1,10 +1,16 @@
 import { actionTypes } from "./actionType";
 import FILTER_TYPE_ROOMS from "../../constants/filtersRoom";
+import { addDays } from "date-fns";
 const initialState = {
   rooms: [],
   currentFiLter: FILTER_TYPE_ROOMS.PRICE,
   filterText: "",
   isLoadingRooms: false,
+  optionsForSearchRoom: {
+    dateStart: new Date(),
+    dateEnd: addDays(new Date(), 1),
+    numberOfPerson: 1,
+  },
 };
 
 export const roomsReducer = (state = initialState, action) => {
@@ -31,6 +37,17 @@ export const roomsReducer = (state = initialState, action) => {
         ...state,
         isLoadingRooms: action.payload.isLoadingRooms,
       };
+    case actionTypes.SET_SEARCH_PARAMS_ROOMS:
+      return {
+        ...state,
+        optionsForSearchRoom: action.payload.optionsForSearchRoom,
+      };
+    // case: actionTypes.BOOKING_ROOM:
+    // return {
+    //   ...state,
+    //   rooms: [],
+    //   isLoadingRooms: false,
+    // }
     default:
       return state;
   }

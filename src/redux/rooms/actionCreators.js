@@ -29,7 +29,17 @@ const roomsQuerySearchChange = (text) => ({
   payload: { filterText: text },
 });
 
+const changeOptionsForSearchRoom = (obj) => ({
+  type: actionTypes.SET_SEARCH_PARAMS_ROOMS,
+  payload: { optionsForSearchRoom: obj },
+});
+
 export default bindActionCreators(
-  { getRooms, roomsFilterChange, roomsQuerySearchChange },
+  {
+    getRooms,
+    roomsFilterChange,
+    roomsQuerySearchChange,
+    changeOptionsForSearchRoom,
+  },
   store.dispatch
 );

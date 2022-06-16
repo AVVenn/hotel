@@ -4,10 +4,17 @@ import Typography from "@mui/material/Typography";
 import { BoxSpaceAround, BoxSpaceBetween } from "../CustomBoxes";
 import { TypographyLeft } from "../TypographyLeft";
 import { useFormikContext } from "formik";
-import { format } from "date-fns";
+import { format, differenceInCalendarDays } from "date-fns";
 
 export default function Review() {
   const { values } = useFormikContext();
+
+  const numberBookindDays = differenceInCalendarDays(
+    values.dateEnd,
+    values.dateStart
+  );
+  const priceBooking =
+    numberBookindDays * values.placePrice * values.numberOfPerson;
 
   return (
     <>
@@ -33,28 +40,28 @@ export default function Review() {
         </BoxSpaceBetween>
         <BoxSpaceBetween>
           <TypographyLeft variant="body2">Дата прибытия:</TypographyLeft>
-          <Typography>{format(values.dataStart, "dd.MM.yyyy")}</Typography>
+          <Typography>{format(values.dateStart, "dd.MM.yyyy")}</Typography>
         </BoxSpaceBetween>
         <BoxSpaceBetween>
           <TypographyLeft variant="body2">Дата отъезда:</TypographyLeft>
-          <Typography>{format(values.dataEnd, "dd.MM.yyyy")}</Typography>
+          <Typography>{format(values.dateEnd, "dd.MM.yyyy")}</Typography>
         </BoxSpaceBetween>
         <BoxSpaceBetween>
           <TypographyLeft variant="body2">Количество мест:</TypographyLeft>
-          <Typography>{values.peopleNumber} </Typography>
+          <Typography>{values.numberOfPerson} </Typography>
         </BoxSpaceBetween>
-        {/* <BoxSpaceBetween>
+        <BoxSpaceBetween>
           <TypographyLeft variant="body2">
             Стоимость места в комнате:
           </TypographyLeft>
-          <Typography>{aboutBooking.pricePlace} </Typography>
-        </BoxSpaceBetween> */}
-        {/* <BoxSpaceBetween>
-          <TypographyLeft variant="h5">Цена:</TypographyLeft>
+          <Typography>{values.placePrice} бел.руб./сутки </Typography>
+        </BoxSpaceBetween>
+        <BoxSpaceBetween>
+          <TypographyLeft variant="h5">Итого:</TypographyLeft>
           <Typography variant="h5" sx={{ fontWeight: 700 }}>
-            {aboutBooking.price}
+            {priceBooking} бел.руб.
           </Typography>
-        </BoxSpaceBetween> */}
+        </BoxSpaceBetween>
       </BoxSpaceAround>
     </>
   );
