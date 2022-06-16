@@ -13,7 +13,7 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         isLoadingUser: action.payload.isLoadingUser,
       };
-    case actionTypes.LOGIN_SUCCES:
+    case actionTypes.LOGIN_SUCCESS:
       return {
         ...state,
         user: action.payload.user,

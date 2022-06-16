@@ -59,7 +59,7 @@ const Appbar = ({ setOpen, pages, isAuth }) => {
               <IconButton>
                 <Avatar
                   sx={{ width: "50", height: "50" }}
-                  alt="Profile"
+                  alt={isAuth.firstName}
                   src="/static/images/avatar/2.jpg"
                 />
               </IconButton>

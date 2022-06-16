@@ -9,6 +9,8 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import PhoneIcon from "@mui/icons-material/Phone";
 import HelpIcon from "@mui/icons-material/Help";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/userSelectors";
 
 const pages = [
   { name: "Главная", path: routes.HOME, icon: <HomeIcon /> },
@@ -19,13 +21,14 @@ const pages = [
 ];
 
 const Header = () => {
+  const user = useSelector(selectUser);
   const [open, setOpen] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  // const [isAuth, setIsAuth] = useState(false);
 
   return (
     <>
-      <Appbar pages={pages} setOpen={setOpen} isAuth={isAuth} />
-      <Sidebar pages={pages} open={open} setOpen={setOpen} isAuth={isAuth} />
+      <Appbar pages={pages} setOpen={setOpen} isAuth={user} />
+      <Sidebar pages={pages} open={open} setOpen={setOpen} isAuth={user} />
     </>
   );
 };

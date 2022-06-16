@@ -2,7 +2,7 @@ import { actionTypes } from "./actionType";
 import { bindActionCreators } from "redux";
 import { store } from "../index";
 
-const getUser = (values) => {
+const getUser = (values, closeModal) => {
   return (dispatch) => {
     dispatch({
       type: actionTypes.SET_LOADING_USER,
@@ -14,14 +14,31 @@ const getUser = (values) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(values),
-    }).then((data) =>
-      data.json().then((obj) =>
-        dispatch({
-          type: actionTypes.LOGIN_SUCCES,
-          payload: { user: obj },
-        })
-      )
-    );
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status > 200 && data.status < 500) {
+          return dispatch({
+            type: actionTypes.LOGIN_FAILURE,
+            payload: { error: data.message },
+          });
+        } else {
+          dispatch({
+            type: actionTypes.LOGIN_SUCCESS,
+            payload: { user: data },
+          });
+          closeModal(); //! легально?
+        }
+      })
+      .catch(
+        (err) => {
+          "Шото пошло не так";
+        }
+        // dispatch({
+        //   type: actionTypes.LOGIN_FAILURE,
+        //   payload: err.,
+        // })
+      );
   };
 };
 

@@ -1,5 +1,11 @@
 import React from "react";
-import { Dialog, DialogTitle, DialogContent, Grid } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
 import { ButtonTextForModals } from "../Buttons";
 import ButtonWrapper from "../FormsUI/Button";
 
@@ -7,22 +13,26 @@ import { Formik, Form } from "formik";
 import Textfield from "../FormsUI/Textfield";
 import * as yup from "yup";
 import { useSelector } from "react-redux";
+import actionCreator from "../../../redux/user/actionCreator";
+import { BoxCenter } from "../../../components/common/CustomBoxes";
+
 import {
   selectError,
   selectisLoadingUser,
 } from "../../../redux/user/userSelectors";
 
 const INITIAL_FORM_STATE = {
-  login: "",
+  username: "",
   password: "",
 };
-const FORM_VALIDATIOM = yup.object().shape({
-  login: yup.string().required("Обязательно"),
+const FORM_VALIDATION = yup.object().shape({
+  username: yup.string().required("Обязательно"),
   password: yup.string().required("Обязательно"),
 });
 
 const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
-  const error = useSelector(selectError);
+  const { getUser } = actionCreator;
+  const errorText = useSelector(selectError);
   const isLoading = useSelector(selectisLoadingUser);
   const crossSignUp = () => {
     handleCloseSignIn();
@@ -32,10 +42,15 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
   return (
     <Formik
       initialValues={{ ...INITIAL_FORM_STATE }}
-      validationSchema={FORM_VALIDATIOM}
-      onSubmit={(values) => {
-        console.log(values);
-        handleCloseSignIn();
+      validationSchema={FORM_VALIDATION}
+      onSubmit={(values, actions) => {
+        actions.resetForm({
+          values: {
+            username: "",
+            password: "",
+          },
+        });
+        getUser(values, handleCloseSignIn);
       }}
     >
       <Form>
@@ -49,24 +64,35 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} ssm={10}>
                     <Textfield
+                      error={errorText}
+                      helperText={errorText}
                       autoFocus
-                      name="login"
+                      name="username"
                       label="Логин"
                       type="login"
+                      // helperText={errorText}
                     />
                   </Grid>
                   <Grid item xs={12} ssm={10}>
                     <Textfield
+                      error={errorText}
+                      helperText={errorText}
                       name="password"
                       label="Пароль"
                       type="password"
-                      helperText={error}
                     />
                   </Grid>
                 </Grid>
               </DialogContent>
+              <Grid item xs={8.5} sx={{ ml: "35px" }}></Grid>
               <Grid item xs={8.5} sx={{ ml: "35px" }}>
-                <ButtonWrapper>Войти</ButtonWrapper>
+                {isLoading ? (
+                  <BoxCenter>
+                    <CircularProgress />
+                  </BoxCenter>
+                ) : (
+                  <ButtonWrapper>Войти</ButtonWrapper>
+                )}
               </Grid>
               <Grid item xs={12}></Grid>
               <ButtonTextForModals onClick={() => {}}>

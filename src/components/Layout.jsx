@@ -19,13 +19,7 @@ import SignUp from "./common/modals/SignUp";
 import Booking from "./common/modals/Booking";
 import actionsRooms from "../redux/rooms/actionCreators";
 
-// import { useSelector } from "react-redux";
-// import { selectUser } from "../redux/user/userSelectors";
-
 const Layout = () => {
-  // const currentUser = useSelector(selectUser);
-  // const [user, setUser] = useState(currentUser);
-
   const chosenTheme = JSON.parse(localStorage.getItem("chosenTheme"));
   // console.log(chosenTheme);
   const { getRooms } = actionsRooms;
@@ -33,11 +27,6 @@ const Layout = () => {
   useEffect(() => {
     getRooms();
   }, []);
-
-  // useEffect(() => {
-  //   getUser(value);
-  //   localStorage.setItem("user", JSON.stringify(user));
-  // }, [user]);
 
   const [theme, setTheme] = useState(createTheme(chosenTheme) || baseTheme);
   const [openSignIn, setOpenSignIn] = useState(false);
