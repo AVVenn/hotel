@@ -6,6 +6,11 @@ import ButtonWrapper from "../FormsUI/Button";
 import { Formik, Form } from "formik";
 import Textfield from "../FormsUI/Textfield";
 import * as yup from "yup";
+import { useSelector } from "react-redux";
+import {
+  selectError,
+  selectisLoadingUser,
+} from "../../../redux/user/userSelectors";
 
 const INITIAL_FORM_STATE = {
   login: "",
@@ -17,6 +22,8 @@ const FORM_VALIDATIOM = yup.object().shape({
 });
 
 const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectisLoadingUser);
   const crossSignUp = () => {
     handleCloseSignIn();
     handleOpenSignUp();
@@ -49,7 +56,12 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
                     />
                   </Grid>
                   <Grid item xs={12} ssm={10}>
-                    <Textfield name="password" label="Пароль" type="password" />
+                    <Textfield
+                      name="password"
+                      label="Пароль"
+                      type="password"
+                      helperText={error}
+                    />
                   </Grid>
                 </Grid>
               </DialogContent>

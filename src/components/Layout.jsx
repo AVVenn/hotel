@@ -17,15 +17,27 @@ import { CssBaseline, Button, Container } from "@mui/material";
 import SignIn from "./common/modals/SignIn";
 import SignUp from "./common/modals/SignUp";
 import Booking from "./common/modals/Booking";
-import actions from "../redux/rooms/actionCreators";
+import actionsRooms from "../redux/rooms/actionCreators";
+
+// import { useSelector } from "react-redux";
+// import { selectUser } from "../redux/user/userSelectors";
 
 const Layout = () => {
+  // const currentUser = useSelector(selectUser);
+  // const [user, setUser] = useState(currentUser);
+
   const chosenTheme = JSON.parse(localStorage.getItem("chosenTheme"));
   // console.log(chosenTheme);
-  const { getRooms } = actions;
+  const { getRooms } = actionsRooms;
+
   useEffect(() => {
     getRooms();
   }, []);
+
+  // useEffect(() => {
+  //   getUser(value);
+  //   localStorage.setItem("user", JSON.stringify(user));
+  // }, [user]);
 
   const [theme, setTheme] = useState(createTheme(chosenTheme) || baseTheme);
   const [openSignIn, setOpenSignIn] = useState(false);
