@@ -23,7 +23,6 @@ const pages = [
 const Header = () => {
   const user = useSelector(selectUser);
   const [open, setOpen] = useState(false);
-  // const [isAuth, setIsAuth] = useState(false);
 
   return (
     <>

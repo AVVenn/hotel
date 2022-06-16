@@ -12,6 +12,8 @@ import {
 import { BoxCenter, BoxSpaceAround } from "../common/CustomBoxes";
 import { ButtonHeader, ButtonOutlined } from "../common/Buttons";
 
+import actionCreator from "../../redux/user/actionCreator";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 
@@ -22,6 +24,7 @@ const Appbar = ({ setOpen, pages, isAuth }) => {
     handleOpenSignUp,
     handleCloseSignUp,
   } = useContext(Context);
+  const { logOut } = actionCreator;
   return (
     <AppBar position="static">
       <BoxSpaceAround sx={{ height: "100px" }}>
@@ -55,15 +58,23 @@ const Appbar = ({ setOpen, pages, isAuth }) => {
         </BoxCenter>
         <BoxCenter>
           {(isAuth && (
-            <Tooltip title="Открыть профиль">
-              <IconButton>
-                <Avatar
-                  sx={{ width: "50", height: "50" }}
-                  alt={isAuth.firstName}
-                  src="/static/images/avatar/2.jpg"
-                />
-              </IconButton>
-            </Tooltip>
+            <>
+              <Tooltip title="Открыть профиль">
+                <IconButton>
+                  <Avatar
+                    sx={{ width: "50", height: "50" }}
+                    alt={isAuth.firstName}
+                    src="/static/images/avatar/2.jpg"
+                  />
+                </IconButton>
+              </Tooltip>
+              <ButtonOutlined
+                onClick={logOut}
+                sx={{ p: { xs: 1, sm: "14px 20px" }, mr: 0.5 }}
+              >
+                Выйти
+              </ButtonOutlined>
+            </>
           )) || (
             <>
               <ButtonOutlined

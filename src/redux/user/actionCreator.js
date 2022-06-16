@@ -42,4 +42,24 @@ const getUser = (values, closeModal) => {
   };
 };
 
-export default bindActionCreators({ getUser }, store.dispatch);
+const logOut = () => ({
+  type: actionTypes.LOGIN_OUT,
+  payload: {},
+});
+
+// const registration = async (values) => {
+//   const response = await fetch("http://localhost:8800/api/auth/register", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(values),
+//   });
+//   const data = await response.json();
+
+//   if(data.status > 200 && data.status < 500) {
+// 	data.
+//   }
+// };
+
+export default bindActionCreators({ logOut, getUser }, store.dispatch);

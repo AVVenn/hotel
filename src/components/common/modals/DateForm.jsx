@@ -108,8 +108,8 @@ export default function DateForm() {
         <Grid item xs={12} ssm={6} sm={6}>
           <Textfield
             disabled
-            name="numberOfPerson"
-            value={values.numberOfPerson}
+            name="placePrice"
+            value={values.placePrice}
             label="Место(а) по цене (руб.):"
           />
         </Grid>

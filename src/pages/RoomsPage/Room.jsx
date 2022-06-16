@@ -23,10 +23,12 @@ import Context from "../../сontext";
 
 import { useSelector } from "react-redux";
 import { selectRooms } from "../../redux/rooms/roomsSelectors";
+import { selectUser } from "../../redux/user/userSelectors";
 import { useParams, useNavigate } from "react-router-dom";
 import { routes } from "../../constants/routes";
 
 const Room = () => {
+  const user = useSelector(selectUser);
   const navigate = useNavigate();
   const { id } = useParams();
   const rooms = useSelector(selectRooms);
@@ -34,7 +36,7 @@ const Room = () => {
 
   const [openSlider, setOpenSlider] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
-  const { handleOpenBooking } = useContext(Context);
+  const { handleOpenBooking, handleOpenSignIn } = useContext(Context);
 
   const handleOpen = (index) => {
     setSlideNumber(index);
@@ -51,6 +53,14 @@ const Room = () => {
     setSlideNumber((prevImg) =>
       prevImg === room.photos.length - 1 ? (prevImg = 0) : (prevImg += 1)
     );
+
+  const handleClick = () => {
+    if (user) {
+      handleOpenBooking();
+    } else {
+      handleOpenSignIn();
+    }
+  };
 
   return (
     <Container>
@@ -128,7 +138,7 @@ const Room = () => {
           <ButtonContained
             fullWidth
             sx={{ py: 3, borderRadius: "15px" }}
-            onClick={handleOpenBooking}
+            onClick={handleClick}
           >
             {`Забронировать за ${room.price} руб./сут.`}
           </ButtonContained>
