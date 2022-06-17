@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   isLoadingUser: false,
   error: null,
+  errorRegistration: null,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -29,6 +30,17 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: null,
+      };
+    case actionTypes.REGISTRATION_SUCCESS:
+      return {
+        ...state,
+        isLoadingUser: false,
+      };
+    case actionTypes.REGISTRATION_FAILURE:
+      return {
+        ...state,
+        errorRegistration: action.payload.error,
+        isLoadingUser: false,
       };
     default:
       return state;

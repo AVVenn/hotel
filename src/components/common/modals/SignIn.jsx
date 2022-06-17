@@ -70,7 +70,6 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
                       name="username"
                       label="Логин"
                       type="login"
-                      // helperText={errorText}
                     />
                   </Grid>
                   <Grid item xs={12} ssm={10}>

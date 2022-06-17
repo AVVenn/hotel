@@ -6,26 +6,37 @@ import {
   Grid,
   Typography,
   InputAdornment,
+  CircularProgress,
 } from "@mui/material";
 
 import { ButtonTextForModals } from "../Buttons";
+import { BoxCenter } from "../CustomBoxes";
 
 import { Formik, Form } from "formik";
 import Textfield from "../FormsUI/Textfield";
 import * as yup from "yup";
 import ButtonWrapper from "../FormsUI/Button";
+import { useSelector } from "react-redux";
+import {
+  selectisLoadingUser,
+  selectErrorRegistration,
+} from "../../../redux/user/userSelectors";
+import actionCreator from "../../../redux/user/actionCreator";
+import { useEffect } from "react";
 
 const phoneRegExp = /^\d{8}$/;
 
 const INITIAL_FORM_STATE = {
-  login: "",
+  username: "",
   email: "",
   password: "",
   passwordConfirmation: "",
   phone: "",
+  firstName: "",
+  lastName: "",
 };
 const FORM_VALIDATIOM = yup.object().shape({
-  login: yup
+  username: yup
     .string()
     .min(3, "Больше 2 символов")
     .max(20, "Не больше 20 символов")
@@ -36,7 +47,7 @@ const FORM_VALIDATIOM = yup.object().shape({
     .required("Обязательно")
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{5,}$/,
-      "Должен включать 5 букв, 1 Заглавная, 1 Строчную, 1 Цифру"
+      "Должен включать 5 символов, 1 заглавная(латиница), 1 цифра"
     ),
   passwordConfirmation: yup
     .string()
@@ -45,9 +56,23 @@ const FORM_VALIDATIOM = yup.object().shape({
     .string()
     .matches(phoneRegExp, "Некорректный номер")
     .required("Обязательно"),
+  firstName: yup.string().required("Обязательно"),
+  lastName: yup.string().required("Обязательно"),
 });
 
 const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
+  const isLoading = useSelector(selectisLoadingUser);
+  const errorText = useSelector(selectErrorRegistration);
+  const { registrationUser } = actionCreator;
+
+  // useEffect(() => {
+  //   errorText;
+  // }, []);
+
+  const forUserName = /^1/.test(errorText) ? errorText.slice(1) : "";
+  const forEmail = /^2/.test(errorText) ? errorText.slice(1) : "";
+  const forPhone = /^3/.test(errorText) ? errorText.slice(1) : "";
+
   const crossSignIn = () => {
     handleCloseSignUp();
     handleOpenSignIn();
@@ -57,8 +82,8 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
       initialValues={{ ...INITIAL_FORM_STATE }}
       validationSchema={FORM_VALIDATIOM}
       onSubmit={(values) => {
-        console.log(values);
-        handleCloseSignUp();
+        registrationUser(values);
+        // handleCloseSignUp();
       }}
     >
       <Form>
@@ -72,8 +97,9 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
                 <Grid container spacing={1.5}>
                   <Grid item xs={12} ssm={7}>
                     <Textfield
-                      name="login"
-                      label="Придумайте имя"
+                      autoFocus
+                      name="username"
+                      label="Придумайте логин"
                       type="login"
                     />
                   </Grid>
@@ -83,12 +109,17 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
                     </Typography>
                   </Grid>
                   <Grid item xs={12} ssm={6}>
+                    <Textfield name="firstName" label="Ваше имя" type="text" />
+                  </Grid>
+                  <Grid item xs={12} ssm={6}>
                     <Textfield
-                      autoFocus
-                      name="email"
-                      label="Ваш e-mail"
-                      type="email"
+                      name="lastName"
+                      label="Ваша фамилия"
+                      type="text"
                     />
+                  </Grid>
+                  <Grid item xs={12} ssm={6}>
+                    <Textfield name="email" label="Ваш e-mail" type="email" />
                   </Grid>
                   <Grid item xs={12} ssm={6}>
                     <Textfield
@@ -119,8 +150,20 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
                   </Grid>
                 </Grid>
               </DialogContent>
+              <Grid item xs={12} sx={{ ml: "20px", mb: 3 }}>
+                <Typography variant="caption" color="error">
+                  {forUserName || forPhone || forEmail}.
+                </Typography>
+              </Grid>
               <Grid item xs={10.5} sm={6} sx={{ ml: "15px" }}>
-                <ButtonWrapper> Зарегистрироваться</ButtonWrapper>
+                {isLoading ? (
+                  <BoxCenter>
+                    <CircularProgress />
+                  </BoxCenter>
+                ) : (
+                  <ButtonWrapper>Зарегистрироваться</ButtonWrapper>
+                )}
+                <Grid />
                 <Grid item xs={12}>
                   <ButtonTextForModals onClick={crossSignIn}>
                     Есть аккаунт?

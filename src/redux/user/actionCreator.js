@@ -18,7 +18,7 @@ const getUser = (values, closeModal) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.status > 200 && data.status < 500) {
-          return dispatch({
+          dispatch({
             type: actionTypes.LOGIN_FAILURE,
             payload: { error: data.message },
           });
@@ -30,15 +30,9 @@ const getUser = (values, closeModal) => {
           closeModal(); //! легально?
         }
       })
-      .catch(
-        (err) => {
-          "Шото пошло не так";
-        }
-        // dispatch({
-        //   type: actionTypes.LOGIN_FAILURE,
-        //   payload: err.,
-        // })
-      );
+      .catch((err) => {
+        "Шото пошло не так";
+      });
   };
 };
 
@@ -47,19 +41,44 @@ const logOut = () => ({
   payload: {},
 });
 
-// const registration = async (values) => {
-//   const response = await fetch("http://localhost:8800/api/auth/register", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(values),
-//   });
-//   const data = await response.json();
+const registrationUser = (values, closeModal) => {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.SET_LOADING_USER,
+      payload: { isLoadingUser: true },
+    });
+    fetch("http://localhost:8800/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status > 399) {
+          dispatch({
+            type: actionTypes.REGISTRATION_FAILURE,
+            payload: { error: data.message },
+          });
+        } else {
+          dispatch({
+            type: actionTypes.REGISTRATION_SUCCESS,
+            payload: {},
+          });
+          alert(
+            `пользователь успешно зарегистрирован - можете войти под вашими логином и паролем`
+          );
+          //закрыть модалку
+        }
+      })
+      .catch((err) => {
+        "Шото пошло не так";
+      });
+  };
+};
 
-//   if(data.status > 200 && data.status < 500) {
-// 	data.
-//   }
-// };
-
-export default bindActionCreators({ logOut, getUser }, store.dispatch);
+export default bindActionCreators(
+  { logOut, getUser, registrationUser },
+  store.dispatch
+);
