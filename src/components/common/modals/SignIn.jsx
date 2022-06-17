@@ -31,7 +31,7 @@ const FORM_VALIDATION = yup.object().shape({
 });
 
 const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
-  const { getUser } = actionCreator;
+  const { getUser, resetErrorFields } = actionCreator;
   const errorText = useSelector(selectError);
   const isLoading = useSelector(selectisLoadingUser);
   const crossSignUp = () => {
@@ -51,6 +51,7 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
           },
         });
         getUser(values, handleCloseSignIn);
+        resetErrorFields();
       }}
     >
       <Form>

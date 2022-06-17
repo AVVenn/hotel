@@ -22,7 +22,6 @@ import {
   selectErrorRegistration,
 } from "../../../redux/user/userSelectors";
 import actionCreator from "../../../redux/user/actionCreator";
-import { useEffect } from "react";
 
 const phoneRegExp = /^\d{8}$/;
 
@@ -63,11 +62,7 @@ const FORM_VALIDATIOM = yup.object().shape({
 const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
   const isLoading = useSelector(selectisLoadingUser);
   const errorText = useSelector(selectErrorRegistration);
-  const { registrationUser } = actionCreator;
-
-  // useEffect(() => {
-  //   errorText;
-  // }, []);
+  const { registrationUser, resetErrorFields } = actionCreator;
 
   const forUserName = /^1/.test(errorText) ? errorText.slice(1) : "";
   const forEmail = /^2/.test(errorText) ? errorText.slice(1) : "";
@@ -77,17 +72,23 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
     handleCloseSignUp();
     handleOpenSignIn();
   };
+
+  const closeSignUp = () => {
+    handleCloseSignUp();
+    resetErrorFields();
+  };
+
   return (
     <Formik
       initialValues={{ ...INITIAL_FORM_STATE }}
       validationSchema={FORM_VALIDATIOM}
-      onSubmit={(values) => {
-        registrationUser(values);
-        // handleCloseSignUp();
+      onSubmit={(values, { resetForm }) => {
+        registrationUser(values, handleCloseSignUp, resetForm);
+        resetErrorFields();
       }}
     >
       <Form>
-        <Dialog onClose={handleCloseSignUp} open={open}>
+        <Dialog onClose={closeSignUp} open={open}>
           <Grid container spacing={2} sx={{ maxWidth: "650px" }}>
             <Grid item xs={12}>
               <DialogTitle variant="h3">Регистрация</DialogTitle>

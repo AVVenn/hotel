@@ -18,6 +18,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.user,
+        error: null,
         isLoadingUser: false,
       };
     case actionTypes.LOGIN_FAILURE:
@@ -34,6 +35,7 @@ export const userReducer = (state = initialState, action) => {
     case actionTypes.REGISTRATION_SUCCESS:
       return {
         ...state,
+        errorRegistration: null,
         isLoadingUser: false,
       };
     case actionTypes.REGISTRATION_FAILURE:
@@ -41,6 +43,12 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         errorRegistration: action.payload.error,
         isLoadingUser: false,
+      };
+    case actionTypes.RESET_ERROR_FIELDS:
+      return {
+        ...state,
+        error: null,
+        errorRegistration: null,
       };
     default:
       return state;

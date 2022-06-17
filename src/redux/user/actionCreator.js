@@ -41,7 +41,7 @@ const logOut = () => ({
   payload: {},
 });
 
-const registrationUser = (values, closeModal) => {
+const registrationUser = (values, closeModal, resetForm) => {
   return (dispatch) => {
     dispatch({
       type: actionTypes.SET_LOADING_USER,
@@ -66,10 +66,21 @@ const registrationUser = (values, closeModal) => {
             type: actionTypes.REGISTRATION_SUCCESS,
             payload: {},
           });
+          resetForm({
+            values: {
+              username: "",
+              email: "",
+              password: "",
+              passwordConfirmation: "",
+              phone: "",
+              firstName: "",
+              lastName: "",
+            },
+          });
+          closeModal();
           alert(
             `пользователь успешно зарегистрирован - можете войти под вашими логином и паролем`
           );
-          //закрыть модалку
         }
       })
       .catch((err) => {
@@ -78,7 +89,11 @@ const registrationUser = (values, closeModal) => {
   };
 };
 
+const resetErrorFields = () => ({
+  type: actionTypes.RESET_ERROR_FIELDS,
+});
+
 export default bindActionCreators(
-  { logOut, getUser, registrationUser },
+  { logOut, getUser, registrationUser, resetErrorFields },
   store.dispatch
 );

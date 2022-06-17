@@ -25,6 +25,7 @@ import {
   selectOptionsForSearchRoom,
   selectRoomsWithFreePlaces,
 } from "../../../redux/rooms/roomsSelectors";
+import { selectUser } from "../../../redux/user/userSelectors";
 const steps = ["Ваши данные", "Пожелания", "Бронирование"];
 
 function getStepContent(step) {
@@ -42,6 +43,7 @@ function getStepContent(step) {
 
 const Booking = ({ open, handleCloseBooking }) => {
   const { id } = useParams();
+  const user = useSelector(selectUser);
   const options = useSelector(selectOptionsForSearchRoom);
   const freePlacesInRoom = useSelector(selectRoomsWithFreePlaces);
   const pricePlace = freePlacesInRoom.find((rooms) => rooms._id === id)?.price;
@@ -58,10 +60,10 @@ const Booking = ({ open, handleCloseBooking }) => {
   const phoneRegExp = /^\d{8}$/;
 
   const INITIAL_FORM_STATE = {
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    phone: user?.phone,
+    email: user?.email,
     numberOfPerson: +options.numberOfPerson,
     dateStart: options.dateStart,
     dateEnd: options.dateEnd,
