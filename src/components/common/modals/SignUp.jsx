@@ -126,7 +126,7 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
                     <Textfield
                       name="phone"
                       label="Моб.тел."
-                      type="text"
+                      type="phone"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">+375</InputAdornment>

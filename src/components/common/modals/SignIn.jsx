@@ -65,7 +65,7 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} ssm={10}>
                     <Textfield
-                      error={errorText}
+                      error={errorText ? true : false}
                       helperText={errorText}
                       autoFocus
                       name="username"
@@ -75,7 +75,7 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
                   </Grid>
                   <Grid item xs={12} ssm={10}>
                     <Textfield
-                      error={errorText}
+                      error={errorText ? true : false}
                       helperText={errorText}
                       name="password"
                       label="Пароль"
