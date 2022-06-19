@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <>
-      <Appbar pages={pages} setOpen={setOpen} isAuth={user} />
+      <Appbar pages={pages} setOpen={setOpen} user={user} />
       <Sidebar pages={pages} open={open} setOpen={setOpen} isAuth={user} />
     </>
   );

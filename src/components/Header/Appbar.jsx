@@ -11,19 +11,17 @@ import {
 } from "@mui/material";
 import { BoxCenter, BoxSpaceAround } from "../common/CustomBoxes";
 import { ButtonHeader, ButtonOutlined } from "../common/Buttons";
+import { TypographyForAppBar } from "../common/TypographyForAppBar";
 
 import actionCreator from "../../redux/user/actionCreator";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
+import { routes } from "../../constants/routes";
 
-const Appbar = ({ setOpen, pages, isAuth }) => {
-  const {
-    handleOpenSignIn,
-    handleCloseSignIn,
-    handleOpenSignUp,
-    handleCloseSignUp,
-  } = useContext(Context);
+const Appbar = ({ setOpen, pages, user }) => {
+  const { handleOpenSignIn, handleOpenSignUp } = useContext(Context);
+
   const { logOut } = actionCreator;
   return (
     <AppBar position="static">
@@ -57,20 +55,23 @@ const Appbar = ({ setOpen, pages, isAuth }) => {
           ))}
         </BoxCenter>
         <BoxCenter>
-          {(isAuth && (
+          {(user && (
             <>
               <Tooltip title="Открыть профиль">
-                <IconButton>
+                <IconButton component={RouterLink} to={routes.PROFILE}>
                   <Avatar
-                    sx={{ width: "50", height: "50" }}
-                    alt={isAuth.firstName}
+                    sx={{ width: "70", height: "70", mr: 1 }}
+                    alt={user.details.firstName}
                     src="/static/images/avatar/2.jpg"
                   />
+                  <TypographyForAppBar>
+                    {user.details.firstName}
+                  </TypographyForAppBar>
                 </IconButton>
               </Tooltip>
               <ButtonOutlined
                 onClick={logOut}
-                sx={{ p: { xs: 1, sm: "14px 20px" }, mr: 0.5 }}
+                sx={{ p: { xs: 1, sm: "14px 20px" }, ml: 1.5 }}
               >
                 Выйти
               </ButtonOutlined>
