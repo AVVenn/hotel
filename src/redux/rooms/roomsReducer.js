@@ -42,12 +42,18 @@ export const roomsReducer = (state = initialState, action) => {
         ...state,
         optionsForSearchRoom: action.payload.optionsForSearchRoom,
       };
-    // case: actionTypes.BOOKING_ROOM:
-    // return {
-    //   ...state,
-    //   rooms: [],
-    //   isLoadingRooms: false,
-    // }
+    case actionTypes.BOOKING_ROOM:
+      return {
+        ...state,
+        rooms: state.rooms.map((room) => ({
+          ...room,
+          booked:
+            room._id === action.payload.id
+              ? [...room.booked, action.payload.booking]
+              : room.booked,
+        })),
+        isLoadingRooms: false,
+      };
     default:
       return state;
   }

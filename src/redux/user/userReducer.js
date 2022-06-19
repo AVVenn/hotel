@@ -50,6 +50,18 @@ export const userReducer = (state = initialState, action) => {
         error: null,
         errorRegistration: null,
       };
+    case actionTypes.UPDATE_AFTER_BOOKING:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          details: {
+            ...state.user.details,
+            booking: [...state.user.details.booking, action.payload.booking],
+          },
+        },
+        isLoadingUser: false,
+      };
     default:
       return state;
   }

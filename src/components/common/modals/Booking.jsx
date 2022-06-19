@@ -8,6 +8,7 @@ import {
   Box,
   Dialog,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import DateForm from "./DateForm";
 import MessageForm from "./MessageForm";
@@ -15,7 +16,7 @@ import Review from "./Review";
 import { ButtonContainedForModals } from "../Buttons";
 
 import { useParams } from "react-router-dom";
-
+import { v4 as uuidv4 } from "uuid";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
 import ButtonWrapper from "../FormsUI/Button";
@@ -26,6 +27,10 @@ import {
   selectRoomsWithFreePlaces,
 } from "../../../redux/rooms/roomsSelectors";
 import { selectUser } from "../../../redux/user/userSelectors";
+import { selectisLoadingUser } from "../../../redux/user/userSelectors";
+import actionCreators from "../../../redux/rooms/actionCreators";
+import { useNavigate } from "react-router-dom";
+
 const steps = ["Ваши данные", "Пожелания", "Бронирование"];
 
 function getStepContent(step) {
@@ -41,12 +46,16 @@ function getStepContent(step) {
   }
 }
 
-const Booking = ({ open, handleCloseBooking }) => {
+const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const user = useSelector(selectUser);
   const options = useSelector(selectOptionsForSearchRoom);
+  const isLoadingUser = useSelector(selectisLoadingUser);
   const freePlacesInRoom = useSelector(selectRoomsWithFreePlaces);
   const pricePlace = freePlacesInRoom.find((rooms) => rooms._id === id)?.price;
+  const { bookingPlaces } = actionCreators;
+
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -60,10 +69,10 @@ const Booking = ({ open, handleCloseBooking }) => {
   const phoneRegExp = /^\d{8}$/;
 
   const INITIAL_FORM_STATE = {
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    phone: user?.phone,
-    email: user?.email,
+    firstName: user?.details?.firstName,
+    lastName: user?.details?.lastName,
+    phone: user?.details?.phone,
+    email: user?.details?.email,
     numberOfPerson: +options.numberOfPerson,
     dateStart: options.dateStart,
     dateEnd: options.dateEnd,
@@ -98,8 +107,18 @@ const Booking = ({ open, handleCloseBooking }) => {
       initialValues={{ ...INITIAL_FORM_STATE }}
       validationSchema={FORM_VALIDATIOM}
       enableReinitialize={true}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={(values, { resetForm }) => {
+        values = {
+          ...values,
+          userId: user?.details._id,
+          reservationId: uuidv4(),
+        };
+        bookingPlaces(id, values, setOpenBookingAccepted);
+        handleCloseBooking();
+        resetForm({
+          values: { ...INITIAL_FORM_STATE },
+        });
+        navigate("/");
       }}
     >
       <Form>

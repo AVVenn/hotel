@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { Container, BoxCenter } from "../../components/common/CustomBoxes";
 import { format } from "date-fns";
 
@@ -32,13 +32,16 @@ import {
 } from "../../redux/rooms/roomsSelectors";
 
 const RoomsPage = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const allRooms = useSelector(selectFilteredRooms);
   const isLoadingRooms = useSelector(selectIsLoadingRooms);
   const freePlaces = useSelector(selectRoomsWithFreePlaces);
   const options = useSelector(selectOptionsForSearchRoom);
   const day = format(options.dateStart, "dd.MM.yyyy");
-  const rooms = state?.filtered && freePlaces ? freePlaces : allRooms;
+  const filtered = state?.filtered;
+  const rooms = filtered && freePlaces ? freePlaces : allRooms;
+
   return (
     <Container>
       <FilterRooms />
@@ -64,8 +67,11 @@ const RoomsPage = () => {
                 {rooms.map((room, index) => (
                   <Grid item xs={12} sm={6} key={room._id}>
                     <CardActionArea
-                      component={RouterLink}
-                      to={`${routes.ROOMS}/${room._id}`}
+                      onClick={() =>
+                        navigate(`${routes.ROOMS}/${room._id}`, {
+                          state: filtered,
+                        })
+                      }
                     >
                       <Card
                         sx={{
@@ -76,7 +82,7 @@ const RoomsPage = () => {
                         <CardMedia
                           component="img"
                           height="300"
-                          image={room.photos[0]}
+                          image={room?.photos[0]}
                           alt="room.image"
                         />
                         <CardContent>

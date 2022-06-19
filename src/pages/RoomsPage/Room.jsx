@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback } from "react";
 
 import classes from "./room.module.css";
 
@@ -15,6 +15,8 @@ import {
   IconButton,
 } from "@mui/material";
 
+import GoToHomePage from "../../components/common/modals/goToHomePage";
+
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -24,16 +26,16 @@ import Context from "../../сontext";
 import { useSelector } from "react-redux";
 import { selectRooms } from "../../redux/rooms/roomsSelectors";
 import { selectUser } from "../../redux/user/userSelectors";
-import { useParams, useNavigate } from "react-router-dom";
-import { routes } from "../../constants/routes";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 const Room = () => {
+  const [openGoToHome, setOpenGoToHome] = useState(false);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const { id } = useParams();
   const rooms = useSelector(selectRooms);
   const room = rooms.find((apartment) => apartment._id === id);
-
+  const { state } = useLocation();
   const [openSlider, setOpenSlider] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
   const { handleOpenBooking, handleOpenSignIn } = useContext(Context);
@@ -55,7 +57,9 @@ const Room = () => {
     );
 
   const handleClick = () => {
-    if (user) {
+    if (!state) {
+      setOpenGoToHome(true);
+    } else if (user) {
       handleOpenBooking();
     } else {
       handleOpenSignIn();
@@ -64,6 +68,7 @@ const Room = () => {
 
   return (
     <Container>
+      <GoToHomePage setOpenGoToHome={setOpenGoToHome} open={openGoToHome} />
       <Typography component="h2" variant="h2" sx={{ mb: 3 }}>
         {room.name}
       </Typography>
