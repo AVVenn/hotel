@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-
 import {
   Typography,
   Accordion,
@@ -114,7 +113,14 @@ const Questions = () => {
           <Formik
             initialValues={{ ...INITIAL_FORM_STATE }}
             validationSchema={FORM_VALIDATIOM}
-            onSubmit={(values) => sendQuetions(values)}
+            onSubmit={(values, { resetForm }) => {
+              sendQuetions(values);
+              resetForm({
+                values: {
+                  ...INITIAL_FORM_STATE,
+                },
+              });
+            }}
           >
             <Form>
               <Grid container rowSpacing={1}>

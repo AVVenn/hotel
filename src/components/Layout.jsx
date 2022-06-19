@@ -17,6 +17,7 @@ import { CssBaseline, Button, Container } from "@mui/material";
 import SignIn from "./common/modals/SignIn";
 import SignUp from "./common/modals/SignUp";
 import Booking from "./common/modals/Booking";
+import BookingAccepted from "./common/modals/BookingAccepted";
 import actionsRooms from "../redux/rooms/actionCreators";
 
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSingUp, setOpenSignUp] = useState(false);
   const [openBooking, setOpenBoking] = useState(false);
+  const [openBookingAccepted, setOpenBookingAccepted] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("chosenTheme", JSON.stringify(theme));
@@ -119,7 +121,15 @@ const Layout = () => {
             handleOpenSignIn={handleOpenSignIn}
             open={openSingUp}
           />
-          <Booking open={openBooking} handleCloseBooking={handleCloseBooking} />
+          <Booking
+            open={openBooking}
+            handleCloseBooking={handleCloseBooking}
+            setOpenBookingAccepted={setOpenBookingAccepted}
+          />
+          <BookingAccepted
+            setOpenBookingAccepted={setOpenBookingAccepted}
+            open={openBookingAccepted}
+          />
         </Container>
       </Context.Provider>
     </ThemeProvider>

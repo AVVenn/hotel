@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import Context from "../../сontext";
 import { contacts } from "../../constants/contacts";
 import { Box, Typography, Grid } from "@mui/material";
 import { BoxCenter, Container } from "../../components/common/CustomBoxes";
@@ -15,7 +16,13 @@ import {
   FORM_VALIDATIOM,
 } from "../../constants/formValidation";
 
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/userSelectors";
+
 const ContactsPage = () => {
+  const { handleOpenSignIn } = useContext(Context);
+  const user = useSelector(selectUser);
+
   return (
     <Container sx={{ px: 5 }}>
       <BoxCenter sx={{ mb: 4 }}>
@@ -80,7 +87,18 @@ const ContactsPage = () => {
           <Formik
             initialValues={{ ...INITIAL_FORM_STATE }}
             validationSchema={FORM_VALIDATIOM}
-            onSubmit={(values) => console.log(values)}
+            onSubmit={(values, { resetForm }) => {
+              if (!user) {
+                handleOpenSignIn();
+              } else {
+                console.log(values);
+                resetForm({
+                  values: {
+                    ...INITIAL_FORM_STATE,
+                  },
+                });
+              }
+            }}
           >
             <Form>
               <Grid container rowSpacing={1}>

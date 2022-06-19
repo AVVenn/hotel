@@ -27,7 +27,7 @@ const FilterRooms = () => {
           onChange={({ target: { value } }) => roomsQuerySearchChange(value)}
           value={curentFilterText}
           variant="outlined"
-          label="искать по заголовкам"
+          label="искать по названию комнаты"
           fullWidth
         ></TextField>
       </Grid>
