@@ -13,6 +13,7 @@ const getUser = (values, closeModal) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(values),
     })
       .then((response) => response.json())
@@ -93,7 +94,41 @@ const resetErrorFields = () => ({
   type: actionTypes.RESET_ERROR_FIELDS,
 });
 
+const updateDataInProfile = (values) => {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.SET_LOADING_USER,
+      payload: { isLoadingUser: true },
+    });
+    fetch(`http://localhost:8800/api/users/${values.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(values),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status > 399) {
+          // произошла ошбика
+        } else {
+          console.log(data);
+          dispatch({
+            type: actionTypes.UPDATE_INFO_PROFILE,
+            payload: {
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              phone: data.phone,
+            },
+          });
+        }
+      });
+  };
+};
+
 export default bindActionCreators(
-  { logOut, getUser, registrationUser, resetErrorFields },
+  { logOut, getUser, registrationUser, resetErrorFields, updateDataInProfile },
   store.dispatch
 );

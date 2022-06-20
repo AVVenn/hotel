@@ -118,6 +118,7 @@ const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
         resetForm({
           values: { ...INITIAL_FORM_STATE },
         });
+        setActiveStep(0);
         navigate("/");
       }}
     >
@@ -153,42 +154,30 @@ const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
                 ))}
               </Stepper>
               <>
-                {activeStep === steps.length ? (
-                  <>
-                    <Typography variant="h5">
-                      Место успешно забронировано
-                    </Typography>
-                  </>
-                ) : (
-                  <>
-                    {getStepContent(activeStep)}
-                    <Box
-                      sx={{ display: "flex", justifyContent: "space-around" }}
+                {getStepContent(activeStep)}
+                <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                  {activeStep !== 0 && (
+                    <ButtonContainedForModals
+                      onClick={handleBack}
+                      sx={{ p: 2, fontSize: "20px" }}
                     >
-                      {activeStep !== 0 && (
-                        <ButtonContainedForModals
-                          onClick={handleBack}
-                          sx={{ p: 2, fontSize: "20px" }}
-                        >
-                          Назад
-                        </ButtonContainedForModals>
-                      )}
+                      Назад
+                    </ButtonContainedForModals>
+                  )}
 
-                      {activeStep === steps.length - 1 ? (
-                        <ButtonWrapper sx={{ fontSize: "16px" }}>
-                          Забронировать
-                        </ButtonWrapper>
-                      ) : (
-                        <ButtonContainedForModals
-                          onClick={handleNext}
-                          sx={{ p: 2, fontSize: "20px" }}
-                        >
-                          Дальше
-                        </ButtonContainedForModals>
-                      )}
-                    </Box>
-                  </>
-                )}
+                  {activeStep === steps.length - 1 ? (
+                    <ButtonWrapper sx={{ fontSize: "16px" }}>
+                      Забронировать
+                    </ButtonWrapper>
+                  ) : (
+                    <ButtonContainedForModals
+                      onClick={handleNext}
+                      sx={{ p: 2, fontSize: "20px" }}
+                    >
+                      Дальше
+                    </ButtonContainedForModals>
+                  )}
+                </Box>
               </>
             </Paper>
           </Container>

@@ -3,6 +3,8 @@ import React from "react";
 import { Typography, Tabs, Tab, Box } from "@mui/material";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import { BoxCenter, Container } from "../../components/common/CustomBoxes";
+import BookingInfo from "./BookingInfo";
+import SettingsProfile from "./SettingsPage/Settings";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -15,7 +17,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -53,13 +55,12 @@ const Profile = () => {
       >
         <Tab label="Ваши брони" {...a11yProps(0)} />
         <Tab label="Ваши настройки" {...a11yProps(1)} />
-        <Tab label="Ваши вопросы" {...a11yProps(2)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        Item One
+        <BookingInfo />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <SettingsProfile />
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three

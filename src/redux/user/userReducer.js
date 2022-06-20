@@ -62,6 +62,21 @@ export const userReducer = (state = initialState, action) => {
         },
         isLoadingUser: false,
       };
+    case actionTypes.UPDATE_INFO_PROFILE:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          details: {
+            ...state.user.details,
+            firstName: action.payload.firstName,
+            lastName: action.payload.lastName,
+            email: action.payload.email,
+            phone: action.payload.phone,
+          },
+        },
+        isLoadingUser: false,
+      };
     default:
       return state;
   }

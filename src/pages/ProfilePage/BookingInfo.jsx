@@ -1,67 +1,77 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Container, BoxCenter } from "../../components/common/CustomBoxes";
-import { format } from "date-fns";
+import { format, compareAsc } from "date-fns";
+
 import {
   Typography,
   Grid,
   CardActionArea,
   CardContent,
   Card,
-  TextField,
 } from "@mui/material";
 
-import { TypographyLeft } from "../../components/common/TypographyLeft";
-import { TypographyForNews } from "../../components/common/TypographyForNews";
+import { getTotalPrice } from "../../utils/totalPrice";
 
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/userSelectors";
+import { CardProfile } from "../../components/common/CardProfile";
+import { TypographyForProfile } from "../../components/common/TypographyForProfile";
+import { ButtonContained } from "../../components/common/Buttons";
 
-const News = () => {
+const BookingInfo = () => {
   const user = useSelector(selectUser);
 
   return (
     <Grid container spacing={3}>
-      {user.details.booking.length === 0 ? (
+      {user?.details.booking.length === 0 ? (
         <Grid item xs={12}>
           <Typography sx={{ mt: 2 }} variant="h2">
             Броней не найдено
           </Typography>
         </Grid>
       ) : (
-        user.details.booking.map((bookingItem, index) => (
+        user?.details.booking.map((bookingItem) => (
           <Grid
             item
             xs={12}
             ssm={6}
-            sm={4}
+            sm={6}
             md={4}
-            key={bookingItem?.reservationId || index}
+            key={bookingItem?.reservationId}
           >
-            <CardActionArea
-              component={RouterLink}
-              to={`/news/${bookingItem.reservationId}`}
-            >
-              <Card
-                sx={{
-                  backgroundColor: "primary.main", //фурмула
-                  minHeight: "200px",
-                }}
-              >
-                <CardContent>
-                  <TypographyForNews variant="subtitle2">
-                    {format(new Date(bookingItem.dateStart), "dd.MM.yyyy")}
-                  </TypographyForNews>
-                  <TypographyLeft
-                    component="h4"
-                    variant="h4"
-                    color="text.second"
-                  >
-                    {/* {newsItem.title} */}
-                  </TypographyLeft>
-                </CardContent>
-              </Card>
-            </CardActionArea>
+            <CardProfile>
+              <CardContent>
+                <TypographyForProfile>
+                  {`Бронь на:
+                    ${bookingItem.lastName + " " + bookingItem.firstName}`}
+                </TypographyForProfile>
+                <TypographyForProfile>
+                  {`${format(
+                    new Date(bookingItem.dateStart),
+                    "dd.MM.yyyy"
+                  )} - ${format(new Date(bookingItem.dateEnd), "dd.MM.yyyy")}`}
+                </TypographyForProfile>
+                <TypographyForProfile>{`Места за ${bookingItem.placePrice} руб./сутки.`}</TypographyForProfile>
+                <TypographyForProfile>{`Количество человек: ${bookingItem.numberOfPerson}`}</TypographyForProfile>
+                <TypographyForProfile
+                  component="h4"
+                  variant="h4"
+                  sx={{ mt: 2 }}
+                >{`Итого: ${getTotalPrice(
+                  bookingItem.placePrice,
+                  bookingItem.numberOfPerson,
+                  bookingItem.dateEnd,
+                  bookingItem.dateStart
+                )} бел.руб.`}</TypographyForProfile>
+              </CardContent>
+              {compareAsc(new Date(bookingItem.dateStart), new Date()) < 2 && (
+                <ButtonContained
+                  onClick={() => {}}
+                  sx={{ borderRadius: "10px" }}
+                >
+                  Отменить
+                </ButtonContained>
+              )}
+            </CardProfile>
           </Grid>
         ))
       )}
@@ -69,4 +79,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default BookingInfo;

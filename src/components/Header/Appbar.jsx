@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Context from "../../сontext";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -21,7 +21,7 @@ import { routes } from "../../constants/routes";
 
 const Appbar = ({ setOpen, pages, user }) => {
   const { handleOpenSignIn, handleOpenSignUp } = useContext(Context);
-
+  const navigate = useNavigate();
   const { logOut } = actionCreator;
   return (
     <AppBar position="static">
@@ -65,12 +65,15 @@ const Appbar = ({ setOpen, pages, user }) => {
                     src="/static/images/avatar/2.jpg"
                   />
                   <TypographyForAppBar>
-                    {user.details.firstName}
+                    {user?.details.firstName}
                   </TypographyForAppBar>
                 </IconButton>
               </Tooltip>
               <ButtonOutlined
-                onClick={logOut}
+                onClick={() => {
+                  logOut();
+                  navigate("/");
+                }}
                 sx={{ p: { xs: 1, sm: "14px 20px" }, ml: 1.5 }}
               >
                 Выйти

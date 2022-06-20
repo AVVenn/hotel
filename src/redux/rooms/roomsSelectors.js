@@ -30,7 +30,7 @@ export const selectFilteredRooms = createSelector(
   selectSearchQueryStringRooms,
   (filteredRooms, searchQuery) =>
     filteredRooms.filter((room) =>
-      room.name.toLowerCase().includes(searchQuery.toLowerCase())
+      room?.name?.toLowerCase().includes(searchQuery?.toLowerCase())
     )
 );
 
