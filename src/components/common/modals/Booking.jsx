@@ -111,6 +111,7 @@ const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
         values = {
           ...values,
           userId: user?.details._id,
+          roomId: id,
           reservationId: uuidv4(),
         };
         bookingPlaces(id, values, setOpenBookingAccepted);

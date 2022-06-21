@@ -111,7 +111,7 @@ const updateDataInProfile = (values) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status > 399) {
-          // произошла ошбика
+          // произошла ошбика модалка
         } else {
           console.log(data);
           dispatch({
@@ -128,7 +128,30 @@ const updateDataInProfile = (values) => {
   };
 };
 
+const cancelBooking = (reservationId, userId) => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.CANCEL_BOOKING, payload: { reservationId } });
+    fetch(`http://localhost:8800/api/users/booking-cancel/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ reservationId }),
+    })
+      .then((data) => data.json())
+      .then((info) => console.log(info));
+  };
+};
+
 export default bindActionCreators(
-  { logOut, getUser, registrationUser, resetErrorFields, updateDataInProfile },
+  {
+    logOut,
+    getUser,
+    registrationUser,
+    resetErrorFields,
+    updateDataInProfile,
+    cancelBooking,
+  },
   store.dispatch
 );

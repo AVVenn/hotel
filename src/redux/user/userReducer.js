@@ -77,6 +77,21 @@ export const userReducer = (state = initialState, action) => {
         },
         isLoadingUser: false,
       };
+    case actionTypes.CANCEL_BOOKING:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          details: {
+            ...state.user.details,
+            booking: state.user.details.booking.filter(
+              (reserve) =>
+                reserve.reservationId !== action.payload.reservationId
+            ),
+          },
+        },
+        isLoadingUser: false,
+      };
     default:
       return state;
   }

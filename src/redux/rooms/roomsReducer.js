@@ -54,6 +54,19 @@ export const roomsReducer = (state = initialState, action) => {
         })),
         isLoadingRooms: false,
       };
+
+    case actionTypes.CANCEL_BOOKING_ROOM:
+      return {
+        ...state,
+        rooms: state.rooms.map((room) => ({
+          ...room,
+          booked: room.booked.filter(
+            (reservation) =>
+              reservation.reservationId !== action.payload.reservationId
+          ),
+        })),
+        isLoadingRooms: false,
+      };
     default:
       return state;
   }

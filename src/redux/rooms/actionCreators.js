@@ -69,13 +69,40 @@ const bookingPlaces = (id, obj, setOpenBookingAccepted) => {
           .then((info) => {
             dispatch({
               type: actionTypesUsers.UPDATE_AFTER_BOOKING,
-              payload: { booking: obj },
+              payload: { booking: info },
             });
           });
         setOpenBookingAccepted(true);
       })
       .catch((err) => {
         console.log(err);
+      });
+  };
+};
+
+const cancelBookingRoom = (roomId, reservationId) => {
+  console.log(roomId);
+  console.log(JSON.stringify(reservationId));
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.SET_LOADING_ROOMS,
+      payload: { isLoadingRooms: true },
+    });
+    fetch(`http://localhost:8800/api/rooms/cancel-reservation/${roomId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ reservationId: reservationId }),
+    })
+      .then((res) => res.json())
+      .then((info) => {
+        console.log(info);
+        dispatch({
+          type: actionTypes.CANCEL_BOOKING_ROOM,
+          payload: { reservationId },
+        });
       });
   };
 };
@@ -87,6 +114,7 @@ export default bindActionCreators(
     roomsQuerySearchChange,
     changeOptionsForSearchRoom,
     bookingPlaces,
+    cancelBookingRoom,
   },
   store.dispatch
 );
