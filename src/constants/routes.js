@@ -7,5 +7,4 @@ export const routes = {
   RULES_BOOKING: "/rules-booking",
   RECIDENCE_RULES: "/residence-rules",
   PROFILE: "/profile",
-  FOR_ADMIN: "/control-panel",
 };

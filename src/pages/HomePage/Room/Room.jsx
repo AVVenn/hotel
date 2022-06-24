@@ -14,7 +14,7 @@ import { CardRoom } from "../../../components/common/CardRoom";
 
 const Room = ({ room }) => {
   return (
-    <Grid item xs={12} sm={6} md={4}>
+    <Grid item xs={12} sm={6} md={4} sx={{ p: 0, m: 0 }}>
       <CardRoom>
         <CardMedia
           sx={{

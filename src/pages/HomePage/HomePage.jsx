@@ -7,7 +7,7 @@ import { Typography, Box, Divider } from "@mui/material";
 
 const HomePage = () => {
   return (
-    <Box sx={{ py: 8 }}>
+    <Box sx={{ py: 5 }}>
       <Typography component="h1" variant="h1" sx={{ mb: 5 }}>
         Жильё в самом центре города
       </Typography>

@@ -1,4 +1,5 @@
 import { actionTypes } from "./actionType";
+import basicLink from "../../constants/basicLink";
 import { actionTypes as actionTypesUsers } from ".././user/actionType";
 import { bindActionCreators } from "redux";
 import { store } from "../index";
@@ -9,14 +10,20 @@ const getRooms = () => {
       type: actionTypes.SET_LOADING_ROOMS,
       payload: { isLoadingRooms: true },
     });
-    fetch("http://localhost:8800/api/rooms")
+    fetch(basicLink + "rooms")
       .then((res) => res.json())
-      .then((data) =>
-        dispatch({
-          type: actionTypes.SET_ROOMS,
-          payload: { rooms: data },
-        })
-      );
+      .then((data) => {
+        if (data.status > 399) {
+          throw new Error(`что-то посыпалось`);
+        } else {
+          dispatch({
+            type: actionTypes.SET_ROOMS,
+            payload: { rooms: data },
+          });
+        }
+        return data;
+      })
+      .catch((data) => console.log(data.message));
   };
 };
 

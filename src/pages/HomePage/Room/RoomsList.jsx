@@ -12,6 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const RoomList = () => {
   const rooms = useSelector(selectRooms);
+
   return (
     <Container>
       <BoxCenter sx={{ flexDirection: "column" }}>
@@ -19,12 +20,13 @@ const RoomList = () => {
           Комнаты
         </Typography>
         {rooms.length === 0 ? (
-          <CircularProgress />
+          <CircularProgress sx={{ mb: 4 }} />
         ) : (
           <CustomGrid container spacing={2} sx={{ mb: 5 }}>
-            {rooms.slice(0, 3).map((room, index) => (
-              <Room key={room._id} room={room} />
-            ))}
+            {rooms.length &&
+              rooms
+                .slice(0, 3)
+                .map((room, index) => <Room key={room._id} room={room} />)}
           </CustomGrid>
         )}
         <ButtonOutlined

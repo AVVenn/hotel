@@ -27,7 +27,10 @@ import actionCreators from "../../redux/rooms/actionCreators";
 import { useSelector } from "react-redux";
 import { selectOptionsForSearchRoom } from "../../redux/rooms/roomsSelectors";
 
+import { useSnackbar } from "notistack";
+
 const FindPlaces = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { changeOptionsForSearchRoom } = actionCreators;
   const optionsForSearch = useSelector(selectOptionsForSearchRoom);
@@ -50,12 +53,21 @@ const FindPlaces = () => {
   };
 
   const formHandler = () => {
-    changeOptionsForSearchRoom({
-      dateStart: dataStart,
-      dateEnd: dataEnd,
-      numberOfPerson: numberOfPerson,
-    });
-    navigate(routes.ROOMS, { state: { filtered: true } });
+    if (
+      compareDesc(dataStart, dataEnd) === 1 &&
+      compareDesc(dataEnd, addDays(dataStart, 50)) > -1 &&
+      compareDesc(new Date(), dataStart) > -1 &&
+      compareDesc(dataStart, addDays(new Date(), 20)) > -1
+    ) {
+      changeOptionsForSearchRoom({
+        dateStart: dataStart,
+        dateEnd: dataEnd,
+        numberOfPerson: numberOfPerson,
+      });
+      navigate(routes.ROOMS, { state: { filtered: true } });
+    } else {
+      enqueueSnackbar("Введите корректные значения", { variant: "error" });
+    }
   };
 
   return (
@@ -127,62 +139,3 @@ const FindPlaces = () => {
 };
 
 export default FindPlaces;
-
-// <DatePicker
-// id="startDate"
-// closeOnSelect
-// showDaysOutsideCurrentMonth
-// mask="__.__.____"
-// minDate={new Date()}
-// maxDate={addDays(new Date(), 20)}
-// label="Дата приезда"
-// value={startDate}
-// renderInput={(props) => <TextField {...props} />}
-// onChange={changeStartDate}
-// />
-
-{
-  /* <DatePicker
-id="endDate"
-closeOnSelect
-showDaysOutsideCurrentMonth
-minDate={addDays(startDate, 1)}
-maxDate={addDays(startDate, 50)}
-mask="__.__.____"
-label="Дата отъезда"
-value={endDate}
-renderInput={(props) => <TextField {...props} />}
-onChange={changeEndDate}
-/> */
-}
-
-// <BoxCenter sx={{ mb: { xs: 1, sm: 0 } }}>
-// <DatePicker
-//   id="startDate"
-//   closeOnSelect
-//   showDaysOutsideCurrentMonth
-//   mask="__.__.____"
-//   minDate={new Date()}
-//   maxDate={addDays(new Date(), 20)}
-//   label="Дата приезда"
-//   // value={}                                                                                    !
-//   name="dataStart"
-//   renderInput={(props) => (
-//     <DateTimePicker name="dataStart" {...props} />
-//   )}
-//   onClick={() => console.log(this.props.values.firstName)}
-// />
-// <DatePicker
-//   id="endDate"
-//   closeOnSelect
-//   showDaysOutsideCurrentMonth
-//   // minDate={addDays(values.dataStart, 1)}                                                        !
-//   // maxDate={addDays(values.dataStart, 50)}                                                       !
-//   mask="__.__.____"
-//   label="Дата отъезда"
-//   // value={values.dataEnd}                                                                         !
-//   renderInput={(props) => (
-//     <DateTimePicker name="dataEnd" {...props} />
-//   )}
-//   // onChange={changeEndDate}
-// />

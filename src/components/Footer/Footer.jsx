@@ -25,7 +25,6 @@ const Footer = () => {
       sx={{
         backgroundColor: "third.main",
         py: 3,
-        borderTop: "1px solid #7635DC",
       }}
     >
       <BoxSpaceAround sx={{ flexDirection: { xs: "column", sm: "row" } }}>

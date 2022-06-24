@@ -3,7 +3,9 @@ import Context from "../сontext";
 import { ThemeProvider } from "@mui/system";
 import { createTheme } from "@mui/material/styles";
 import { baseTheme } from "../styles/index";
-// import { lightTheme } from "../styles/lightTheme";
+
+import { SnackbarProvider } from "notistack";
+
 import { darkThemePurple } from "../styles/darkThemePurple";
 import { darkThemeGreen } from "../styles/darkThemeGreen";
 import { deepmerge } from "@mui/utils";
@@ -12,13 +14,14 @@ import Header from "./Header/Header";
 import { Outlet } from "react-router-dom";
 import Footer from "./Footer/Footer";
 
-import { CssBaseline, Button, Container } from "@mui/material";
+import { CssBaseline, Button, Container, Divider } from "@mui/material";
 
 import SignIn from "./common/modals/SignIn";
 import SignUp from "./common/modals/SignUp";
 import Booking from "./common/modals/Booking";
 import BookingAccepted from "./common/modals/BookingAccepted";
 import actionsRooms from "../redux/rooms/actionCreators";
+import { BoxCenter } from "./common/CustomBoxes";
 
 const Layout = () => {
   const chosenTheme = JSON.parse(localStorage.getItem("chosenTheme"));
@@ -87,51 +90,59 @@ const Layout = () => {
   );
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Context.Provider value={value}>
-        <Container maxWidth="xl" disableGutters>
-          <Header handleOpenSignIn={handleOpenSignIn} />
-          <Button
-            onClick={() => handleSwitchTheme(darkThemePurple)}
-            variant="contained"
-          >
-            DarkPurple
-          </Button>
-          <Button
-            onClick={() => handleSwitchTheme(darkThemeGreen)}
-            variant="contained"
-          >
-            DarkGreen
-          </Button>
-          <Button
-            onClick={() => handleSwitchTheme(baseTheme)}
-            variant="contained"
-          >
-            Light
-          </Button>
-          <Outlet />
-          <Footer />
-          <SignIn
-            handleCloseSignIn={handleCloseSignIn}
-            handleOpenSignUp={handleOpenSignUp}
-            open={openSignIn}
-          />
-          <SignUp
-            handleCloseSignUp={handleCloseSignUp}
-            handleOpenSignIn={handleOpenSignIn}
-            open={openSingUp}
-          />
-          <Booking
-            open={openBooking}
-            handleCloseBooking={handleCloseBooking}
-            setOpenBookingAccepted={setOpenBookingAccepted}
-          />
-          <BookingAccepted
-            setOpenBookingAccepted={setOpenBookingAccepted}
-            open={openBookingAccepted}
-          />
-        </Container>
-      </Context.Provider>
+      <SnackbarProvider maxSnack={3}>
+        <CssBaseline />
+        <Context.Provider value={value}>
+          <Container maxWidth="xl" disableGutters>
+            <Header handleOpenSignIn={handleOpenSignIn} />
+            <BoxCenter>
+              <Button
+                onClick={() => handleSwitchTheme(darkThemePurple)}
+                variant="contained"
+              >
+                Темно-фиолетовая
+              </Button>
+              <Button
+                onClick={() => handleSwitchTheme(darkThemeGreen)}
+                variant="contained"
+              >
+                Темно-зеленая
+              </Button>
+              <Button
+                onClick={() => handleSwitchTheme(baseTheme)}
+                variant="contained"
+              >
+                Светлая (базовая)
+              </Button>
+            </BoxCenter>
+            <Outlet />
+            <Divider
+              variant="middle"
+              sx={{ backgroundColor: "text.lightWarning" }}
+            />
+            <Footer />
+            <SignIn
+              handleCloseSignIn={handleCloseSignIn}
+              handleOpenSignUp={handleOpenSignUp}
+              open={openSignIn}
+            />
+            <SignUp
+              handleCloseSignUp={handleCloseSignUp}
+              handleOpenSignIn={handleOpenSignIn}
+              open={openSingUp}
+            />
+            <Booking
+              open={openBooking}
+              handleCloseBooking={handleCloseBooking}
+              setOpenBookingAccepted={setOpenBookingAccepted}
+            />
+            <BookingAccepted
+              setOpenBookingAccepted={setOpenBookingAccepted}
+              open={openBookingAccepted}
+            />
+          </Container>
+        </Context.Provider>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 };

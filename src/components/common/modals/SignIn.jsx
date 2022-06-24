@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { ButtonTextForModals } from "../Buttons";
 import ButtonWrapper from "../FormsUI/Button";
+import { useSnackbar } from "notistack";
 
 import { Formik, Form } from "formik";
 import Textfield from "../FormsUI/Textfield";
@@ -39,6 +40,11 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
     handleOpenSignUp();
   };
 
+  const { enqueueSnackbar } = useSnackbar();
+  const showMesssage = (message, status) => {
+    enqueueSnackbar(message, { variant: status });
+  };
+
   return (
     <Formik
       initialValues={{ ...INITIAL_FORM_STATE }}
@@ -50,7 +56,7 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
             password: "",
           },
         });
-        getUser(values, handleCloseSignIn);
+        getUser(values, handleCloseSignIn, showMesssage);
         resetErrorFields();
       }}
     >
@@ -95,9 +101,9 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
                 )}
               </Grid>
               <Grid item xs={12}></Grid>
-              <ButtonTextForModals onClick={() => {}}>
+              {/* <ButtonTextForModals onClick={() => {}}>
                 Забыли пароль?
-              </ButtonTextForModals>
+              </ButtonTextForModals> */}
               <ButtonTextForModals onClick={crossSignUp}>
                 Нет аккаунта? Зарегистрироваться.
               </ButtonTextForModals>

@@ -12,8 +12,6 @@ import QuestionsPage from "./pages/QuestionsPage/QuestionsPage";
 import RulesBoking from "./pages/RulesBookingPage/RulesOrderPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ResidenceRules from "./pages/ResidenceRules/ResidenceRules";
-
-// import ForAdmin from "./pages/ForAdmin/ForAdmin";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 const AppRouter = () => {
@@ -30,7 +28,6 @@ const AppRouter = () => {
         <Route path="rules-booking" element={<RulesBoking />} />
         <Route path="residence-rules" element={<ResidenceRules />} />
         <Route path="profile" element={<ProfilePage />} />
-        {/* <Route path="contol-panel" element={<ForAdmin />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

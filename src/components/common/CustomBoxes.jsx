@@ -22,5 +22,5 @@ export const BoxSpaceBetween = styled(Box)(() => ({
 }));
 
 export const Container = styled(Box)(() => ({
-  padding: "60px 10px",
+  padding: "50px 10px",
 }));

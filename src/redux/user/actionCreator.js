@@ -1,14 +1,15 @@
 import { actionTypes } from "./actionType";
+import basicLink from "../../constants/basicLink";
 import { bindActionCreators } from "redux";
 import { store } from "../index";
 
-const getUser = (values, closeModal) => {
+const getUser = (values, closeModal, showMesssage) => {
   return (dispatch) => {
     dispatch({
       type: actionTypes.SET_LOADING_USER,
       payload: { isLoadingUser: true },
     });
-    fetch("http://localhost:8800/api/auth/login", {
+    fetch(basicLink + "auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,7 +19,7 @@ const getUser = (values, closeModal) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status > 200 && data.status < 500) {
+        if (data.status > 399 && data.status < 500) {
           dispatch({
             type: actionTypes.LOGIN_FAILURE,
             payload: { error: data.message },
@@ -28,11 +29,12 @@ const getUser = (values, closeModal) => {
             type: actionTypes.LOGIN_SUCCESS,
             payload: { user: data },
           });
-          closeModal(); //! легально?
+          closeModal();
+          showMesssage("Вы вошли", "success");
         }
       })
       .catch((err) => {
-        "Шото пошло не так";
+        console.log(err);
       });
   };
 };
@@ -42,13 +44,13 @@ const logOut = () => ({
   payload: {},
 });
 
-const registrationUser = (values, closeModal, resetForm) => {
+const registrationUser = (values, closeModal, resetForm, showMesssage) => {
   return (dispatch) => {
     dispatch({
       type: actionTypes.SET_LOADING_USER,
       payload: { isLoadingUser: true },
     });
-    fetch("http://localhost:8800/api/auth/register", {
+    fetch(basicLink + "auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -57,7 +59,7 @@ const registrationUser = (values, closeModal, resetForm) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.status > 399) {
+        if (data.status > 399 && data.status < 500) {
           dispatch({
             type: actionTypes.REGISTRATION_FAILURE,
             payload: { error: data.message },
@@ -79,13 +81,14 @@ const registrationUser = (values, closeModal, resetForm) => {
             },
           });
           closeModal();
-          alert(
-            `пользователь успешно зарегистрирован - можете войти под вашими логином и паролем`
+          showMesssage(
+            `пользователь успешно зарегистрирован - можете войти под вашими логином и паролем`,
+            "success"
           );
         }
       })
       .catch((err) => {
-        "Шото пошло не так";
+        console.log(err);
       });
   };
 };

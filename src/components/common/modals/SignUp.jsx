@@ -8,6 +8,7 @@ import {
   InputAdornment,
   CircularProgress,
 } from "@mui/material";
+import { useSnackbar } from "notistack";
 
 import { ButtonTextForModals } from "../Buttons";
 import { BoxCenter } from "../CustomBoxes";
@@ -60,6 +61,10 @@ const FORM_VALIDATIOM = yup.object().shape({
 });
 
 const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const showMesssage = (message, status) => {
+    enqueueSnackbar(message, { variant: status });
+  };
   const isLoading = useSelector(selectisLoadingUser);
   const errorText = useSelector(selectErrorRegistration);
   const { registrationUser, resetErrorFields } = actionCreator;
@@ -83,7 +88,7 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
       initialValues={{ ...INITIAL_FORM_STATE }}
       validationSchema={FORM_VALIDATIOM}
       onSubmit={(values, { resetForm }) => {
-        registrationUser(values, handleCloseSignUp, resetForm);
+        registrationUser(values, handleCloseSignUp, resetForm, showMesssage);
         resetErrorFields();
       }}
     >
