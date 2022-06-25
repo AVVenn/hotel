@@ -47,14 +47,22 @@ const Room = () => {
 
   const closeSlider = () => setOpenSlider(false);
   const prevImage = () =>
-    setSlideNumber((prevImg) =>
-      prevImg === 0 ? (prevImg = room.photos.length - 1) : (prevImg -= 1)
-    ); // поправить
+    setSlideNumber((prevImg) => {
+      if (prevImg === 0) {
+        return room.photos.length - 1;
+      } else {
+        return prevImg - 1;
+      }
+    });
 
   const nextImage = () =>
-    setSlideNumber((prevImg) =>
-      prevImg === room.photos.length - 1 ? (prevImg = 0) : (prevImg += 1)
-    );
+    setSlideNumber((prevImg) => {
+      if (prevImg === room.photos.length - 1) {
+        return 0;
+      } else {
+        return prevImg + 1;
+      }
+    });
 
   const handleClick = () => {
     if (!state) {
@@ -75,7 +83,10 @@ const Room = () => {
       <Dialog onClose={closeSlider} open={openSlider} fullWidth>
         <Box
           className={classes.image}
-          sx={{ backgroundImage: `url(${room.photos[slideNumber]})` }}
+          sx={{
+            backgroundImage: `url(${room.photos[slideNumber]})`,
+            backgroundPosition: "center top",
+          }}
         >
           <IconButton
             onClick={closeSlider}

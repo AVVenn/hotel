@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const BookingAccepted = ({ setOpenBookingAccepted, open }) => {
   const navigate = useNavigate();
-  console.log(open);
   return (
     <Dialog
       onClose={() => {

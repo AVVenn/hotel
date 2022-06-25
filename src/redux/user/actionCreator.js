@@ -2,6 +2,7 @@ import { actionTypes } from "./actionType";
 import basicLink from "../../constants/basicLink";
 import { bindActionCreators } from "redux";
 import { store } from "../index";
+import { INITIAL_FORM_STATE_SIGN_UP } from "../../constants/formValidation";
 
 const getUser = (values, closeModal, showMesssage) => {
   return (dispatch) => {
@@ -71,13 +72,7 @@ const registrationUser = (values, closeModal, resetForm, showMesssage) => {
           });
           resetForm({
             values: {
-              username: "",
-              email: "",
-              password: "",
-              passwordConfirmation: "",
-              phone: "",
-              firstName: "",
-              lastName: "",
+              ...INITIAL_FORM_STATE_SIGN_UP,
             },
           });
           closeModal();
@@ -97,13 +92,13 @@ const resetErrorFields = () => ({
   type: actionTypes.RESET_ERROR_FIELDS,
 });
 
-const updateDataInProfile = (values) => {
+const updateDataInProfile = (values, showMesssage) => {
   return (dispatch) => {
     dispatch({
       type: actionTypes.SET_LOADING_USER,
       payload: { isLoadingUser: true },
     });
-    fetch(`http://localhost:8800/api/users/${values.id}`, {
+    fetch(basicLink + `users/${values.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -114,9 +109,8 @@ const updateDataInProfile = (values) => {
       .then((res) => res.json())
       .then((data) => {
         if (data.status > 399) {
-          // произошла ошбика модалка
+          showMesssage(data.message, "error");
         } else {
-          console.log(data);
           dispatch({
             type: actionTypes.UPDATE_INFO_PROFILE,
             payload: {
@@ -126,15 +120,16 @@ const updateDataInProfile = (values) => {
               phone: data.phone,
             },
           });
+          showMesssage("Данные успешно обновлены", "success");
         }
       });
   };
 };
 
-const cancelBooking = (reservationId, userId) => {
+const cancelBooking = (reservationId, userId, showMesssage) => {
   return (dispatch) => {
     dispatch({ type: actionTypes.CANCEL_BOOKING, payload: { reservationId } });
-    fetch(`http://localhost:8800/api/users/booking-cancel/${userId}`, {
+    fetch(basicLink + `users/booking-cancel/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -143,7 +138,37 @@ const cancelBooking = (reservationId, userId) => {
       body: JSON.stringify({ reservationId }),
     })
       .then((data) => data.json())
-      .then((info) => console.log(info));
+      .then((info) => {
+        if (info.status > 399) {
+          showMesssage(info.message, "error");
+        } else {
+          showMesssage(info, "success");
+        }
+      });
+  };
+};
+
+const addInfoAboutBooking = (obj, setOpenBookingAccepted) => {
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.SET_LOADING_USER,
+      payload: { isLoadingUser: true },
+    });
+    fetch(basicLink + `users/booking/${obj.userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    })
+      .then((res) => res.json())
+      .then((info) => {
+        dispatch({
+          type: actionTypes.UPDATE_AFTER_BOOKING,
+          payload: { booking: info },
+        });
+      });
+    setOpenBookingAccepted(true);
   };
 };
 
@@ -155,6 +180,7 @@ export default bindActionCreators(
     resetErrorFields,
     updateDataInProfile,
     cancelBooking,
+    addInfoAboutBooking,
   },
   store.dispatch
 );

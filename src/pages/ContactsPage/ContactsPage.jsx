@@ -12,16 +12,25 @@ import { TypographyLeft } from "../../components/common/TypographyLeft";
 import { Formik, Form } from "formik";
 import Textfield from "../../components/common/FormsUI/Textfield";
 import {
-  INITIAL_FORM_STATE,
-  FORM_VALIDATIOM,
+  INITIAL_FORM_STATE_CONTACTS_QESTION,
+  FORM_VALIDATIOM_CONTACTS_QESTION,
 } from "../../constants/formValidation";
 
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/userSelectors";
 
+import actionCreators from "../../redux/questions/actionCreators";
+import { useSnackbar } from "notistack";
+
 const ContactsPage = () => {
   const { handleOpenSignIn } = useContext(Context);
   const user = useSelector(selectUser);
+  const { sendQuetions } = actionCreators;
+
+  const { enqueueSnackbar } = useSnackbar();
+  const showMesssage = (message, status) => {
+    enqueueSnackbar(message, { variant: status });
+  };
 
   return (
     <Container sx={{ px: 5 }}>
@@ -32,7 +41,7 @@ const ContactsPage = () => {
         </Typography>
       </BoxCenter>
       <CustomGrid container spacing={6}>
-        <Grid item xs={12} ssm={6} sm={6} md={6}>
+        <Grid item xs={12} ssm={6}>
           <TypographyLeft variant="h3" sx={{ mb: 3 }}>
             Вахта
           </TypographyLeft>
@@ -45,7 +54,7 @@ const ContactsPage = () => {
             <TypographyLeft>Ежедневно, круглосуточно, без обеда</TypographyLeft>
           </Box>
         </Grid>
-        <Grid item xs={12} ssm={6} sm={6} md={6}>
+        <Grid item xs={12} ssm={6}>
           <TypographyLeft variant="h3" sx={{ mb: 3 }}>
             Заведующий общежитием
           </TypographyLeft>
@@ -80,21 +89,21 @@ const ContactsPage = () => {
             </TypographyLeft>
           </Box>
         </Grid>
-        <Grid item xs={12} ssm={10} sm={10} md={6}>
+        <Grid item xs={12} ssm={10} md={6}>
           <Typography component="h3" variant="h3" sx={{ mb: 3 }}>
             Задать вопрос
           </Typography>
           <Formik
-            initialValues={{ ...INITIAL_FORM_STATE }}
-            validationSchema={FORM_VALIDATIOM}
+            initialValues={{ ...INITIAL_FORM_STATE_CONTACTS_QESTION }}
+            validationSchema={FORM_VALIDATIOM_CONTACTS_QESTION}
             onSubmit={(values, { resetForm }) => {
               if (!user) {
                 handleOpenSignIn();
               } else {
-                console.log(values);
+                sendQuetions(values, showMesssage);
                 resetForm({
                   values: {
-                    ...INITIAL_FORM_STATE,
+                    ...INITIAL_FORM_STATE_CONTACTS_QESTION,
                   },
                 });
               }

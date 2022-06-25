@@ -10,6 +10,8 @@ import {
   selectErrorRegistration,
 } from "../../../redux/user/userSelectors";
 
+import { useSnackbar } from "notistack";
+
 import { Formik, Form } from "formik";
 import ButtonWrapper from "../../../components/common/FormsUI/Button";
 import Textfield from "../../../components/common/FormsUI/Textfield";
@@ -31,6 +33,11 @@ const SettingsProfile = () => {
     lastName: user?.details.lastName,
   };
 
+  const { enqueueSnackbar } = useSnackbar();
+  const showMesssage = (message, status) => {
+    enqueueSnackbar(message, { variant: status });
+  };
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -42,7 +49,7 @@ const SettingsProfile = () => {
           validationSchema={FORM_VALIDATION}
           onSubmit={(values, { resetForm }) => {
             values = { ...values, id: user?.details._id };
-            updateDataInProfile(values);
+            updateDataInProfile(values, showMesssage);
             resetForm({ values: { ...INITIAL_FORM_STATE } });
           }}
         >

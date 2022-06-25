@@ -8,7 +8,6 @@ import {
   Box,
   Dialog,
   Typography,
-  CircularProgress,
 } from "@mui/material";
 import DateForm from "./DateForm";
 import MessageForm from "./MessageForm";
@@ -18,7 +17,6 @@ import { ButtonContainedForModals } from "../Buttons";
 import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { Formik, Form } from "formik";
-import * as yup from "yup";
 import ButtonWrapper from "../FormsUI/Button";
 
 import { useSelector } from "react-redux";
@@ -27,9 +25,11 @@ import {
   selectRoomsWithFreePlaces,
 } from "../../../redux/rooms/roomsSelectors";
 import { selectUser } from "../../../redux/user/userSelectors";
-import { selectisLoadingUser } from "../../../redux/user/userSelectors";
 import actionCreators from "../../../redux/rooms/actionCreators";
+import actionCreatorsUser from "../../../redux/user/actionCreator";
 import { useNavigate } from "react-router-dom";
+
+import { FORM_VALIDATIOM_BOOKING } from "../../../constants/formValidation";
 
 const steps = ["Ваши данные", "Пожелания", "Бронирование"];
 
@@ -51,10 +51,11 @@ const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
   const { id } = useParams();
   const user = useSelector(selectUser);
   const options = useSelector(selectOptionsForSearchRoom);
-  const isLoadingUser = useSelector(selectisLoadingUser);
   const freePlacesInRoom = useSelector(selectRoomsWithFreePlaces);
   const pricePlace = freePlacesInRoom.find((rooms) => rooms._id === id)?.price;
+
   const { bookingPlaces } = actionCreators;
+  const { addInfoAboutBooking } = actionCreatorsUser;
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -65,8 +66,6 @@ const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
-  const phoneRegExp = /^\d{8}$/;
 
   const INITIAL_FORM_STATE = {
     firstName: user?.details?.firstName,
@@ -79,33 +78,11 @@ const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
     placePrice: pricePlace,
     message: "",
   };
-  const FORM_VALIDATIOM = yup.object().shape({
-    firstName: yup
-      .string()
-      .min(2, "Больше 2х символов")
-      .max(20, "Не больше 20 символов")
-      .matches(/[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu, "Только буквы")
-      .required("Обязательно"),
-    lastName: yup
-      .string()
-      .min(2, "Больше 2х символов")
-      .max(20, "Не больше 20 символов")
-      .matches(/[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu, "Только буквы")
-      .required("Обязательно"),
-    phone: yup
-      .string()
-      .matches(phoneRegExp, "Некорректный номер")
-      .required("Обязательно"),
-    email: yup.string().email("Некорректный email").required("Обязательно"),
-    numberOfPerson: yup.number().required("Обязательно"),
-    placePrice: yup.number(),
-    message: yup.string().typeError("Только строки"),
-  });
 
   return (
     <Formik
       initialValues={{ ...INITIAL_FORM_STATE }}
-      validationSchema={FORM_VALIDATIOM}
+      validationSchema={FORM_VALIDATIOM_BOOKING}
       enableReinitialize={true}
       onSubmit={(values, { resetForm }) => {
         values = {
@@ -114,7 +91,8 @@ const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
           roomId: id,
           reservationId: uuidv4(),
         };
-        bookingPlaces(id, values, setOpenBookingAccepted);
+        bookingPlaces(id, values);
+        addInfoAboutBooking(values, setOpenBookingAccepted);
         handleCloseBooking();
         resetForm({
           values: { ...INITIAL_FORM_STATE },

@@ -1,30 +1,5 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-// import React from "react";
-// import { Link as RouterLink } from "react-router-dom";
-// const LinkBehavior = React.forwardRef((props, ref) => {
-//   const { href, ...other } = props;
-//   return (
-//     <RouterLink data-testid="custom-link" ref={ref} to={href} {...other} />
-//   );
-// });
-
-// MuiLink: {
-//   defaultProps: {
-//     component: LinkBehavior,
-//   },
-// },
-// MuiButtonBase: {
-//   defaultProps: {
-//     LinkComponent: LinkBehavior,
-//   },
-// },
-// MuiCardActionArea: {
-//   defaultProps: {
-//     LinkComponent: LinkBehavior,
-//   },
-// },
-
 export let darkThemePurple = createTheme({
   breakpoints: {
     values: {

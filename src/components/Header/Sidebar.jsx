@@ -5,6 +5,7 @@ import { ListItemButtonForSideBar } from "../common/ListItemButtonForSideBar";
 import { CustomDrawer } from "../common/CustomDrawer";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import view from "../../assets/view6.jpg";
 
 const Sidebar = ({ open, setOpen, pages, isAuth }) => {
   return (
@@ -16,7 +17,15 @@ const Sidebar = ({ open, setOpen, pages, isAuth }) => {
       }}
     >
       <Toolbar
-        sx={{ display: "flex", justifyContent: "flex-end", height: "200px" }}
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          height: "400px",
+          backgroundImage: `url(${view})`,
+          backgroundPosition: "center top",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
       >
         <IconButton onClick={() => setOpen((prevVal) => (prevVal = false))}>
           <ChevronLeftIcon color="primary" />

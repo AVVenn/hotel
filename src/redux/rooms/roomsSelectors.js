@@ -1,7 +1,6 @@
 import { createSelector } from "reselect";
 import FILTER_TYPE_ROOMS from "../../constants/filtersRoom";
 import sortBy from "lodash/sortBy";
-// import filter from "lodash/filter";
 import { areIntervalsOverlapping } from "date-fns";
 
 export const selectRooms = ({ apartments }) => apartments.rooms;

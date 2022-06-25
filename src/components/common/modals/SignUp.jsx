@@ -15,7 +15,6 @@ import { BoxCenter } from "../CustomBoxes";
 
 import { Formik, Form } from "formik";
 import Textfield from "../FormsUI/Textfield";
-import * as yup from "yup";
 import ButtonWrapper from "../FormsUI/Button";
 import { useSelector } from "react-redux";
 import {
@@ -24,41 +23,10 @@ import {
 } from "../../../redux/user/userSelectors";
 import actionCreator from "../../../redux/user/actionCreator";
 
-const phoneRegExp = /^\d{8}$/;
-
-const INITIAL_FORM_STATE = {
-  username: "",
-  email: "",
-  password: "",
-  passwordConfirmation: "",
-  phone: "",
-  firstName: "",
-  lastName: "",
-};
-const FORM_VALIDATIOM = yup.object().shape({
-  username: yup
-    .string()
-    .min(3, "Больше 2 символов")
-    .max(20, "Не больше 20 символов")
-    .required("Обязательно"),
-  email: yup.string().email("Некорректный email").required("Обязательно"),
-  password: yup
-    .string()
-    .required("Обязательно")
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{5,}$/,
-      "Должен включать 5 символов, 1 заглавная(латиница), 1 цифра"
-    ),
-  passwordConfirmation: yup
-    .string()
-    .oneOf([yup.ref("password")], "Пароли не совпадают"),
-  phone: yup
-    .string()
-    .matches(phoneRegExp, "Некорректный номер")
-    .required("Обязательно"),
-  firstName: yup.string().required("Обязательно"),
-  lastName: yup.string().required("Обязательно"),
-});
+import {
+  INITIAL_FORM_STATE_SIGN_UP,
+  FORM_VALIDATION_SIGN_UP,
+} from "../../../constants/formValidation";
 
 const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -85,8 +53,8 @@ const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
 
   return (
     <Formik
-      initialValues={{ ...INITIAL_FORM_STATE }}
-      validationSchema={FORM_VALIDATIOM}
+      initialValues={{ ...INITIAL_FORM_STATE_SIGN_UP }}
+      validationSchema={FORM_VALIDATION_SIGN_UP}
       onSubmit={(values, { resetForm }) => {
         registrationUser(values, handleCloseSignUp, resetForm, showMesssage);
         resetErrorFields();

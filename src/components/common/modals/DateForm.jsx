@@ -1,7 +1,6 @@
 import React from "react";
 import { Typography, InputAdornment, Grid } from "@mui/material";
 import { ru } from "date-fns/locale";
-// import { addDays, compareDesc } from "date-fns";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -13,24 +12,7 @@ import numberPeople from "../../../constants/dataNumbersPeople.json";
 import DateTimePicker from "../FormsUI/DataTimePicker";
 
 export default function DateForm() {
-  // const { id } = useParams();
-  // const options = useSelector(selectOptionsForSearchRoom);
-  // const freePlacesInRoom = useSelector(selectRoomsWithFreePlaces);
-  // const pricePlace = freePlacesInRoom.find((rooms) => rooms._id === id)?.price;
-
-  const { values } = useFormikContext(); // setFieldValue
-
-  const changeStartDate = (date) => {
-    // if (values.dateEnd && compareDesc(date, values.dateEnd) < 1) {
-    //   setFieldValue("dateEnd", addDays(date, 1));
-    // }
-    // setFieldValue("dateStart", date);
-  };
-
-  const changeEndDate = (date) => {
-    // setFieldValue("dateEnd", date);
-  };
-  console.log(values);
+  const { values } = useFormikContext();
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
@@ -63,29 +45,19 @@ export default function DateForm() {
         <Grid item xs={12} ssm={6} sm={6}>
           <DatePicker
             disabled
-            // id="startDate"
-            // closeOnSelect
-            // showDaysOutsideCurrentMonth
             mask="__.__.____"
-            // minDate={new Date()}
-            // maxDate={addDays(new Date(), 20)}
             label="Дата приезда"
-            value={values.dateStart} //values.dateStart
+            value={values.dateStart}
             name="dateStart"
             renderInput={(props) => (
               <DateTimePicker name="dateStart" disabled {...props} />
             )}
-            onChange={changeStartDate}
+            onChange={() => {}}
           />
         </Grid>
         <Grid item xs={12} ssm={6} sm={6}>
           <DatePicker
             disabled
-            // id="endDate"
-            // closeOnSelect
-            // showDaysOutsideCurrentMonth
-            // minDate={addDays(values.dateStart, 1)}
-            // maxDate={addDays(values.dateStart, 50)}
             mask="__.__.____"
             label="Дата отъезда"
             name="dateEnd"
@@ -93,10 +65,10 @@ export default function DateForm() {
             renderInput={(props) => (
               <DateTimePicker name="dateEnd" {...props} />
             )}
-            onChange={changeEndDate}
+            onChange={() => {}}
           />
         </Grid>
-        <Grid item xs={12} ssm={6} sm={6}>
+        <Grid item xs={12} ssm={6}>
           <Select
             disabled
             name="numberOfPerson"
@@ -105,7 +77,7 @@ export default function DateForm() {
             value={values.numberOfPerson}
           />
         </Grid>
-        <Grid item xs={12} ssm={6} sm={6}>
+        <Grid item xs={12} ssm={6}>
           <Textfield
             disabled
             name="placePrice"

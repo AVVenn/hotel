@@ -2,8 +2,6 @@ import view1 from "../assets/view1.jpg";
 import view2 from "../assets/view2.jpg";
 import view3 from "../assets/view3.jpg";
 import view4 from "../assets/view4.jpg";
-import view5 from "../assets/view5.jpg";
-import view6 from "../assets/view6.jpg";
 import view7 from "../assets/view7.jpg";
 import view8 from "../assets/view8.jpg";
 import view9 from "../assets/view9.jpg";
@@ -14,8 +12,6 @@ export const imagesForGallery = [
   { img: view2, title: "Со стороны ул. Кирова" },
   { img: view3, title: "Со сторны ул.Крестьянская" },
   { img: view4, title: "Со стороны мед.колледа 1" },
-  // { img: view5, title: "Со сторны ул.Крестьянская2" },
-  // { img: view6, title: "Со стороны мед.колледа 3" },
   { img: view7, title: "От входа в общежитие" },
   { img: view8, title: "Коридор" },
   { img: view9, title: "Галадильная комната" },
@@ -48,3 +44,8 @@ export const settingsForSlider = {
     },
   ],
 };
+
+// import view5 from "../assets/view5.jpg";
+// import view6 from "../assets/view6.jpg";
+// { img: view5, title: "Со сторны ул.Крестьянская2" },
+// { img: view6, title: "Со стороны мед.колледа 3" },

@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
-import { Card, CardMedia, CardContent, Grid } from "@mui/material";
+import { Card, CardMedia, CardContent } from "@mui/material";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Container, BoxCenter } from "../../components/common/CustomBoxes";
 import { format } from "date-fns";
 
@@ -106,7 +106,7 @@ const RoomsPage = () => {
                           </BoxCenter>
                           <Grid container sx={{ mb: 3 }}>
                             {room.facilities.map((item) => (
-                              <Grid item>
+                              <Grid item key={item}>
                                 <Chip
                                   label={item}
                                   icon={<DoneIcon color="success.main" />}

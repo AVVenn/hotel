@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "../../constants/routes";
 
 import { ru } from "date-fns/locale";
-import { addDays, compareDesc } from "date-fns";
+import { addDays, compareDesc, addMinutes } from "date-fns";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -56,7 +56,7 @@ const FindPlaces = () => {
     if (
       compareDesc(dataStart, dataEnd) === 1 &&
       compareDesc(dataEnd, addDays(dataStart, 50)) > -1 &&
-      compareDesc(new Date(), dataStart) > -1 &&
+      compareDesc(new Date(), addMinutes(dataStart, 1)) > -1 &&
       compareDesc(dataStart, addDays(new Date(), 20)) > -1
     ) {
       changeOptionsForSearchRoom({

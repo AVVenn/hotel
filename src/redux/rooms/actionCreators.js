@@ -1,6 +1,5 @@
 import { actionTypes } from "./actionType";
 import basicLink from "../../constants/basicLink";
-import { actionTypes as actionTypesUsers } from ".././user/actionType";
 import { bindActionCreators } from "redux";
 import { store } from "../index";
 
@@ -42,13 +41,13 @@ const changeOptionsForSearchRoom = (obj) => ({
   payload: { optionsForSearchRoom: obj },
 });
 
-const bookingPlaces = (id, obj, setOpenBookingAccepted) => {
+const bookingPlaces = (id, obj) => {
   return (dispatch, getState) => {
     dispatch({
       type: actionTypes.SET_LOADING_ROOMS,
       payload: { isLoadingRooms: true },
     });
-    fetch(`http://localhost:8800/api/rooms/reservation/${id}`, {
+    fetch(basicLink + `rooms/reservation/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -57,29 +56,14 @@ const bookingPlaces = (id, obj, setOpenBookingAccepted) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        dispatch({
-          type: actionTypes.BOOKING_ROOM,
-          payload: { id: id, booking: obj },
-        });
-        dispatch({
-          type: actionTypesUsers.SET_LOADING_USER,
-          payload: { isLoadingUser: true },
-        });
-        fetch(`http://localhost:8800/api/users/booking/${obj.userId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(obj),
-        })
-          .then((res) => res.json())
-          .then((info) => {
-            dispatch({
-              type: actionTypesUsers.UPDATE_AFTER_BOOKING,
-              payload: { booking: info },
-            });
+        if (data.status > 399) {
+          console.log(`Не получилась бронь`);
+        } else {
+          dispatch({
+            type: actionTypes.BOOKING_ROOM,
+            payload: { id: id, booking: obj },
           });
-        setOpenBookingAccepted(true);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -88,14 +72,12 @@ const bookingPlaces = (id, obj, setOpenBookingAccepted) => {
 };
 
 const cancelBookingRoom = (roomId, reservationId) => {
-  console.log(roomId);
-  console.log(JSON.stringify(reservationId));
   return (dispatch) => {
     dispatch({
       type: actionTypes.SET_LOADING_ROOMS,
       payload: { isLoadingRooms: true },
     });
-    fetch(`http://localhost:8800/api/rooms/cancel-reservation/${roomId}`, {
+    fetch(basicLink + `rooms/cancel-reservation/${roomId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -125,3 +107,37 @@ export default bindActionCreators(
   },
   store.dispatch
 );
+
+// .then((data) => {
+//   dispatch({
+//     type: actionTypes.BOOKING_ROOM,
+//     payload: { id: id, booking: obj },
+//   }).catch((err) => {
+//     console.log(err);
+//   });
+
+// dispatch({
+//   type: actionTypesUsers.SET_LOADING_USER,
+//   payload: { isLoadingUser: true },
+// });
+// fetch(basicLink + `users/booking/${obj.userId}`, {
+//   method: "PUT",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   body: JSON.stringify(obj),
+// })
+//     .then((res) => res.json())
+//     .then((info) => {
+//       dispatch({
+//         type: actionTypesUsers.UPDATE_AFTER_BOOKING,
+//         payload: { booking: info },
+//       });
+//     });
+//   setOpenBookingAccepted(true);
+// })
+// .catch((err) => {
+//   console.log(err);
+// });
+//   });
+// };

@@ -17,8 +17,8 @@ import { CustomGrid } from "../../components/common/CustomGrid";
 import { Formik, Form } from "formik";
 import Textfield from "../../components/common/FormsUI/Textfield";
 import {
-  INITIAL_FORM_STATE,
-  FORM_VALIDATIOM,
+  INITIAL_FORM_STATE_CONTACTS_QESTION,
+  FORM_VALIDATIOM_CONTACTS_QESTION,
 } from "../../constants/formValidation";
 
 import { format } from "date-fns";
@@ -31,11 +31,18 @@ import {
   selectAnsweredQuestions,
 } from "../../redux/questions/questionSelectors";
 
+import { useSnackbar } from "notistack";
+
 const Questions = () => {
   const questions = useSelector(selectAllQuestions);
   const isLoadingQuestions = useSelector(selectIsLoadingAllQuestions);
   const answeredQuestions = useSelector(selectAnsweredQuestions);
   const { getAllQuestions, sendQuetions } = actionCreators;
+
+  const { enqueueSnackbar } = useSnackbar();
+  const showMesssage = (message, status) => {
+    enqueueSnackbar(message, { variant: status });
+  };
 
   useEffect(() => {
     if (!questions.length) {
@@ -111,13 +118,13 @@ const Questions = () => {
             </Typography>
           </BoxCenter>
           <Formik
-            initialValues={{ ...INITIAL_FORM_STATE }}
-            validationSchema={FORM_VALIDATIOM}
+            initialValues={{ ...INITIAL_FORM_STATE_CONTACTS_QESTION }}
+            validationSchema={FORM_VALIDATIOM_CONTACTS_QESTION}
             onSubmit={(values, { resetForm }) => {
-              sendQuetions(values);
+              sendQuetions(values, showMesssage);
               resetForm({
                 values: {
-                  ...INITIAL_FORM_STATE,
+                  ...INITIAL_FORM_STATE_CONTACTS_QESTION,
                 },
               });
             }}
@@ -172,7 +179,7 @@ const Questions = () => {
                     borderRadius: "15px",
                   }}
                 >
-                  <Grid item xs={2}>
+                  <Grid item xs={3}>
                     <Typography sx={{ fontWeight: 600 }} variant="h6">
                       {question.name}
                     </Typography>
@@ -180,7 +187,7 @@ const Questions = () => {
                       {format(new Date(question.createdAt), "dd.MM.yyyy")}
                     </Typography>
                   </Grid>
-                  <Grid item xs={10}>
+                  <Grid item xs={9}>
                     <Typography
                       sx={{ mb: 2, borderBottom: "1px solid black" }}
                       variant="h6"

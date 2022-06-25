@@ -5,9 +5,7 @@ import { ru } from "date-fns/locale";
 
 const LinkBehavior = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
-  return (
-    <RouterLink data-testid="custom-link" ref={ref} to={href} {...other} />
-  );
+  return <RouterLink ref={ref} to={href} {...other} />;
 });
 
 export let baseTheme = createTheme({

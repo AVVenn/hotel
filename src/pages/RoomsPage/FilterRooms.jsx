@@ -22,7 +22,7 @@ const FilterRooms = () => {
   const { roomsFilterChange, roomsQuerySearchChange } = actionCreators;
   return (
     <Grid container>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={5}>
         <TextField
           onChange={({ target: { value } }) => roomsQuerySearchChange(value)}
           value={curentFilterText}
@@ -31,10 +31,11 @@ const FilterRooms = () => {
           fullWidth
         ></TextField>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={7}>
         <Typography sx={{ mr: 2 }}>Сортировать по:</Typography>
         <ButtonGroup variant="outlined" fullWidth>
           <Button
+            sx={{ py: 0 }}
             onClick={() => roomsFilterChange(FILTER_TYPE_ROOMS.PRICE)}
             variant={
               currentFilterType === FILTER_TYPE_ROOMS.PRICE
@@ -45,6 +46,7 @@ const FilterRooms = () => {
             Цена
           </Button>
           <Button
+            sx={{ py: 0 }}
             variant={
               currentFilterType === FILTER_TYPE_ROOMS.RATING
                 ? "contained"
@@ -55,6 +57,7 @@ const FilterRooms = () => {
             Рейтинг
           </Button>
           <Button
+            sx={{ py: 0 }}
             variant={
               currentFilterType === FILTER_TYPE_ROOMS.FREE_PLACES
                 ? "contained"

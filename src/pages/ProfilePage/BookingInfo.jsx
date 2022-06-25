@@ -5,6 +5,8 @@ import { Typography, Grid, CardContent } from "@mui/material";
 
 import { getTotalPrice } from "../../utils/totalPrice";
 
+import { useSnackbar } from "notistack";
+
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/userSelectors";
 import { CardProfile } from "../../components/common/CardProfile";
@@ -17,6 +19,12 @@ const BookingInfo = () => {
   const user = useSelector(selectUser);
   const { cancelBooking } = actionCreator;
   const { cancelBookingRoom } = actionCreators;
+
+  const { enqueueSnackbar } = useSnackbar();
+  const showMesssage = (message, status) => {
+    enqueueSnackbar(message, { variant: status });
+  };
+
   return (
     <Grid container spacing={3}>
       {user?.details.booking.length === 0 ? (
@@ -26,7 +34,7 @@ const BookingInfo = () => {
           </Typography>
         </Grid>
       ) : (
-        user?.details.booking.map((bookingItem) => (
+        user?.details.booking.reverse().map((bookingItem) => (
           <Grid
             item
             xs={12}
@@ -60,17 +68,20 @@ const BookingInfo = () => {
                   bookingItem.dateStart
                 )} бел.руб.`}</TypographyForProfile>
               </CardContent>
-              {compareAsc(new Date(bookingItem.dateStart), new Date()) < 2 && (
+              {compareAsc(new Date(), new Date(bookingItem.dateStart)) < 1 && (
                 <ButtonContained
                   onClick={() => {
-                    console.log(bookingItem.roomId);
                     cancelBookingRoom(
                       bookingItem.roomId,
                       bookingItem.reservationId
                     );
-                    cancelBooking(bookingItem.reservationId, user.details._id);
+                    cancelBooking(
+                      bookingItem.reservationId,
+                      user.details._id,
+                      showMesssage
+                    );
                   }}
-                  sx={{ borderRadius: "10px" }}
+                  sx={{ borderRadius: "10px", mb: 1, ml: 1 }}
                 >
                   Отменить
                 </ButtonContained>

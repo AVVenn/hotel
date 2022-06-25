@@ -12,24 +12,19 @@ import { useSnackbar } from "notistack";
 
 import { Formik, Form } from "formik";
 import Textfield from "../FormsUI/Textfield";
-import * as yup from "yup";
 import { useSelector } from "react-redux";
 import actionCreator from "../../../redux/user/actionCreator";
 import { BoxCenter } from "../../../components/common/CustomBoxes";
 
 import {
+  INITIAL_FORM_STATE_SIGN_IN,
+  FORM_VALIDATION_SIGN_IN,
+} from "../../../constants/formValidation";
+
+import {
   selectError,
   selectisLoadingUser,
 } from "../../../redux/user/userSelectors";
-
-const INITIAL_FORM_STATE = {
-  username: "",
-  password: "",
-};
-const FORM_VALIDATION = yup.object().shape({
-  username: yup.string().required("Обязательно"),
-  password: yup.string().required("Обязательно"),
-});
 
 const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
   const { getUser, resetErrorFields } = actionCreator;
@@ -47,8 +42,8 @@ const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
 
   return (
     <Formik
-      initialValues={{ ...INITIAL_FORM_STATE }}
-      validationSchema={FORM_VALIDATION}
+      initialValues={{ ...INITIAL_FORM_STATE_SIGN_IN }}
+      validationSchema={FORM_VALIDATION_SIGN_IN}
       onSubmit={(values, actions) => {
         actions.resetForm({
           values: {

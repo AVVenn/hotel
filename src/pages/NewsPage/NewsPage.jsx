@@ -51,7 +51,7 @@ const News = () => {
         </BoxCenter>
       ) : (
         <Grid container spacing={3}>
-          <Grid item xs={9}>
+          <Grid item xs={12} sm={9}>
             <TextField
               fullWidth
               label="Найти новость"
