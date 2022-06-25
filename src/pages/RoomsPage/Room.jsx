@@ -21,7 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
-import Context from "../../сontext";
+import { useModalHandle } from "../../hooks/handleModalsHook";
 
 import { useSelector } from "react-redux";
 import { selectRooms } from "../../redux/rooms/roomsSelectors";
@@ -38,7 +38,7 @@ const Room = () => {
   const { state } = useLocation();
   const [openSlider, setOpenSlider] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
-  const { handleOpenBooking, handleOpenSignIn } = useContext(Context);
+  const { handleOpenBooking, handleOpenSignIn } = useModalHandle();
 
   const handleOpen = (index) => {
     setSlideNumber(index);

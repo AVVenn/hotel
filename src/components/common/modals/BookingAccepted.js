@@ -3,7 +3,13 @@ import { Dialog, DialogTitle, DialogActions } from "@mui/material";
 import { ButtonContainedForModals } from "../Buttons";
 import { useNavigate } from "react-router-dom";
 
-const BookingAccepted = ({ setOpenBookingAccepted, open }) => {
+import { useModalHandle } from "../../../hooks/handleModalsHook";
+
+const BookingAccepted = () => {
+  const { setOpenBookingAccepted, openBookingAccepted } = useModalHandle();
+
+  let open = openBookingAccepted;
+
   const navigate = useNavigate();
   return (
     <Dialog

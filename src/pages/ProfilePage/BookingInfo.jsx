@@ -51,9 +51,9 @@ const BookingInfo = () => {
                 </TypographyForProfile>
                 <TypographyForProfile>
                   {`${format(
-                    new Date(bookingItem.dateStart),
+                    new Date(bookingItem?.dateStart),
                     "dd.MM.yyyy"
-                  )} - ${format(new Date(bookingItem.dateEnd), "dd.MM.yyyy")}`}
+                  )} - ${format(new Date(bookingItem?.dateEnd), "dd.MM.yyyy")}`}
                 </TypographyForProfile>
                 <TypographyForProfile>{`Места за ${bookingItem.placePrice} руб./сутки.`}</TypographyForProfile>
                 <TypographyForProfile>{`Количество человек: ${bookingItem.numberOfPerson}`}</TypographyForProfile>
@@ -64,11 +64,11 @@ const BookingInfo = () => {
                 >{`Итого: ${getTotalPrice(
                   bookingItem.placePrice,
                   bookingItem.numberOfPerson,
-                  bookingItem.dateEnd,
-                  bookingItem.dateStart
+                  bookingItem?.dateEnd,
+                  bookingItem?.dateStart
                 )} бел.руб.`}</TypographyForProfile>
               </CardContent>
-              {compareAsc(new Date(), new Date(bookingItem.dateStart)) < 1 && (
+              {compareAsc(new Date(), new Date(bookingItem?.dateStart)) < 1 && (
                 <ButtonContained
                   onClick={() => {
                     cancelBookingRoom(

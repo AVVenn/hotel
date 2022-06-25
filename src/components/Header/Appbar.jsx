@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import Context from "../../сontext";
+import React from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -19,8 +18,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeWorkIcon from "@mui/icons-material/HomeWork";
 import { routes } from "../../constants/routes";
 
+import { useModalHandle } from "../../hooks/handleModalsHook";
+
 const Appbar = ({ setOpen, pages, user }) => {
-  const { handleOpenSignIn, handleOpenSignUp } = useContext(Context);
+  const { handleOpenSignIn, handleOpenSignUp } = useModalHandle();
+
   const navigate = useNavigate();
   const { logOut } = actionCreator;
   return (

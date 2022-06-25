@@ -31,6 +31,8 @@ import { useNavigate } from "react-router-dom";
 
 import { FORM_VALIDATIOM_BOOKING } from "../../../constants/formValidation";
 
+import { useModalHandle } from "../../../hooks/handleModalsHook";
+
 const steps = ["Ваши данные", "Пожелания", "Бронирование"];
 
 function getStepContent(step) {
@@ -46,7 +48,11 @@ function getStepContent(step) {
   }
 }
 
-const Booking = ({ open, handleCloseBooking, setOpenBookingAccepted }) => {
+const Booking = () => {
+  const { handleCloseBooking, setOpenBookingAccepted, openBooking } =
+    useModalHandle();
+  const open = openBooking;
+
   const navigate = useNavigate();
   const { id } = useParams();
   const user = useSelector(selectUser);

@@ -12,14 +12,6 @@ export const ButtonOutlined = styled(Button)(({ theme: { palette } }) => ({
     color: palette.text.second,
     backgroundColor: palette.primary.main,
   },
-  // "&:active": {
-  //   color: palette.text.second,
-  //   backgroundColor: palette.text.lightWarning,
-  // },
-  // "&:focus": {
-  //   color: palette.text.second,
-  //   backgroundColor: palette.text.lightWarning,
-  // },
 }));
 
 export const ButtonHeader = styled(ButtonOutlined)(

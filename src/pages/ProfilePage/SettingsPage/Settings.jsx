@@ -1,8 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Typography, Grid, Avatar, CircularProgress } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  Avatar,
+  CircularProgress,
+  Button,
+  Fab,
+} from "@mui/material";
 import { ButtonOutlined } from "../../../components/common/Buttons";
-
+import SaveIcon from "@mui/icons-material/Save";
 import { useSelector } from "react-redux";
 import {
   selectUser,
@@ -24,9 +31,22 @@ const SettingsProfile = () => {
   const isLoadingUser = useSelector(selectisLoadingUser);
   const error = useSelector(selectErrorRegistration);
 
+  // const uploadImage = (files) => {
+  //   setPhoto(files);
+  //   const formData = new FormData();
+  //   formData.append("file", files);
+  //   formData.append("upload_preset", "upload");
+  //  fetch("https://api.cloudinary.com/v1_1/avven/image/upload", {
+  //       method: "POST",
+  //       body: formData,
+  //     }).then((res) => res.json()).then(data => console.log(data))
+  //   }
+  // };
+
   useEffect(() => {}, [user]);
 
   const INITIAL_FORM_STATE = {
+    photo: user?.details.photo,
     email: user?.details.email,
     phone: user?.details.phone,
     firstName: user?.details.firstName,
@@ -72,7 +92,25 @@ const SettingsProfile = () => {
                   src="/static/images/avatar/1.jpg"
                   sx={{ width: 150, height: 150, mb: 2 }}
                 />
-                <ButtonOutlined>Загрузить фото</ButtonOutlined>
+                <label htmlFor="photo">
+                  <Textfield
+                    style={{ display: "none" }}
+                    id="photo"
+                    name="photo"
+                    type="file"
+                    // onChange={({ target: { files } }) => {
+                    // }}
+                  />
+                  <Fab
+                    color="primary.main"
+                    size="small"
+                    component="span"
+                    aria-label="add"
+                    variant="extended"
+                  >
+                    <SaveIcon /> Загрузить
+                  </Fab>
+                </label>
               </Grid>
               <Grid item xs={12} sm={4}>
                 <Grid container spacing={2}>

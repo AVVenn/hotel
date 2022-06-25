@@ -1,5 +1,4 @@
-import React, { useContext } from "react";
-import Context from "../../сontext";
+import React from "react";
 import { contacts } from "../../constants/contacts";
 import { Box, Typography, Grid } from "@mui/material";
 import { BoxCenter, Container } from "../../components/common/CustomBoxes";
@@ -22,8 +21,9 @@ import { selectUser } from "../../redux/user/userSelectors";
 import actionCreators from "../../redux/questions/actionCreators";
 import { useSnackbar } from "notistack";
 
+import { useModalHandle } from "../../hooks/handleModalsHook";
 const ContactsPage = () => {
-  const { handleOpenSignIn } = useContext(Context);
+  const { handleOpenSignIn } = useModalHandle();
   const user = useSelector(selectUser);
   const { sendQuetions } = actionCreators;
 

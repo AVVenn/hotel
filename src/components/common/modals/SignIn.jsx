@@ -26,7 +26,13 @@ import {
   selectisLoadingUser,
 } from "../../../redux/user/userSelectors";
 
-const SignIn = ({ handleCloseSignIn, handleOpenSignUp, open }) => {
+import { useModalHandle } from "../../../hooks/handleModalsHook";
+
+const SignIn = () => {
+  const { handleCloseSignIn, handleOpenSignUp, openSignIn } = useModalHandle();
+
+  let open = openSignIn;
+
   const { getUser, resetErrorFields } = actionCreator;
   const errorText = useSelector(selectError);
   const isLoading = useSelector(selectisLoadingUser);

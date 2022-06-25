@@ -28,7 +28,13 @@ import {
   FORM_VALIDATION_SIGN_UP,
 } from "../../../constants/formValidation";
 
-const SignUp = ({ handleCloseSignUp, handleOpenSignIn, open }) => {
+import { useModalHandle } from "../../../hooks/handleModalsHook";
+
+const SignUp = () => {
+  const { handleCloseSignUp, handleOpenSignIn, openSingUp } = useModalHandle();
+
+  let open = openSingUp;
+
   const { enqueueSnackbar } = useSnackbar();
   const showMesssage = (message, status) => {
     enqueueSnackbar(message, { variant: status });
