@@ -2,7 +2,6 @@ import * as yup from "yup";
 import { phoneRegExp } from "../../../constants/regex";
 
 export const FORM_VALIDATION = yup.object().shape({
-  photo: yup.string(),
   email: yup.string().email("Некорректный email").required("Обязательно"),
   phone: yup
     .string()

@@ -8,7 +8,7 @@ import { getTotalPrice } from "../../utils/totalPrice";
 import { useSnackbar } from "notistack";
 
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/user/userSelectors";
+import { selectUser, selectUsersBooking } from "../../redux/user/userSelectors";
 import { CardProfile } from "../../components/common/CardProfile";
 import { TypographyForProfile } from "../../components/common/TypographyForProfile";
 import { ButtonContained } from "../../components/common/Buttons";
@@ -17,6 +17,7 @@ import actionCreators from "../../redux/rooms/actionCreators";
 
 const BookingInfo = () => {
   const user = useSelector(selectUser);
+  const booking = useSelector(selectUsersBooking);
   const { cancelBooking } = actionCreator;
   const { cancelBookingRoom } = actionCreators;
 
@@ -27,22 +28,15 @@ const BookingInfo = () => {
 
   return (
     <Grid container spacing={3}>
-      {user?.details.booking.length === 0 ? (
+      {booking.length === 0 ? (
         <Grid item xs={12}>
           <Typography sx={{ mt: 2 }} variant="h2">
             Броней не найдено
           </Typography>
         </Grid>
       ) : (
-        user?.details.booking.reverse().map((bookingItem) => (
-          <Grid
-            item
-            xs={12}
-            ssm={6}
-            sm={6}
-            md={4}
-            key={bookingItem?.reservationId}
-          >
+        booking.map((bookingItem) => (
+          <Grid item xs={12} ssm={6} md={4} key={bookingItem?.reservationId}>
             <CardProfile>
               <CardContent>
                 <TypographyForProfile>

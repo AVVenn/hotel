@@ -92,6 +92,17 @@ export const userReducer = (state = initialState, action) => {
         },
         isLoadingUser: false,
       };
+    case actionTypes.CHANGE_PHOTO:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          details: {
+            ...state.user.details,
+            photo: action.payload.photo,
+          },
+        },
+      };
     default:
       return state;
   }

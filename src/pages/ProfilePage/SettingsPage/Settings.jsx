@@ -5,10 +5,9 @@ import {
   Grid,
   Avatar,
   CircularProgress,
-  Button,
+  TextField,
   Fab,
 } from "@mui/material";
-import { ButtonOutlined } from "../../../components/common/Buttons";
 import SaveIcon from "@mui/icons-material/Save";
 import { useSelector } from "react-redux";
 import {
@@ -26,27 +25,16 @@ import { FORM_VALIDATION } from "./forFormik";
 import actionCreators from "../../../redux/user/actionCreator";
 
 const SettingsProfile = () => {
-  const { updateDataInProfile } = actionCreators;
+  const { updateDataInProfile, changePhoto } = actionCreators;
   const user = useSelector(selectUser);
   const isLoadingUser = useSelector(selectisLoadingUser);
   const error = useSelector(selectErrorRegistration);
 
-  // const uploadImage = (files) => {
-  //   setPhoto(files);
-  //   const formData = new FormData();
-  //   formData.append("file", files);
-  //   formData.append("upload_preset", "upload");
-  //  fetch("https://api.cloudinary.com/v1_1/avven/image/upload", {
-  //       method: "POST",
-  //       body: formData,
-  //     }).then((res) => res.json()).then(data => console.log(data))
-  //   }
-  // };
+  const [photo, setPhoto] = useState(user.details.photo || "");
 
   useEffect(() => {}, [user]);
 
   const INITIAL_FORM_STATE = {
-    photo: user?.details.photo,
     email: user?.details.email,
     phone: user?.details.phone,
     firstName: user?.details.firstName,
@@ -56,6 +44,23 @@ const SettingsProfile = () => {
   const { enqueueSnackbar } = useSnackbar();
   const showMesssage = (message, status) => {
     enqueueSnackbar(message, { variant: status });
+  };
+
+  const uploadImage = (photo) => {
+    const formData = new FormData();
+    formData.append("file", photo);
+    formData.append("upload_preset", "upload");
+    fetch("https://api.cloudinary.com/v1_1/avven/image/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.url) {
+          setPhoto(data.url);
+          changePhoto(data.url, user.details._id, showMesssage);
+        }
+      });
   };
 
   return (
@@ -68,7 +73,8 @@ const SettingsProfile = () => {
           initialValues={{ ...INITIAL_FORM_STATE }}
           validationSchema={FORM_VALIDATION}
           onSubmit={(values, { resetForm }) => {
-            values = { ...values, id: user?.details._id };
+            values = { ...values, id: user?.details._id, photo: photo };
+            console.log(values);
             updateDataInProfile(values, showMesssage);
             resetForm({ values: { ...INITIAL_FORM_STATE } });
           }}
@@ -89,17 +95,18 @@ const SettingsProfile = () => {
               >
                 <Avatar
                   alt={user?.details.firstName}
-                  src="/static/images/avatar/1.jpg"
+                  src={photo}
                   sx={{ width: 150, height: 150, mb: 2 }}
                 />
                 <label htmlFor="photo">
-                  <Textfield
+                  <TextField
                     style={{ display: "none" }}
                     id="photo"
-                    name="photo"
                     type="file"
-                    // onChange={({ target: { files } }) => {
-                    // }}
+                    onChange={({ target: { files } }) => {
+                      setPhoto(files[0]);
+                      uploadImage(files[0]);
+                    }}
                   />
                   <Fab
                     color="primary.main"

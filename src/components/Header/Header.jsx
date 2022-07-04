@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { routes } from "../../constants/routes";
 
 import Appbar from "./Appbar";
@@ -23,7 +23,6 @@ const pages = [
 const Header = () => {
   const user = useSelector(selectUser);
   const [open, setOpen] = useState(false);
-
   return (
     <>
       <Appbar pages={pages} setOpen={setOpen} user={user} />

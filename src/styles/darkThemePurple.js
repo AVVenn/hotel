@@ -1,16 +1,16 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 export let darkThemePurple = createTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      ssm: 420,
-      sm: 640,
-      md: 1024,
-      lg: 1366,
-      xl: 1536,
-    },
-  },
+  // breakpoints: {
+  //   values: {
+  //     xs: 0,
+  //     ssm: 420,
+  //     sm: 640,
+  //     md: 1024,
+  //     lg: 1366,
+  //     xl: 1536,
+  //   },
+  // },
   palette: {
     primary: { main: "#7635DC" },
     secondary: { main: "#FFFFFF" },

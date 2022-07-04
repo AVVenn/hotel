@@ -22,7 +22,6 @@ import { useModalHandle } from "../../hooks/handleModalsHook";
 
 const Appbar = ({ setOpen, pages, user }) => {
   const { handleOpenSignIn, handleOpenSignUp } = useModalHandle();
-
   const navigate = useNavigate();
   const { logOut } = actionCreator;
   return (
@@ -62,9 +61,9 @@ const Appbar = ({ setOpen, pages, user }) => {
               <Tooltip title="Открыть профиль">
                 <IconButton component={RouterLink} to={routes.PROFILE}>
                   <Avatar
-                    sx={{ width: "70", height: "70", mr: 1 }}
+                    sx={{ width: "55px", height: "55px", mr: 1 }}
                     alt={user.details.firstName}
-                    src="/static/images/avatar/2.jpg"
+                    src={user.details.photo}
                   />
                   <TypographyForAppBar>
                     {user?.details.firstName}

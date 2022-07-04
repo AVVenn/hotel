@@ -98,6 +98,7 @@ const updateDataInProfile = (values, showMesssage) => {
       type: actionTypes.SET_LOADING_USER,
       payload: { isLoadingUser: true },
     });
+
     fetch(basicLink + `users/${values.id}`, {
       method: "PUT",
       headers: {
@@ -172,6 +173,28 @@ const addInfoAboutBooking = (obj, setOpenBookingAccepted) => {
   };
 };
 
+const changePhoto = (photo, id, showMesssage) => {
+  return (dispatch) => {
+    fetch(basicLink + `users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ photo }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: actionTypes.CHANGE_PHOTO,
+          payload: {
+            photo: data.photo,
+          },
+        });
+      });
+  };
+};
+
 export default bindActionCreators(
   {
     logOut,
@@ -181,6 +204,7 @@ export default bindActionCreators(
     updateDataInProfile,
     cancelBooking,
     addInfoAboutBooking,
+    changePhoto,
   },
   store.dispatch
 );

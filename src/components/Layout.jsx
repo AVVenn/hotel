@@ -31,14 +31,12 @@ const Layout = () => {
 
   useEffect(() => {
     getRooms();
-    console.log(`did mount`);
   }, []);
 
-  const [theme, setTheme] = useState(createTheme(chosenTheme) || baseTheme);
+  const [theme, setTheme] = useState(baseTheme); //createTheme(chosenTheme) ||
 
   useEffect(() => {
     localStorage.setItem("chosenTheme", JSON.stringify(theme));
-    console.log(`did mount`);
   }, [theme]);
 
   const handleSwitchTheme = (whichTheme) => {

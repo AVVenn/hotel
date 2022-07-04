@@ -34,7 +34,6 @@ const SignUp = () => {
   const { handleCloseSignUp, handleOpenSignIn, openSingUp } = useModalHandle();
 
   let open = openSingUp;
-
   const { enqueueSnackbar } = useSnackbar();
   const showMesssage = (message, status) => {
     enqueueSnackbar(message, { variant: status });

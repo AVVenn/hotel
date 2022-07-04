@@ -56,7 +56,7 @@ const FindPlaces = () => {
     if (
       compareDesc(dataStart, dataEnd) === 1 &&
       compareDesc(dataEnd, addDays(dataStart, 50)) > -1 &&
-      compareDesc(new Date(), addMinutes(dataStart, 1)) > -1 &&
+      compareDesc(new Date(), addMinutes(dataStart, 120)) > -1 &&
       compareDesc(dataStart, addDays(new Date(), 20)) > -1
     ) {
       changeOptionsForSearchRoom({
