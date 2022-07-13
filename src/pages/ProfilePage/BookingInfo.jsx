@@ -39,46 +39,85 @@ const BookingInfo = () => {
           <Grid item xs={12} ssm={6} md={4} key={bookingItem?.reservationId}>
             <CardProfile>
               <CardContent>
-                <TypographyForProfile>
-                  {`Бронь на:
-                    ${bookingItem.lastName + " " + bookingItem.firstName}`}
-                </TypographyForProfile>
-                <TypographyForProfile>
-                  {`${format(
-                    new Date(bookingItem?.dateStart),
-                    "dd.MM.yyyy"
-                  )} - ${format(new Date(bookingItem?.dateEnd), "dd.MM.yyyy")}`}
-                </TypographyForProfile>
-                <TypographyForProfile>{`Места за ${bookingItem.placePrice} руб./сутки.`}</TypographyForProfile>
-                <TypographyForProfile>{`Количество человек: ${bookingItem.numberOfPerson}`}</TypographyForProfile>
-                <TypographyForProfile
-                  component="h4"
-                  variant="h4"
-                  sx={{ mt: 2 }}
-                >{`Итого: ${getTotalPrice(
-                  bookingItem.placePrice,
-                  bookingItem.numberOfPerson,
-                  bookingItem?.dateEnd,
-                  bookingItem?.dateStart
-                )} бел.руб.`}</TypographyForProfile>
+                <Grid container spacing={2.5} sx={{ mb: 1 }}>
+                  <Grid item xs={4}>
+                    <TypographyForProfile>Бронь:</TypographyForProfile>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <TypographyForProfile>{`${
+                      bookingItem.lastName + " " + bookingItem.firstName
+                    }`}</TypographyForProfile>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2.5} sx={{ mb: 1 }}>
+                  <Grid item xs={4}>
+                    <TypographyForProfile>Даты:</TypographyForProfile>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <TypographyForProfile>
+                      {`${format(
+                        new Date(bookingItem?.dateStart),
+                        "dd.MM.yyyy"
+                      )} - ${format(
+                        new Date(bookingItem?.dateEnd),
+                        "dd.MM.yyyy"
+                      )}`}
+                    </TypographyForProfile>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2.5} sx={{ mb: 1 }}>
+                  <Grid item xs={4}>
+                    <TypographyForProfile>Сутки:</TypographyForProfile>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <TypographyForProfile>{`${bookingItem.placePrice} руб.`}</TypographyForProfile>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2.5}>
+                  <Grid item xs={4}>
+                    <TypographyForProfile component="h4" variant="h4">
+                      Итого:
+                    </TypographyForProfile>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <TypographyForProfile
+                      component="h4"
+                      variant="h4"
+                    >{`${getTotalPrice(
+                      bookingItem.placePrice,
+                      bookingItem.numberOfPerson,
+                      bookingItem?.dateEnd,
+                      bookingItem?.dateStart
+                    )} бел.руб.`}</TypographyForProfile>
+                  </Grid>
+                </Grid>
               </CardContent>
               {compareAsc(new Date(), new Date(bookingItem?.dateStart)) < 1 && (
-                <ButtonContained
-                  onClick={() => {
-                    cancelBookingRoom(
-                      bookingItem.roomId,
-                      bookingItem.reservationId
-                    );
-                    cancelBooking(
-                      bookingItem.reservationId,
-                      user.details._id,
-                      showMesssage
-                    );
-                  }}
-                  sx={{ borderRadius: "10px", mb: 1, ml: 1 }}
-                >
-                  Отменить
-                </ButtonContained>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <ButtonContained
+                      fullWidth
+                      onClick={() => {
+                        cancelBookingRoom(
+                          bookingItem.roomId,
+                          bookingItem.reservationId
+                        );
+                        cancelBooking(
+                          bookingItem.reservationId,
+                          user.details._id,
+                          showMesssage
+                        );
+                      }}
+                      sx={{
+                        borderRadius: "10px",
+                        mb: 1,
+                        px: 1,
+                      }}
+                    >
+                      Отменить
+                    </ButtonContained>
+                  </Grid>
+                </Grid>
               )}
             </CardProfile>
           </Grid>
