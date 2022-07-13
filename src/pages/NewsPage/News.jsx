@@ -21,7 +21,7 @@ const News = () => {
   const news = useSelector(selectNews);
   const newsItem = news.find((item) => item._id === id);
   return (
-    <Container sx={{ px: 5 }}>
+    <Container sx={{ px: 5, height: "55vh" }}>
       <Grid container spacing={3}>
         <Grid
           item
