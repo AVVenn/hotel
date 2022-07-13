@@ -19,6 +19,7 @@ import SignIn from "./common/modals/SignIn";
 import SignUp from "./common/modals/SignUp";
 import Booking from "./common/modals/Booking";
 import BookingAccepted from "./common/modals/BookingAccepted";
+import RatingRoom from "./common/modals/RatingRoom";
 import actionsRooms from "../redux/rooms/actionCreators";
 import { BoxCenter } from "./common/CustomBoxes";
 
@@ -79,6 +80,7 @@ const Layout = () => {
             <SignIn />
             <SignUp />
             <Booking />
+            <RatingRoom />
             <BookingAccepted />
           </Container>
         </ModalsProvider>

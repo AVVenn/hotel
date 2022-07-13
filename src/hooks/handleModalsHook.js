@@ -10,6 +10,8 @@ export const ModalsProvider = ({ children }) => {
   const [openSignIn, setOpenSignIn] = useState(false);
   const [openSingUp, setOpenSignUp] = useState(false);
   const [openBooking, setOpenBoking] = useState(false);
+  const [openRating, setOpenRating] = useState(true);
+
   const [openBookingAccepted, setOpenBookingAccepted] = useState(false);
 
   const handleCloseBooking = useCallback(() => {
@@ -47,6 +49,8 @@ export const ModalsProvider = ({ children }) => {
         handleOpenSignUp,
         handleCloseSignUp,
         setOpenBookingAccepted,
+        setOpenRating,
+        openRating,
         openBookingAccepted,
         openSignIn,
         openSingUp,

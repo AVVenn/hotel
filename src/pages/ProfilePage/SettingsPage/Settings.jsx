@@ -9,6 +9,7 @@ import {
   Fab,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
+
 import { useSelector } from "react-redux";
 import {
   selectUser,
@@ -25,6 +26,7 @@ import { FORM_VALIDATION } from "./forFormik";
 import actionCreators from "../../../redux/user/actionCreator";
 
 const SettingsProfile = () => {
+  const [loading, setLoading] = useState(false);
   const { updateDataInProfile, changePhoto } = actionCreators;
   const user = useSelector(selectUser);
   const isLoadingUser = useSelector(selectisLoadingUser);
@@ -50,6 +52,7 @@ const SettingsProfile = () => {
     const formData = new FormData();
     formData.append("file", photo);
     formData.append("upload_preset", "upload");
+    setLoading(true);
     fetch("https://api.cloudinary.com/v1_1/avven/image/upload", {
       method: "POST",
       body: formData,
@@ -60,6 +63,9 @@ const SettingsProfile = () => {
           setPhoto(data.url);
           changePhoto(data.url, user.details._id, showMesssage);
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -109,13 +115,23 @@ const SettingsProfile = () => {
                     }}
                   />
                   <Fab
-                    color="primary.main"
-                    size="small"
+                    sx={{
+                      color: "secondary.main",
+                      backgroundColor: "primary.main",
+                      "&:hover": {
+                        color: "primary.main",
+                        backgroundColor: "secondary.main",
+                      },
+                    }}
                     component="span"
-                    aria-label="add"
                     variant="extended"
                   >
-                    <SaveIcon /> Загрузить
+                    {loading ? (
+                      <CircularProgress sx={{ color: "white", mr: 2 }} />
+                    ) : (
+                      <SaveIcon sx={{ mr: 2 }} />
+                    )}
+                    Загрузить
                   </Fab>
                 </label>
               </Grid>
@@ -141,8 +157,8 @@ const SettingsProfile = () => {
                 sm={4}
                 sx={{ display: "flex", alignItems: "center" }}
               >
-                {isLoadingUser ? (
-                  <CircularProgress />
+                {isLoadingUser || loading ? (
+                  <CircularProgress fullWidth />
                 ) : (
                   <>
                     <ButtonWrapper sx={{ mb: 2 }}>Сохранить</ButtonWrapper>
