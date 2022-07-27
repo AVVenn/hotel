@@ -195,6 +195,34 @@ const changePhoto = (photo, id, showMesssage) => {
   };
 };
 
+const changeFieldIsVoted = (userId, reservationId) => {
+  console.log(userId, reservationId);
+  return (dispatch) => {
+    fetch(basicLink + `users/changeFieldIsVoted/${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ reservationId: reservationId }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        if (result.status > 399 && result.status < 500) {
+          console.log(result.message);
+        } else {
+          dispatch({
+            type: actionTypes.CHANGE_FIELD_ISVOTED,
+            payload: {
+              reservationId,
+            },
+          });
+        }
+      });
+  };
+};
+
 export default bindActionCreators(
   {
     logOut,
@@ -205,6 +233,7 @@ export default bindActionCreators(
     cancelBooking,
     addInfoAboutBooking,
     changePhoto,
+    changeFieldIsVoted,
   },
   store.dispatch
 );

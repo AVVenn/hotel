@@ -31,6 +31,8 @@ import {
   selectRoomsWithFreePlaces,
 } from "../../redux/rooms/roomsSelectors";
 
+import calculationRating from "../../utils/calculationRating";
+
 const RoomsPage = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -96,12 +98,13 @@ const RoomsPage = () => {
                           <BoxCenter sx={{ mb: 2 }}>
                             <Typography sx={{ mr: 2 }}>Рейтинг:</Typography>
                             <Rating
-                              name="read-only"
-                              value={room.rating}
+                              name="half-rating-read"
+                              precision={0.1}
+                              value={+calculationRating(room.rating)}
                               readOnly
                             />
                             <Typography variant="caption">
-                              {room.rating.toFixed(1)}
+                              {calculationRating(room.rating)}
                             </Typography>
                           </BoxCenter>
                           <Grid container sx={{ mb: 3 }}>

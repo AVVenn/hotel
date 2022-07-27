@@ -10,9 +10,12 @@ import {
   BoxSpaceAround,
 } from "../../../components/common/CustomBoxes";
 
+import calculationRating from "../../../utils/calculationRating";
+
 import { CardRoom } from "../../../components/common/CardRoom";
 
 const Room = ({ room }) => {
+  let rating = calculationRating(room.rating);
   return (
     <Grid item xs={12} sm={6} md={4} sx={{ p: 0, m: 0 }}>
       <CardRoom>
@@ -34,8 +37,13 @@ const Room = ({ room }) => {
             {room.price} руб. к/место
           </Typography>
           <BoxSpaceAround sx={{ mb: 2 }}>
-            <Rating name="read-only" value={room.rating} readOnly />
-            <Typography variant="caption">{room.rating.toFixed(1)}</Typography>
+            <Rating
+              name="half-rating-read"
+              value={+rating}
+              precision={0.1}
+              readOnly
+            />
+            <Typography variant="caption">{rating}</Typography>
           </BoxSpaceAround>
           <ButtonOutlined
             sx={{

@@ -5,18 +5,25 @@ import {
   DialogContent,
   Grid,
   Rating,
-  Button,
 } from "@mui/material";
 import { ButtonContainedForModals } from "../Buttons";
-import ButtonWrapper from "../FormsUI/Button";
-import actionCreator from "../../../redux/user/actionCreator";
-
+import actionCreatorUser from "../../../redux/user/actionCreator";
+import actionCreatorsRoom from "../../../redux/rooms/actionCreators";
+import { selectUser } from "../../../redux/user/userSelectors";
+import { useSelector } from "react-redux";
+import findSuccessfulLiving from "../../../utils/findSuccessfulLive";
 import { useModalHandle } from "../../../hooks/handleModalsHook";
 
 const RatingRoom = () => {
+  const user = useSelector(selectUser);
+  const [roomId, reservationId] = findSuccessfulLiving(user?.details?.booking);
+
   const { setOpenRating, openRating } = useModalHandle();
+  const { changeRatingRoom } = actionCreatorsRoom;
+  const { changeFieldIsVoted } = actionCreatorUser;
   let open = openRating;
-  const [rating, setRating] = useState(null);
+  const [rating, setRating] = useState(5);
+  console.log("render rating room modal");
 
   return (
     <Dialog
@@ -39,14 +46,23 @@ const RatingRoom = () => {
               >
                 <Rating
                   sx={{ fontSize: "50px" }}
-                  value={rating}
+                  value={+rating}
                   onChange={({ target: { value } }) => {
                     setRating(value);
                   }}
                 />
               </Grid>
               <Grid item xs={12}>
-                <ButtonContainedForModals fullWidth>
+                <ButtonContainedForModals
+                  fullWidth
+                  onClick={() => {
+                    if ((roomId, reservationId)) {
+                      changeRatingRoom(roomId, +rating);
+                      changeFieldIsVoted(user.details._id, reservationId);
+                      setOpenRating(false);
+                    }
+                  }}
+                >
                   Ок
                 </ButtonContainedForModals>
               </Grid>

@@ -15,13 +15,15 @@ import Footer from "./Footer/Footer";
 
 import { CssBaseline, Button, Container, Divider } from "@mui/material";
 
-import SignIn from "./common/modals/SignIn";
-import SignUp from "./common/modals/SignUp";
-import Booking from "./common/modals/Booking";
-import BookingAccepted from "./common/modals/BookingAccepted";
+// import SignIn from "./common/modals/SignIn";
+// import SignUp from "./common/modals/SignUp";
+// import Booking from "./common/modals/Booking";
+// import BookingAccepted from "./common/modals/BookingAccepted";
 import RatingRoom from "./common/modals/RatingRoom";
 import actionsRooms from "../redux/rooms/actionCreators";
 import { BoxCenter } from "./common/CustomBoxes";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/user/userSelectors";
 
 import { ModalsProvider } from "../hooks/handleModalsHook";
 
@@ -29,7 +31,8 @@ const Layout = () => {
   const chosenTheme = JSON.parse(localStorage.getItem("chosenTheme"));
   // console.log(chosenTheme);
   const { getRooms } = actionsRooms;
-
+  const user = useSelector(selectUser);
+  console.log(user);
   useEffect(() => {
     getRooms();
   }, []);
@@ -77,11 +80,11 @@ const Layout = () => {
               sx={{ backgroundColor: "text.lightWarning" }}
             />
             <Footer />
-            <SignIn />
-            <SignUp />
-            <Booking />
-            <RatingRoom />
-            <BookingAccepted />
+            {/* <SignIn /> */}
+            {/* {!user && <SignUp />} */}
+            {/* {user && <Booking />} */}
+            {/* {user && <BookingAccepted />} */}
+            {user?.details?.booking.length > 0 && <RatingRoom />}
           </Container>
         </ModalsProvider>
       </SnackbarProvider>

@@ -103,6 +103,23 @@ export const userReducer = (state = initialState, action) => {
           },
         },
       };
+    case actionTypes.CHANGE_FIELD_ISVOTED:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          details: {
+            ...state.user.details,
+            booking: state.user.details.booking.map((reserve) => ({
+              ...reserve,
+              isVotedRating:
+                reserve.reservationId === action.payload.reservationId
+                  ? !reserve.isVotedRating
+                  : reserve.isVotedRating,
+            })),
+          },
+        },
+      };
     default:
       return state;
   }

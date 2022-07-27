@@ -67,6 +67,17 @@ export const roomsReducer = (state = initialState, action) => {
         })),
         isLoadingRooms: false,
       };
+    case actionTypes.CHANGE_RATING:
+      return {
+        ...state,
+        rooms: state.rooms.map((room) => ({
+          ...room,
+          rating:
+            room._id === action.payload.roomId
+              ? [...room.rating, action.payload.rating]
+              : room.rating,
+        })),
+      };
     default:
       return state;
   }

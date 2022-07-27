@@ -29,6 +29,8 @@ import {
 import { useModalHandle } from "../../../hooks/handleModalsHook";
 
 const SignIn = () => {
+  console.log("render signIn modal");
+
   const { handleCloseSignIn, handleOpenSignUp, openSignIn } = useModalHandle();
 
   let open = openSignIn;

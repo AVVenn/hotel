@@ -49,6 +49,7 @@ function getStepContent(step) {
 }
 
 const Booking = () => {
+  console.log("render booking modal");
   const { handleCloseBooking, setOpenBookingAccepted, openBooking } =
     useModalHandle();
   const open = openBooking;
@@ -96,6 +97,7 @@ const Booking = () => {
           userId: user?.details._id,
           roomId: id,
           reservationId: uuidv4(),
+          isVotedRating: false,
         };
         bookingPlaces(id, values);
         addInfoAboutBooking(values, setOpenBookingAccepted);
