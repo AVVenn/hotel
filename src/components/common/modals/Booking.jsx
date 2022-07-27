@@ -49,7 +49,6 @@ function getStepContent(step) {
 }
 
 const Booking = () => {
-  console.log("render booking modal");
   const { handleCloseBooking, setOpenBookingAccepted, openBooking } =
     useModalHandle();
   const open = openBooking;

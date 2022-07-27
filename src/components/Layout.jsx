@@ -15,10 +15,6 @@ import Footer from "./Footer/Footer";
 
 import { CssBaseline, Button, Container, Divider } from "@mui/material";
 
-// import SignIn from "./common/modals/SignIn";
-// import SignUp from "./common/modals/SignUp";
-// import Booking from "./common/modals/Booking";
-// import BookingAccepted from "./common/modals/BookingAccepted";
 import RatingRoom from "./common/modals/RatingRoom";
 import actionsRooms from "../redux/rooms/actionCreators";
 import { BoxCenter } from "./common/CustomBoxes";
@@ -32,7 +28,7 @@ const Layout = () => {
   // console.log(chosenTheme);
   const { getRooms } = actionsRooms;
   const user = useSelector(selectUser);
-  console.log(user);
+
   useEffect(() => {
     getRooms();
   }, []);
@@ -80,10 +76,6 @@ const Layout = () => {
               sx={{ backgroundColor: "text.lightWarning" }}
             />
             <Footer />
-            {/* <SignIn /> */}
-            {/* {!user && <SignUp />} */}
-            {/* {user && <Booking />} */}
-            {/* {user && <BookingAccepted />} */}
             {user?.details?.booking.length > 0 && <RatingRoom />}
           </Container>
         </ModalsProvider>

@@ -9,7 +9,6 @@ const BookingAccepted = () => {
   const { setOpenBookingAccepted, openBookingAccepted } = useModalHandle();
 
   let open = openBookingAccepted;
-  console.log("render bookingacceppted modal");
 
   const navigate = useNavigate();
   return (

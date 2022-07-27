@@ -10,7 +10,7 @@ import { ButtonContainedForModals } from "../Buttons";
 import { useNavigate } from "react-router-dom";
 const GoToHomePage = ({ setOpenGoToHome, open }) => {
   const navigate = useNavigate();
-  console.log("render goToHomePage");
+
   return (
     <Dialog
       onClose={() => {
